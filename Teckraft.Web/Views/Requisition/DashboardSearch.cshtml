@@ -1,0 +1,133 @@
+﻿<section class="content-header">
+    <div class="row pnl-page-detail-action">
+        <div class="col-md-12">
+            <h1>
+                Dashboard
+            </h1>
+
+        </div>
+    </div>
+
+   <div class="row" ng-hide="true"  >
+                    <div class="col-sm-4">  <label><i class=""></i>TSI</label>
+                            <select class="form-control module" ng-model="item.tsi"  ng-options="md.VcTSICode +' - '+ md.VcTSIDesc for md in tsiUserDetails track by md.VcTSICode"> 
+                               <option value="">Select..</option>
+                            </select>
+                    </div>
+                        <div class="col-sm-4"> 
+                        <label><i class=""></i>ASM</label>
+                           <select class="form-control module" ng-model="item.asm" ng-options="md.VcASMCode + ' - ' + md.VcASMDesc for md in asmCurUser track by md.VcASMCode"> 
+                              <option value="">Select..</option>
+                            </select>
+                    </div>
+<div class="col-sm-4"> <label><i class=""></i>BM</label>
+                         <select class="form-control" ng-model="item.bm" ng-options="md.VcBMCode + ' - ' + md.VcBMDesc for md in bmCurUser track by md.VcBMCode">
+                                <option value="">Select..</option>
+                            </select>
+                    </div>
+                </div>
+
+
+    <div class="row pnl-page-detail-action">
+@if (User.IsInRole("CallCentre"))
+{
+        <div class="col-md-3">
+           <label><font color="red" >*</font> Division</label>
+            <select class="form-control" ng-model="item.division" ng-options="md.divisionName for md in departmentData track by md.id">
+                <option value="">Select..</option>
+            </select>
+        </div>
+}
+        <div class="col-md-3">
+            <label> SR No.</label>
+            <input type="textbox" class="form-control" ng-model="item.requestCode" placeholder="SR No.">
+        </div>
+
+        <div class="col-md-3">
+             <label>Dealer Code</label>
+           <input type="textbox" class="form-control" ng-model="item.dealerCode"   placeholder="Enter Minimum 6 Characters">
+        </div>
+        <div class="col-md-3">
+             <label>Dealer Name</label>
+           <input type="textbox" class="form-control" ng-model="item.dealerName"   placeholder="Enter Minimum 5 Characters">
+        </div>
+
+    </div>
+
+    <div class="row pnl-page-detail-action">
+        <div class="col-md-3">
+            <label>Dealer Contact No.</label>
+            <input type="textbox" class="form-control" ng-model="item.dealerMobileNo" placeholder="Enter 10 digit Mobile No.">
+        </div>
+        <div class="col-md-3">
+            <label>SR Created Date (From) </label>
+            <input type="text" class="form-control" ng-click="open($event, item,'startDate')" datepicker-popup="dd-MMM-yyyy"
+                   class="eventDresetDateate" ng-change="resetDate(item,'startDate')" ng-model="item.startDate" is-open="item.datepickers.startDate"
+                   datepicker-options="dateOptions" /> 
+        </div>
+        <div class="col-md-3">
+            <label>SR Created Date (To)</label>
+            <input type="text" class="form-control" ng-click="open($event, item,'endDate')" datepicker-popup="dd-MMM-yyyy"
+                   class="eventDresetDateate" ng-change="resetDate(item,'endDate')" ng-model="item.endDate" is-open="item.datepickers.endDate"
+                   datepicker-options="dateOptions" /> 
+        </div>
+    @if (User.IsInRole("CallCentre")){
+          <div class="col-md-3">
+            <label>Status</label>
+             <select class="form-control" ng-model="item.status" ng-options="md.statusDesc for md in statusMasterData track by md.id">
+                <option value="">Select..</option>
+            </select>
+        </div>
+        }
+    </div>
+
+    <div class="row footer-action" style="margin: 0px;">
+        <br />
+        <input type="button" class="btn btn-primary" value="Search" ng-click="searchData()"   />
+    </div>
+   <div class="overlay" ng-show="loading" align="center">
+        <img src="~/Content/img/loader--multicolor-2.gif" />
+    </div>
+</section>
+
+<section class="content">
+    <div class="table-responsive">
+        <table class="table table-hover table-striped table-bordered" ng-hide="existingDealerList.length==0">
+             <thead>
+                <tr>
+                    <th>Sr.No.</th>
+                  @*  <th>Request No.</th>*@
+                    <th>Dealer Code</th>
+                    <th>Dealer Name</th>
+                    <th>Dealer Contact No.</th>
+                    <th>RTR Status</th>
+                    <th>Wss Name</th>
+                    <th>TSI Name</th>
+                    <th>View Request</th>
+                </tr>
+            </thead>
+          <tbody>
+                <tr data-ng-repeat="item in existingDealerList">
+                    <td>{{$index+1}}</td>   
+                    @*<td>{{item.requestCode}}</td>*@
+                    <td>{{item.dealerCode}}</td>
+                    <td>{{item.dealerName}}</td>
+                    <td>{{item.dealerMobile}}</td>
+                      <td><div ng-if="item.dealerStatus == 'Y'"  style="background-color:Green;color:yellow">Active</div>
+                        <div  ng-if="item.dealerStatus == 'N'" style="background-color:red;color:yellow">Inactive</div>
+                    </td>
+                     
+                    <td>{{item.wssCode}} - {{item.wssDesc}}</td>
+                    <td>{{item.tsiCode}} - {{item.tsiDesc}}</td>
+                    <td><a href="#/ViewRequisition/{{item.dealerCode + '/' +  srNo}}" style="text-decoration: underline; font-size: 15px;
+                        text-transform: uppercase;">View</a>
+                    </td>
+                 </tr>
+             </tbody>
+             <div ng-show="existingDealerList.length==0" class="alert alert-danger">
+                <i class="fa fa-ban"></i>No Records Found
+            </div>
+        </table>
+    </div>
+</section>
+

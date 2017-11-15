@@ -1,0 +1,143 @@
+﻿using Microsoft.Practices.Unity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Teckraft.Core.Domian.Loging;
+using Teckraft.Core.Domian.Reports;
+using Teckraft.Core.Domian.SAP;
+using Teckraft.Core.Domian.Settings;
+using Teckraft.Core.Domian.Transactions;
+using Teckraft.Core.Workflow;
+using Teckraft.Data;
+using Teckraft.Data.Mappings;
+using Teckraft.Data.Settings;
+using Teckraft.Data.Transaction;
+using Teckraft.Services;
+using Teckraft.Services.Loging;
+using Teckraft.Services.Notification;
+using Teckraft.Services.Settings;
+using Teckraft.Services.Transaction;
+
+namespace Teckraft.Web.Framework.Infrastructure
+{
+    public class RegisterDependency
+    {
+        public static void Register(IUnityContainer container)
+        {
+
+            container.RegisterType<Teckraft.Services.IService<Reason>, Teckraft.Services.Settings.ReasonService>();
+            container.RegisterType<Teckraft.Data.IRepository<Reason>, Teckraft.Data.Settings.ReasonDbRepository>();
+            container.RegisterType<IService<Rlam>, RlamService>();
+            //container.RegisterType<Teckraft.Data.IRepository<Rlam>, RlamDbRepository>();
+            //container.RegisterType<Teckraft.Data.Mappings.IMappingProvider<Rlam, Teckraft.Data.Sql.RLAMUserMapping>, Teckraft.Data.Mappings.RlamMappingProvider>();
+            container.RegisterType<Teckraft.Data.Mappings.IMappingProvider<Reason, Teckraft.Data.Sql.Reason>, Teckraft.Data.Mappings.ReasonMappingProvider>();
+            container.RegisterType<Teckraft.Data.Mappings.IMappingProvider<Teckraft.Core.Domian.SAP.Division, Teckraft.Data.Sql.Division>, Teckraft.Data.Mappings.DivisionMappingProvider>();
+
+
+            container.RegisterType<Teckraft.Data.Mappings.IMappingProvider<Teckraft.Core.Domian.SAP.Company, Teckraft.Data.Sql.Company>, Teckraft.Data.Mappings.CompanyMapping>();
+
+            container.RegisterType<Teckraft.Data.Mappings.IMappingProvider<Teckraft.Core.Domian.Settings.Module, Teckraft.Data.Sql.Module>, Teckraft.Data.Mappings.ModuleMappingProvider>();
+
+            container.RegisterType<Teckraft.Data.Mappings.IMappingProvider<Teckraft.Core.Domian.Settings.SubModule, Teckraft.Data.Sql.SubModule>, Teckraft.Data.Mappings.SubModuleMappingProvider>();
+            container.RegisterType<Teckraft.Data.Mappings.IMappingProvider<Teckraft.Core.Domian.Settings.BusinessFunction, Teckraft.Data.Sql.BusinessFunction>, Teckraft.Data.Mappings.BusinessFunctionMappingProvider>();
+
+            //container.RegisterType<Teckraft.Data.Mappings.IMappingProvider<Plant, Teckraft.Data.Sql.Plant>, Teckraft.Data.Mappings.PlantMappingProvider>();
+            //container.RegisterType<Teckraft.Data.Mappings.IMappingProvider<SalesGroup, Teckraft.Data.Sql.SalesGroup>, Teckraft.Data.Mappings.SalesGroupMappingProvider>();
+            container.RegisterType<Teckraft.Data.Mappings.IMappingProvider<User, Teckraft.Data.Sql.UserProfile>, Teckraft.Data.Mappings.UserMappingProvider>();
+
+
+            //            container.RegisterType<IRepository<HierarchyLevel>, Teckraft.Data.Settings.ApprovalHierarchyRepository>();
+            container.RegisterType<IService<HierarchyLevel>, Teckraft.Services.Settings.ApprovalHierarchyService>();
+            //            container.RegisterType<IMappingProvider<HierarchyLevel, Teckraft.Data.Sql.ApprovalHierarchy>, Teckraft.Data.Mappings.HierarchyLevelMapping>();
+
+            container.RegisterType<IReadService<Teckraft.Core.Domian.SAP.Division>, Services.SAP.DivisionService>();
+            container.RegisterType<IReadableRepository<Teckraft.Core.Domian.SAP.Division>, Data.SAP.DivisionRepository>();
+
+            //Module
+            container.RegisterType<IReadService<Teckraft.Core.Domian.Settings.Module>, Services.SAP.ModuleService>();
+            container.RegisterType<IReadableRepository<Teckraft.Core.Domian.Settings.Module>, Data.Transaction.ModuleRepository>();
+
+            //SubModule
+            container.RegisterType<IReadService<Teckraft.Core.Domian.Settings.SubModule>, Services.SAP.SubModuleService>();
+            container.RegisterType<IReadableRepository<Teckraft.Core.Domian.Settings.SubModule>, Data.Transaction.SubModuleRepository>();
+
+            //BusinessFunction
+            container.RegisterType<IReadService<Teckraft.Core.Domian.Settings.BusinessFunction>, Services.Transaction.BusinessFunctionService>();
+            container.RegisterType<IReadableRepository<Teckraft.Core.Domian.Settings.BusinessFunction>, Data.Transaction.BusinessFunctionRepository>();
+
+            container.RegisterType<IReadService<Customer>, Services.SAP.WssService>();
+            //container.RegisterType<IReadableRepository<Customer>, Data.SAP.CustomerRepository>();
+
+            container.RegisterType<IReadService<Plant>, Services.SAP.PlantService>();
+            //container.RegisterType<IReadableRepository<Plant>, Data.SAP.PlantRepository>();
+
+            container.RegisterType<IReadService<SalesGroup>, Services.SAP.SalesGroupService>();
+            //container.RegisterType<IReadableRepository<SalesGroup>, Data.SAP.SalesGroupRepository>();
+
+            //container.RegisterType<IMappingProvider<ApprovalMatrix, Data.Sql.ApprovalLimit>, Data.Mappings.ApprovalMatrixMappingProvider>();
+
+            container.RegisterType<IService<ApprovalMatrix>, Services.Settings.ApprovalMatrixService>();
+            //container.RegisterType<IRepository<ApprovalMatrix>, Data.Settings.ApprovalMatrixDbRepository>();
+
+            // container.RegisterType<IProductRepository, ProductRepository>();
+
+            container.RegisterType<IRepository<Teckraft.Core.Domian.Transactions.CR>, Data.Transaction.CRRepository>();
+            container.RegisterType<IService<Teckraft.Core.Domian.Transactions.CR>, Services.Transaction.CRService>();
+            container.RegisterType<IMappingProvider<Teckraft.Core.Domian.Transactions.CR, Teckraft.Data.Sql.CR>, CRMapping>();
+
+
+            container.RegisterType<IRepository<Teckraft.Core.Workflow.Task>, Data.Transaction.PhaseTaskRepository>();
+            container.RegisterType<IService<Teckraft.Core.Workflow.Task>, Services.Transaction.PhaseTaskService>();
+            container.RegisterType<IMappingProvider<Teckraft.Core.Workflow.Task, Teckraft.Data.Sql.CRPhaseTask>, PhaseTaskMapping>();
+            container.RegisterType<IMappingProvider<Teckraft.Core.Workflow.TaskType, Teckraft.Data.Sql.TaskType>, TaskTypeMapping>();
+
+
+            container.RegisterType<IReadableRepository<RequestType>, Data.Settings.RequestTypeRepository>();
+            container.RegisterType<IReadService<RequestType>, Services.Settings.RequestTypeService>();
+            container.RegisterType<IMappingProvider<RequestType, Teckraft.Data.Sql.RequestType>, RequestTypeMapper>();
+
+            container.RegisterType<IReadableRepository<User>, Data.Settings.ITFHUserRepository>();
+            container.RegisterType<IReadService<User>, Services.Settings.ITFHUserService>();
+            container.RegisterType<IMappingProvider<User, Teckraft.Data.Sql.UserDetail>, UserDetailMapping>();
+
+            container.RegisterType<IService<User>, Services.Settings.UserService>();
+            container.RegisterType<IRepository<User>, Data.Settings.UserRepository>();
+
+            container.RegisterType<IMappingProvider<Teckraft.Core.Domian.Transactions.CRLog, Teckraft.Data.Sql.CRLog>, LogMappingProvider>();
+
+
+             container.RegisterType<IMappingProvider<CRStage, Teckraft.Data.Sql.CRStage>, CRStageMapping>();
+             container.RegisterType<IRepository<CRStage>, CRStageRepository>();
+             container.RegisterType<IService<CRStage>, CRStageService>();
+
+            container.RegisterType<IMappingProvider<VendorDetail, Teckraft.Data.Sql.CRVendorDetail>, VendorMapping>();
+            container.RegisterType<IMappingProvider<Attachment, Teckraft.Data.Sql.CRAttachment>, CRAttachmentMapping>();
+            container.RegisterType<IMappingProvider<CRPhase, Teckraft.Data.Sql.CRPhase>, CRPhaseMapping>();
+
+            container.RegisterType<IService<CRPhase>, CRPhaseService>();
+            container.RegisterType<IRepository<CRPhase>, CRPhaseRepository>();
+            container.RegisterType<IMappingProvider<SLA, Teckraft.Data.Sql.SLA>, SLAMapping>();
+            container.RegisterType<IEmailService, EmailService>();
+            container.RegisterType<IService<EmailTemplate>, TemplateService>();
+            container.RegisterType<IReadService<Attachment>, CRAttachmentService>();
+            container.RegisterType<IReadableRepository<Attachment>, CRAttachmentRepository>();
+
+            container.RegisterType<IMappingProvider<Teckraft.Core.Domian.Team,Teckraft.Data.Sql.Team>,TeamMapping>();
+
+            container.RegisterType<IRepository<EventLog>, EventLogRepository>();
+            container.RegisterType<IService<EventLog>, EventLogService>();
+
+            container.RegisterType<IRepository<SLA>, SLARepository>();
+            container.RegisterType<IService<SLA>, SLAService>();
+
+            container.RegisterType<IRepository<CRChangeLog>, CRChangeLogRepository>();
+            container.RegisterType<IService<CRChangeLog>, CRChangeLogService>();
+            container.RegisterType<IMappingProvider<CRChangeLog,Teckraft.Data.Sql.CRChangeLog>, CRChangeLogMapping>();
+
+            container.RegisterType<IReadableRepository<CRRegisterData>, CRRegisterDataRepository>();
+            container.RegisterType<IReadService<CRRegisterData>, CRRegisterService>();
+            container.RegisterType<IMappingProvider<CRRegisterData, Teckraft.Data.Sql.vw_CRRegisterData>, CRRegisterDataMapper>();
+        }
+    }
+}

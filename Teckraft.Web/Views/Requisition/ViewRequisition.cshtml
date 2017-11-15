@@ -1,0 +1,334 @@
+﻿<!-- Main content -->
+@if (User.IsInRole("Creator") || User.IsInRole("CallCentre") || User.IsInRole("Viewer"))
+{
+<section class="content-header">
+    <div class="row pnl-page-detail-action">
+        <div class="col-md-12">
+            <h1>View Requisition
+            </h1>
+
+        </div>
+    </div>
+</section>
+<style>
+    .the-legend {
+        margin-bottom: 0px;    
+    }
+    .well {
+    padding: 10px;    
+    }
+
+</style>
+
+<section class="content">
+
+    <form>
+        <fieldset class="well the-fieldset" >
+            <legend class="the-legend">Dealer Details - {{item.dealerCode}} - {{item.dealerName}}</legend>
+                   <div class="row">
+                         <div class="col-sm-6">
+                            <label><i class=""></i>Owner Name: </label> &nbsp; &nbsp; &nbsp; {{item.dealerOwnerName}}
+                         </div>
+                         <div class="col-sm-6">
+                            <label><i class=""></i>SG Desc:</label> &nbsp; &nbsp; &nbsp; {{item.sgDescription}}
+                         </div>
+                      
+                    </div>
+                    <div class="row">
+                         <div class="col-sm-6">
+                           <label><i class=""></i>Mobile: </label> &nbsp; &nbsp; &nbsp; {{item.dealerMobile}}
+                         </div>
+                         <div class="col-sm-6">
+                            <label><i class=""></i>DRCP Flag:</label> {{item.drcpFlag}}
+                         </div>
+                        
+                    </div>
+                     <div class="row">
+                         <div class="col-sm-6">
+                           <label><i class=""></i>Email Id:</label> &nbsp; &nbsp; &nbsp; {{item.dealerEmail}}
+                         </div>
+                         <div class="col-sm-6">
+                            <label><i class=""></i>Salesman Type:</label> &nbsp; &nbsp; &nbsp; {{item.dealerSalesmanType}}
+                         </div>
+                    </div>
+                    <div class="row">
+                         <div class="col-sm-6">
+                            <label><i class=""></i>City:</label> &nbsp; &nbsp; &nbsp; {{item.dealerCity}}
+                         </div>
+                         <div class="col-sm-6">
+                            <label><i class=""></i>Visit Day:</label> &nbsp; &nbsp; &nbsp; {{item.dealerVisitDay}}
+                         </div>
+                    </div>
+                    <div class="row">
+                         <div class="col-sm-6">
+                            <label><i class=""></i>State:</label> &nbsp; &nbsp; &nbsp; {{item.dealerState}}
+                         </div>
+                         <div class="col-sm-6">
+                             <label><i class=""></i>Visit Frequency:</label> &nbsp; &nbsp; &nbsp; {{item.dealerVisitFrequency}}
+                         </div>
+                    </div>
+                    <div class="row">
+                         <div class="col-sm-6">
+                            <label><i class=""></i>Shop Address </label> &nbsp; &nbsp; &nbsp; {{item.dealerAddress}}
+                         </div>
+                         <div class="col-sm-6">
+                             <label><i class=""></i>Class Name:</label> &nbsp; &nbsp; &nbsp; {{item.dealerClassName}}
+                         </div>
+                    </div>
+<div class="row">
+  <div class="col-sm-6" ng-if="item.dealerStatus=='N'">
+                            <label><i class=""></i>RTR Status:</label> &nbsp; &nbsp; &nbsp;<label style="background-color:Red;color:yellow"> Inactive</label>
+                         </div>
+                         <div class="col-sm-6" ng-if="item.dealerStatus=='Y'">
+                            <label><i class=""></i>RTR Status :</label> &nbsp; &nbsp; &nbsp;<label style="background-color:Green;color:yellow"> Active</label>
+                         </div>
+</div>
+        @*    <div class="row">
+                <div class="col-sm-3">
+                    <label><i class=""></i>Owner Name </label> &nbsp; &nbsp; &nbsp; {{item.dealerOwnerName}}
+                </div>
+                <div class="col-sm-3">
+                    <label><i class=""></i>Mobile: </label> &nbsp; &nbsp; &nbsp; {{item.dealerMobile}}
+                </div>
+  <div class="col-sm-3">
+                    <label><i class=""></i>Email Id:</label> &nbsp; &nbsp; &nbsp; {{item.dealerEmail}}
+                </div  > 
+ <div class="col-sm-3">
+                    <label><i class=""></i>Division:</label> &nbsp; &nbsp; &nbsp; {{item.dealerDivision}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label><i class=""></i>City:</label> &nbsp; &nbsp; &nbsp; {{item.dealerCity}}
+                </div>
+                <div class="col-sm-3">
+                    <label><i class=""></i>State:</label> &nbsp; &nbsp; &nbsp; {{item.dealerState}}
+                </div>
+              <div class="col-sm-6">
+                    <label><i class=""></i>Shop Address </label> &nbsp; &nbsp; &nbsp; {{item.dealerAddress}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label><i class=""></i>SG Desc:</label> &nbsp; &nbsp; &nbsp; {{item.sgDescription}}
+                </div>
+                <div class="col-sm-3">
+                    <label><i class=""></i>Status Flag:</label> &nbsp; &nbsp; &nbsp; {{item.dealerStatus}}
+                </div>
+                <div class="col-sm-3">
+                    <label><i class=""></i>Salesman Type:</label> &nbsp; &nbsp; &nbsp; {{item.dealerSalesmanType}}
+                </div>
+                <div class="col-sm-3">
+                    <label><i class=""></i>Visit Day:</label> &nbsp; &nbsp; &nbsp; {{item.dealerVisitDay}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label><i class=""></i>Visit Frequency:</label> &nbsp; &nbsp; &nbsp; {{item.dealerVisitFrequency}}
+                </div>
+                <div class="col-sm-3">
+                    <label><i class=""></i>Class Name:</label> &nbsp; &nbsp; &nbsp; {{item.dealerClassName}}
+                </div>
+            </div>*@
+                        </fieldset>
+        
+
+
+ <div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-heading" style="background-color: #3c8dbc;border-radius: 3px;">
+            <a role="button" data-toggle="collapse" data-parent="" data-target="#collapse1" aria-expanded="true">
+                <div align="left" id="divShow" ng-show="showDiv1" ng-click="hideClass()">
+                    <h4 class="panel-title" style="color: #fff;">
+                        Hierarchy Level &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        <span ng-show="showbtn" style="color:  #ffff00;font-weight:bold">Show</span>
+                        <span ng-hide="showbtn" style="color:  #ffff00;font-weight:bold">Hide</span>
+                    </h4>
+                </div>
+                @*<div align="left" id="divHide" ng-show="showDiv2" ng-click="ShowClass()" >
+                    <h4 class="panel-title" style="color: #fff;">
+                        Hierarchy Level &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        Hide
+                    </h4>
+                </div>*@
+
+            </a>
+
+            
+        </div>
+        <div id="collapse1" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="col-sm-6">
+                    <fieldset class="well the-fieldset">
+                        <legend class="the-legend">NSM Details ( {{item.nsmCode}} - {{item.nsmDesc}})</legend>
+                        <label>Person Name:</label> &nbsp;&nbsp;{{item.nsmPerson}}<br />
+                        <label>Email:</label> &nbsp;&nbsp;{{item.nsmEmail}}<br />
+                        <label>Mobile:</label> &nbsp;&nbsp;{{item.nsmMobile}}
+                    </fieldset>
+                </div>
+                <div class="col-sm-6">
+                    <fieldset class="well the-fieldset">
+                        <legend class="the-legend">ZSM Details ( {{item.zsmCode}} - {{item.zsmDesc}})</legend>
+                        <label>Person Name:</label> &nbsp;&nbsp;{{item.zsmPerson}}<br />
+                        <label>Email:</label> &nbsp;&nbsp;{{item.zsmEmail}}<br />
+                        <label>Mobile:</label> &nbsp;&nbsp;{{item.zsmMobile}}
+                    </fieldset>
+                </div>
+                <div class="col-sm-6">
+                    <fieldset class="well the-fieldset">
+                        <legend class="the-legend">RSM Details ( {{item.rsmCode}} - {{item.rsmDesc}})</legend>
+                        <label>Person Name:</label> &nbsp;&nbsp;{{item.rsmPerson}}<br />
+                        <label>Email:</label> &nbsp;&nbsp;{{item.rsmEmail}}<br />
+                        <label>Mobile:</label> &nbsp;&nbsp;{{item.rsmMobile}}
+                    </fieldset>
+                </div>
+                <div class="col-sm-6">
+                    <fieldset class="well the-fieldset">
+                        <legend class="the-legend">BM Details ( {{item.bmCode}} - {{item.bmDesc}})</legend>
+                        <label>Person Name:</label> &nbsp;&nbsp;{{item.bmPerson}}<br />
+                        <label>Email:</label> &nbsp;&nbsp;{{item.bmEmail}}<br />
+                        <label>Mobile:</label> &nbsp;&nbsp;{{item.bmMobile}}
+                    </fieldset>
+                </div>
+                <div class="col-sm-6">
+                    <fieldset class="well the-fieldset">
+                        <legend class="the-legend">ASM Details ( {{item.asmCode}} - {{item.asmDesc}}) </legend>
+                        <label>Person Name:</label> &nbsp;&nbsp;{{item.asmPerson}}<br />
+                        <label>Email:</label> &nbsp;&nbsp;{{item.asmEmail}}<br />
+                        <label>Mobile:</label> &nbsp;&nbsp;{{item.asmMobile}}
+                    </fieldset>
+                </div>
+                <div class="col-sm-6">
+                    <fieldset class="well the-fieldset">
+                        <legend class="the-legend">TSI Details ( {{item.tsiCode}} - {{item.tsiDesc}}) </legend>
+                        <label>Person Name:</label> &nbsp;&nbsp;{{item.tsiPerson}}<br />
+                        <label>Email:</label> &nbsp;&nbsp;{{item.tsiEmail}}<br />
+                        <label>Mobile:</label> &nbsp;&nbsp;{{item.tsiMobile}}
+                    </fieldset>
+                </div>
+
+                <div class="col-sm-6">
+                    <fieldset class="well the-fieldset">
+                        <legend class="the-legend">WSS Details ( {{item.wssCode}} - {{item.wssDesc}})</legend>
+
+                        <label>Email:</label> &nbsp;&nbsp;{{item.wssEmail}}<br />
+                        <label>Mobile:</label> &nbsp;&nbsp;{{item.wssMobile}}
+                    </fieldset>
+                </div>
+                <div   class="col-sm-6">
+               <fieldset class="well the-fieldset" >
+                      <legend class="the-legend">Dealer RTR Types</legend>
+                        <label>Dealer Outlet Type 1:</label> &nbsp;&nbsp;{{item.dealerRTRTYPE1}}<br />
+                        <label>Dealer Outlet Type 2:</label> &nbsp;&nbsp;{{item.dealerRTRTYPE2}}
+                </fieldset>
+            </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+  @*<div class="row footer-action" style="margin: 0px;">
+            <input type="button" class="btn btn-primary" value="Submit" ng-click="save()" />
+        </div>*@
+    </form>
+</section>
+
+<section class="content">
+    <div class="table-responsive">
+        <table class="table table-hover table-striped table-bordered" ng-hide="relatedDealers.length==0">
+            <thead>
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Request No.</th>
+                    <th>Request Date</th>
+                    <th>Source</th>
+                    <th>SR Type</th>
+                    <th>Dealer Division</th>
+                    <th>Status</th>
+                    <th>Created By</th>
+                    <th>View Request</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="item in relatedDealers">
+                    <td>{{$index+1}}</td>
+                    <td>{{item.requestCode}}</td>
+                    <td>{{item.rct | date: 'dd-MMM-yyyy'}}</td>
+                    <td>{{item.source.sourceDesc}}</td>
+                    <td>{{item.reason.reasonDesc}}</td>
+                    <td>{{item.dealerDivision}}</td>
+                     <td>{{item.status.statusDesc}}</td>
+                    <td>{{item.rcb.title}}</td>
+                    <td> 
+                        <a href="#/AddRequest/{{item.id + '/' + 'Y'}}" style="text-decoration: underline; font-size: 15px;
+                        text-transform: uppercase;">View Details</a>
+                    </td>
+                </tr>
+            </tbody>
+            <div ng-show="relatedDealers.length==0" class="alert alert-danger">
+                <i class="fa fa-ban"></i>No Records Found
+            </div>
+        </table>
+    </div>
+  <div class="row" style="margin: 0px;">
+      <div class="col-sm-12 col-xs-12" align="right">
+ 
+             <input type="button" class="btn btn-primary" value="Back" ng-click="back()" />
+           
+          </div>
+      </div>
+</section>
+ }
+<script type="text/javascript">
+    $('.date').datepicker();
+    $(".select2").select2();
+
+    $(".timepicker").timepicker({
+        showInputs: false
+    });
+
+    //$(function () {
+    //    $('#datetimepicker3').datetimepicker({
+    //        format: 'LT'
+    //    });
+    //});
+
+</script>
+
+<!-- /.content -->

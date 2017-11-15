@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b38712ec-cb4d-493a-a477-8f8bd0894489" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:57395/CRWorkflowService.xamlx" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="CRWorkflowService.xsd" MetadataType="Schema" ID="80d2557e-9163-4148-bc72-4d859dfac568" SourceId="1" SourceUrl="http://localhost:57395/CRWorkflowService.xamlx?xsd=xsd4" />
+    <MetadataFile FileName="CRWorkflowService.disco" MetadataType="Disco" ID="827207b4-96bc-44b6-b74a-e0c3e21b0a3d" SourceId="1" SourceUrl="http://localhost:57395/CRWorkflowService.xamlx?disco" />
+    <MetadataFile FileName="CRWorkflowService1.xsd" MetadataType="Schema" ID="797d8795-f329-4fe4-ba1f-33b6ca20c006" SourceId="1" SourceUrl="http://localhost:57395/CRWorkflowService.xamlx?xsd=xsd1" />
+    <MetadataFile FileName="CRWorkflowService2.xsd" MetadataType="Schema" ID="29f50ccf-f16d-408a-9314-c684744f8c24" SourceId="1" SourceUrl="http://localhost:57395/CRWorkflowService.xamlx?xsd=xsd0" />
+    <MetadataFile FileName="CRWorkflowService3.xsd" MetadataType="Schema" ID="460d20aa-0898-450d-987f-f16d5bf4f578" SourceId="1" SourceUrl="http://localhost:57395/CRWorkflowService.xamlx?xsd=xsd3" />
+    <MetadataFile FileName="CRWorkflowService6.xsd" MetadataType="Schema" ID="0faf7592-ee27-4364-80db-a3fa26eaee72" SourceId="1" SourceUrl="http://localhost:57395/CRWorkflowService.xamlx?xsd=xsd6" />
+    <MetadataFile FileName="CRWorkflowService4.xsd" MetadataType="Schema" ID="e6906ba1-8fcc-4729-b3b3-789b6b8e10c0" SourceId="1" SourceUrl="http://localhost:57395/CRWorkflowService.xamlx?xsd=xsd5" />
+    <MetadataFile FileName="CRWorkflowService.wsdl" MetadataType="Wsdl" ID="41bd4301-e64c-46a4-987a-f9428b0ea3ca" SourceId="1" SourceUrl="http://localhost:57395/CRWorkflowService.xamlx?wsdl" />
+    <MetadataFile FileName="CRWorkflowService5.xsd" MetadataType="Schema" ID="11d49adf-938f-4a9c-be96-8bcb1219f866" SourceId="1" SourceUrl="http://localhost:57395/CRWorkflowService.xamlx?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,573 @@
+﻿<!-- Main content -->
+<style>
+    .the-legend {
+        margin-bottom: 0px;
+    }
+
+    .well {
+        padding: 10px;
+    }
+</style>
+<style>
+
+    .accordion {
+        margin-top:10px;        
+    }
+
+    button.accordion {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+    }
+
+        button.accordion.active, button.accordion:hover {
+            background-color: #ddd;
+        }
+
+   div.panel {
+        padding: 0 18px;
+        display: none;
+        background-color: white;
+    }
+</style>
+<section class="content-header">
+    <div class="row pnl-page-detail-action">
+        <div class="col-md-12">
+            <h1>Issue Details </h1>
+        </div>
+    </div>
+</section>
+<section class="content-header">
+    <div class="row pnl-page-detail-action">
+        <div class="col-md-4" ng-show="userRole.RoleName1=='TopManagement' || userRole.RoleName4=='Employee' || userRole.RoleName3=='ChapterOwner' || userRole.RoleName2=='HOD' || userRole.RoleName1=='NSM' || userRole.RoleName1=='PSM'">
+            <input type="button" class="btn btn-primary" value="My Pending Issues" style="width: 100%" ng-click="DisplayPendingValues()" />
+        </div>
+        <div class="col-md-4" ng-show="userRole.RoleName3=='ChapterOwner'">
+            <input type="button" class="btn btn-primary" value="Chapter Anchor" style="width: 100%" ng-click="DisplayChapterOwnerValues()" />
+        </div>
+        <div class="col-md-4" ng-show="userRole.RoleName2=='HOD'">
+            <input type="button" class="btn btn-primary" value="HOD View" style="width: 100%"  ng-click="DisplayChapterHODValues()"/>
+        </div>
+        <div class="col-md-4" ng-show="userRole.RoleName1=='TopManagement' || userRole.RoleName1=='NSM' || userRole.RoleName1=='PSM'">
+            <input type="button" class="btn btn-primary" value="Member View" style="width: 100%"  ng-click="DisplayChapterAllValues()"/>
+        </div>
+    </div>
+  <div class="overlay" ng-show="loading" align="center"><br />
+        <img src="~/Content/img/GetAttachment.gif" />
+    </div>
+</section>
+<section class="content" ng-show="IsVisible">
+    <div ng-show="IsVisible">
+        <div>
+            <h3>My Pending Issues</h3>
+        </div>
+        @*<div style="color:red"><b> * Click on Request No to update status.</b></div>*@
+        <div ng-repeat="cap in chapterDetails" class="accdiv">
+            <button class="accordion" style="border-radius: 0px; background-color: #cce6ff; color: black; font-weight: bold" ng-click="getIssues('{{cap.ChapterNameFromSystem}}')">
+                {{cap.ChapterNameDisplay}} - (Chapter Anchor Name: {{cap.ChapterOwner}}) <span style="position: absolute;  right: 100px;"> Data till - {{cap.RunDate}}</span>
+               
+               
+            </button>
+             
+            <div class="panel" >
+                <p>
+
+                    <div style="overflow-y: auto; height: 400px">
+                        <table class="table table-hover table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Sr. No.</th>
+                                    <th>Request No.</th>
+                                    <th>Issue Details</th>
+                                    <th>Latest Comments</th>
+                                    @*<th>Status Flag</th>*@
+                                    <th>Reported By</th>
+                                    <th>Department</th>
+                                    <th>Location</th>
+                                    <th>Pending With</th>
+                                    <th>Pending Since (Days)</th>
+                                    <th>Created Date</th>   
+                                    @*<th>Reported Date</th>*@
+                                </tr>
+                                <tr ng-repeat="i in issueDetails">
+                                    <td>{{$index+1}}</td>
+                                  
+                                     <td>
+                                   @*<a style="cursor:pointer" data-target="#myModal1{{getVal(cap.ChapterNameFromSystem)}}{{$index}}" ng-click="openModal(i,$index,'myModal1{{getVal(cap.ChapterNameFromSystem)}}{{$index}}')">{{i.RequestNo}}</a>*@
+{{i.RequestNo}}
+<div class="modal" data-backdrop="static" data-keyboard="false" id="myModal1{{getVal(cap.ChapterNameFromSystem)}}{{$index}}" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Comment Box</h4>
+        </div>
+
+        <div class="modal-body">
+        <div class="row">
+<div class="col-sm-12 col-xs-12">
+        <div style="font-size:12px;color:red">*Note: Click submit button save Comments and Status. <br /><br /></div>
+</div>
+        </div>
+             <div class="row" ng-repeat="com in issueCommentDetails">
+                        <div class="col-sm-8 col-xs-12">
+                        <div class="form-group"  >
+                            <label><i class=""></i>Comments </label> 
+                            <textarea   class="form-control" ng-model="com.iD_Comments" placeholder="Comments" ng-disabled="visFlag"  ></textarea>
+                        </div>
+                        </div>
+                        <div class="col-sm-4 col-xs-12"> 
+                         <div class="form-group"  >
+                            <label><i class=""></i>Status </label> 
+                            <select class="form-control" ng-model="com.iD_Status_Id" ng-disabled="visFlag"   ng-options="md.statusDesc for md in statusData track by md.id">
+                                <option value="" >Select..</option>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+ 
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" ng-click="getConfirmation(i,issueCommentDetails,$index,'myModal1{{getVal(cap.ChapterNameFromSystem)}}{{$index}}')">Submit</button>
+        </div>
+      </div>
+     
+    </div>
+  </div>
+                                     </td>
+                                    <td style="text-align:justify">{{i.IssueDetail1}}</td>
+                                    <td style="text-align:justify">{{i.Comments}}</td>
+                                    @*<td>{{i.Status}}</td>*@
+                                    <td>{{i.ReportedByName}}</td>
+                                    <td>{{i.Department}}</td>
+                                    <td>{{i.Location}}</td>
+                                    <td>{{i.PendingWithEmail}}</td>
+                                    <td>{{i.PendingSince}}</td>
+                                    <td>{{i.LoggedDate}}</td>
+                                    @*<td>{{i.RunDate}}</td>*@
+                                  
+                                </tr>
+                            </tbody>
+                         <div ng-show="chapterDetails.length==0" class="alert alert-danger">
+                                <i class="fa fa-ban"></i>No Records Found
+                        </div>
+                        </table>
+                    </div>
+
+                </p>
+            </div>
+
+
+        </div>
+<div ng-show="chapterDetails.length==0" class="alert alert-danger">
+                                <i class="fa fa-ban"></i>No Records Found
+                        </div>
+    </div>
+
+</section>
+
+<section class="content" ng-show="IsVisible1">
+    <div ng-show="IsVisible1">
+        <div>
+            <h3>Chapter Anchor</h3>
+        </div>
+ 
+        <div ng-repeat="cap in ownerChapterDetails" class="col-sm-3">
+            <button class="btn btn-primary" style="border-radius: 0px; background-color: #cce6ff; color: black; font-weight: bold;width:200px;height:200px" ng-click="getHOdsName('{{cap.ChapterNameFromSystem}}','{{cap.ChapterNameDisplay}}','{{cap.EditFlag}}','ChapterAnchor')">
+                <h4>  {{cap.ChapterNameDisplay}}</h4> <br /> <span> Anchor Name: <br /> {{cap.ChapterOwner}}  </span>
+            </button>
+
+                <br /><br />
+            </div>
+        <div ng-show="ownerChapterDetails.length==0" class="alert alert-danger">
+                <i class="fa fa-ban"></i>No Records Found
+        </div>
+    </div>
+</section>
+
+<section class="content" ng-show="IsVisible2">
+    <div ng-show="IsVisible2">
+        <div>
+            <h3>HOD View</h3>
+        </div>
+        <div ng-repeat="cap in hodChapterDetails" class="accdiv">
+            <button class="accordion" style="border-radius: 0px; background-color: #cce6ff; color: black; font-weight: bold" ng-click="getHODChapterWiseIssues('{{cap.ChapterNameFromSystem}}')">
+                {{cap.ChapterNameDisplay}} - (Chapter Anchor Name: {{cap.ChapterOwner}})  <span style="position: absolute;  right: 100px;""> Data till - {{cap.RunDate}}</span>
+        
+               @* <img src="~/Content/img/D.png" style="
+    text-align: right;
+    position: absolute;
+    right: 22px;">*@
+            </button>
+             
+            <div class="panel" >
+                <p>
+
+                    <div style="overflow-y: auto; height: 400px">
+                        <table class="table table-hover table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Sr. No.</th>
+                                    <th>Request No.</th>
+                                    <th>Issue Details</th>
+                                    <th>Latest Comments</th>
+                                    @*<th>Status Flag</th>*@
+                                    <th>Reported By</th>
+                                    <th>Department</th>
+                                    <th>Location</th>
+                                    <th>Pending With</th>
+                                    <th>Pending Since (Days)</th>
+                                    <th>Created Date</th> 
+                                    @*<th>Reported Date</th>*@
+                                </tr>
+                                <tr ng-repeat="i in hodIssueDetails">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{i.RequestNo}}</td>
+                                    <td style="text-align:justify">{{i.IssueDetail1}}</td>
+                                    <td style="text-align:justify">{{i.Comments}}</td>
+                                    @*<td>{{i.Status}}</td>*@
+                                    <td>{{i.ReportedByName}}</td>
+                                    <td>{{i.Department}}</td>
+                                    <td>{{i.Location}}</td>
+                                    <td>{{i.PendingWithEmail}}</td>
+                                    <td>{{i.PendingSince}}</td>
+                                     <td>{{i.LoggedDate}}</td>
+                                    @*<td>{{i.RunDate}}</td>*@
+                                </tr>
+                            </tbody>
+                        <div ng-show="hodChapterDetails.length==0" class="alert alert-danger">
+                                <i class="fa fa-ban"></i>No Records Found
+                        </div>
+                        </table>
+                    </div>
+
+                </p>
+            </div>
+
+
+        </div>
+        <div ng-show="hodChapterDetails.length==0" class="alert alert-danger">
+                <i class="fa fa-ban"></i>No Records Found
+        </div>
+    </div>
+</section>
+
+@*<section class="content" ng-show="IsVisible3">
+    <div ng-show="IsVisible3">
+        <div>
+            <h3>All Pending Issues</h3>
+        </div>
+        <div ng-repeat="cap in allChapterDetails" class="accdiv">
+            <button class="accordion" style="border-radius: 0px; background-color: #cce6ff; color: black; font-weight: bold" ng-click="getAllChapterWiseIssues('{{cap.ChapterNameFromSystem}}')">
+                {{cap.ChapterNameDisplay}} - (Chapter Anchor Name: {{cap.ChapterOwner}})  <span style="position: absolute;  right: 100px;""> Data till - {{cap.RunDate}}</span>
+        
+              
+            </button>
+             
+            <div class="panel" >
+                <p>
+
+                    <div style="overflow-y: auto; height: 400px">
+                        <table class="table table-hover table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Sr. No.</th>
+                                    <th>Request No.</th>
+                                    <th style="width:300px">Issue Details</th>
+                                    <th>Latest Comments</th>
+                                    <th>Status Flag</th>
+                                    <th>Reported By</th>
+                                    <th>Department</th>
+                                    <th>Location</th>
+                                    <th>Pending With</th>
+                                     
+                                    <th>Pending Since (Days)</th>
+                                    <th>Created Date</th>
+                                    <th>Reported Date</th>
+                                </tr>
+                                <tr ng-repeat="i in allIssueDetails">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{i.RequestNo}}</td>
+                                    <td  style="text-align:justify">{{i.IssueDetail1}}</td>
+                                    <td style="text-align:justify">{{i.Comments}}</td>
+                                    <td>{{i.Status}}</td>
+                                    <td>{{i.ReportedByName}}</td>
+                                    <td>{{i.Department}}</td>
+                                    <td>{{i.Location}}</td>
+                                    <td>{{i.PendingWithEmail}}</td>
+                                    <td>{{i.PendingSince}}</td>
+                                     <td>{{i.LoggedDate}}</td>
+                                    <td>{{i.RunDate}}</td>
+                                </tr>
+                            </tbody>
+                        <div ng-show="allChapterDetails.length==0" class="alert alert-danger">
+                                <i class="fa fa-ban"></i>No Records Found
+                        </div>
+                        </table>
+                    </div>
+
+                </p>
+            </div>
+
+
+        </div>
+        <div ng-show="allChapterDetails.length==0" class="alert alert-danger">
+                <i class="fa fa-ban"></i>No Records Found
+        </div>
+    </div>
+</section>*@
+<section class="content" ng-show="IsVisible3" style="padding-top:0px;padding-bottom:0px" >
+    <div ng-show="IsVisible3">
+        <div>
+                <h3>Member View</h3>
+            </div>
+        <br/><br/>
+        <div ng-repeat="cap in allChapterDetails" class="col-sm-3">
+            
+            <button class="btn btn-primary" style="border-radius: 0px; background-color: #cce6ff; color: black; font-weight: bold;width:200px;height:200px" ng-click="getHOdsName('{{cap.ChapterNameFromSystem}}','{{cap.ChapterNameDisplay}}','{{cap.EditFlag}}','Member')">
+                <span ><h4> {{cap.ChapterNameDisplay}}</h4></span> <br /> <span> Anchor Name: <br /> {{cap.ChapterOwner}}  </span>
+            </button>
+            <br /><br />
+            @*<div class="panel" >*@
+            @* <p>
+                <div style="width:100px;height: 400px;border:1 px">
+                    {{cap.ChapterNameDisplay}} - (Chapter Anchor Name: {{cap.ChapterOwner}})
+
+                               <table class="table table-hover table-striped table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>Sr. No.</th>
+                                <th>Request No.</th>
+                                <th style="width:300px">Issue Details</th>
+                                <th>Latest Comments</th>
+                                <th>Status Flag</th>
+                                <th>Reported By</th>
+                                <th>Department</th>
+                                <th>Location</th>
+                                <th>Pending With</th>
+                                <th>Pending Since (Days)</th>
+                                <th>Reported Date</th>
+                            </tr>
+                            <tr ng-repeat="i in allIssueDetails">
+                                <td>{{$index+1}}</td>
+                                <td>{{i.RequestNo}}</td>
+                                <td  style="text-align:justify">{{i.IssueDetail1}}</td>
+                                <td style="text-align:justify">{{i.Comments}}</td>
+                                <td>{{i.Status}}</td>
+                                <td>{{i.ReportedByName}}</td>
+                                <td>{{i.Department}}</td>
+                                <td>{{i.Location}}</td>
+                                <td>{{i.PendingWithEmail}}</td>
+                                <td>{{i.PendingSince}}</td>
+                                <td>{{i.RunDate}}</td>
+                            </tr>
+                        </tbody>
+                    <div ng-show="allChapterDetails.length==0" class="alert alert-danger">
+                            <i class="fa fa-ban"></i>No Records Found
+                    </div>
+                    </table>
+                                </div>
+
+                            </p>*@
+            @*</div>*@
+
+
+        </div>
+        <div ng-show="allChapterDetails.length==0" class="alert alert-danger">
+            <i class="fa fa-ban"></i>No Records Found
+        </div>
+        @*<div id="piechart_3d" style="width: 900px; height: 500px;"></div>*@
+    </div>
+</section>
+<section class="content" ng-show="IsVisible4" style="padding-top:0px;padding-bottom:0px">
+    <div class="row" style="margin-top:0px">
+        <div class="col-sm-6 col-xs-12">
+            <div class="form-group">
+                <h4>
+                    <b>{{TopMgmt}}</b>
+                </h4>
+            </div>
+        </div>
+        
+                <div class="col-sm-6 col-xs-12" align="right">
+                    <div class="form-group">
+                        <br/>
+                        <input type="button" class="btn btn-primary" value="Back" ng-click="back()" />
+                    </div>
+                </div>
+            </div>
+   
+            <div align="left">
+                <div id="container" style="min-width: 500px; height: 300px;" align="left"></div>
+            </div>
+       
+            <div class="row">
+                <div class="col-sm-4 col-xs-12">
+                    <div class="form-group">
+                        <label>Select HOD</label>
+                        <select class="form-control" ng-model="item.hod" ng-change="getSelectedHODChapterWiseIssues('{{SystemTopMngt}}',item.hod)" ng-options="md.HODName for md in hodNameData">
+                            <option value="">Select..</option>
+                        </select>
+
+                    </div>
+                </div>
+                @*<div class="col-sm-4 col-xs-12" align="right" ng-show="hodIssueDetails.length>0">
+                    <input type="button" class="btn btn-primary" value="Export To Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.hod)" />
+                </div>*@
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <div style="color:red" ng-show="userRole.RoleName3=='ChapterOwner' "><b> * Click on Request No to update status.</b></div>
+                    </div>
+                </div>
+                <div class="col-md-12" align="right" ng-show="hodIssueDetails.length>0">
+                    <input type="button" class="btn btn-primary" value="Export To Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.hod)" />
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <p>
+                        <div style="overflow-y: auto; height: 400px">
+                            
+                            <table class="table table-hover table-striped table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th>Sr. No.</th>
+                                        <th>Request No.</th>
+                                        <th>Issue Details</th>
+                                        <th>Latest Comments</th>
+                                        @*<th>Status Flag</th>*@
+                                        <th>Reported By</th>
+                                        <th>Department</th>
+                                        <th>Location</th>
+                                        <th>Pending With</th>
+                                        <th>Pending Since (Days)</th>
+                                        <th>Created Date</th>
+                                        @*<th>Reported Date</th>*@
+                                    </tr>
+                                    <tr ng-repeat="i in hodIssueDetails | orderBy : '-PendingSince'">
+                                        <td>{{$index+1}}</td>
+                                        <td>
+    <div ng-hide="displayFlag">  {{i.RequestNo}}</div>
+    <div ng-show="displayFlag">
+        <a style="cursor:pointer" data-target="#myModal1Chp{{getVal(SystemTopMngt)}}{{$index}}" ng-click="openModal(i,$index,'myModal1Chp{{getVal(SystemTopMngt)}}{{$index}}')">{{i.RequestNo}}</a>
+
+        <div class="modal" data-backdrop="static" data-keyboard="false" id="myModal1Chp{{getVal(SystemTopMngt)}}{{$index}}" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Comment Box</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12">
+                                <div style="font-size:12px;color:red">*Note: Click submit button save Comments and Status. <br /><br /></div>
+                            </div>
+                        </div>
+                        <div class="row" ng-repeat="com in issueCommentDetails">
+                            <div class="col-sm-8 col-xs-12">
+                                <div class="form-group">
+                                    <label><i class=""></i>Comments </label>
+                                    <textarea class="form-control" ng-model="com.iD_Comments" placeholder="Comments"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-12">
+                                <div class="form-group">
+                                    <label><i class=""></i>Status </label>
+                                    <select class="form-control" ng-model="com.iD_Status_Id" ng-options="md.statusDesc for md in statusData track by md.id">
+                                        <option value="">Select..</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-click="getConfirmation(i,issueCommentDetails,$index,'myModal1Chp{{getVal(SystemTopMngt)}}{{$index}}')">Submit</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+                                            
+                                        </td>
+                                        <td style="text-align:justify">{{i.IssueDetail1}}</td>
+                                        <td style="text-align:justify">{{i.Comments}}</td>
+                                        @*<td>{{i.Status}}</td>*@
+                                        <td>{{i.ReportedByName}}</td>
+                                        <td>{{i.Department}}</td>
+                                        <td>{{i.Location}}</td>
+                                        <td>{{i.PendingWithEmail}}</td>
+                                        <td>{{i.PendingSince}}</td>
+                                        <td>{{i.LoggedDate}}</td>
+                                        @*<td>{{i.RunDate}}</td>*@
+                                    </tr>
+                                </tbody>
+                                <div ng-show="hodIssueDetails.length==0" class="alert alert-danger">
+                                    <i class="fa fa-ban"></i>No Records Found
+                                </div>
+                            </table>
+                        </div>
+                    </p>
+                </div>
+            </div>
+            @*<div id="piechart_3d" style="width: 900px; height: 500px;"></div>*@
+
+</section>
+<script>
+
+    function test() {
+        //alert();
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].onclick = function () {
+
+                if (!$(this).hasClass("active")) {
+
+                    $(".accordion").removeClass("active");
+                    $(".panel").css("display", "none");
+                    //$(".accordion").find('img').attr('src', '/Content/img/D.png');
+
+                }
+
+                this.classList.toggle("active");
+
+                if ($(this).hasClass("active")) {
+                   // $(this).find('img').attr('src', '/Content/img/U.png');
+                }
+                else {
+                    //$(this).find('img').attr('src', '/Content/img/D.png');
+
+                }
+
+                //var panel = $(this).find('panel')
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            }
+        }
+    }
+
+    setInterval(function () { test(); }, 1000);
+
+    // $(this).find('img').attr('src', '/Content/img/U.png');
+
+</script>

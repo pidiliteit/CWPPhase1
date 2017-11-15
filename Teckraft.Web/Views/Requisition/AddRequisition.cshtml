@@ -1,0 +1,79 @@
+﻿3<!-- Main content -->
+ @if (User.IsInRole("Creator")){
+<section class="content-header">
+    <div class="row pnl-page-detail-action">
+        <div class="col-md-12">
+            <h1>Create Requisition
+            </h1>
+
+        </div>
+    </div>
+</section>
+<section class="content">
+
+    <form>
+        <fieldset class="well the-fieldset" ng-model="item.dealerCode" >
+            <legend class="the-legend">Dealer Details - {{item.dealerCode}} </legend>
+                 <div class="row"   >
+                        <div class="col-sm-4"> 
+                        <label><i class=""></i>Name</label>
+                          <label>{{item.dealerName}}</label>
+                    </div>
+<div class="col-sm-4"> <label><i class=""></i>Contact No.</label>
+                         <label>{{item.dealerName}}</label>
+                    </div> <div class="col-sm-4">  <label><i class=""></i>Email</label>
+                            <label>{{item.dealerCode}}</label>
+                    </div>
+
+                </div>
+                 <div class="row"   >
+                        <div class="col-sm-4"> 
+                        <label><i class=""></i>Address</label>
+                          <label>{{item.dealerName}}</label>
+                    </div>
+                    <div class="col-sm-4"> <label><i class=""></i>Pin Code</label>
+                         <label>{{item.dealerName}}</label>
+                    </div>
+                <div class="col-sm-4">  <label><i class=""></i>City</label>
+                            <label>{{item.dealerCode}}</label>
+                    </div>
+                </div>
+                <div class="row">
+                        <div class="col-sm-4"> 
+                        <label><i class=""></i>State</label>
+                          <label>{{item.dealerName}}</label>
+                    </div>
+                <div class="col-sm-4"> <label><i class=""></i>Sales Group</label>
+                         <label>{{item.dealerName}}</label>
+                    </div>
+                    <div class="col-sm-4"> <label><i class=""></i>SG Desc</label>
+                         <label>{{item.dealerName}}</label>
+                    </div>
+                </div>
+
+                 
+                        </fieldset>
+        <div class="row footer-action" style="margin: 0px;">
+            <input type="button" class="btn btn-primary" value="Submit" ng-click="save()" />
+        </div>
+
+    </form>
+</section>
+}
+<script type="text/javascript">
+    $('.date').datepicker();
+    $(".select2").select2();
+
+    $(".timepicker").timepicker({
+        showInputs: false
+    });
+
+    //$(function () {
+    //    $('#datetimepicker3').datetimepicker({
+    //        format: 'LT'
+    //    });
+    //});
+
+</script>
+
+<!-- /.content -->

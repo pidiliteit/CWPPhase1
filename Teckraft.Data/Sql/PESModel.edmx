@@ -1,0 +1,1591 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="InitiativeHubFinalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ChapterMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChapterNameFromSystem" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ChapterNameDisplay" Type="varchar" MaxLength="250" />
+          <Property Name="EmailFlag" Type="bit" />
+          <Property Name="EmailTo" Type="varchar" MaxLength="200" />
+          <Property Name="EmailCC" Type="varchar" MaxLength="200" />
+          <Property Name="RCT" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ChapterOwnerMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChapterId" Type="int" Nullable="false" />
+          <Property Name="ChapterOwner" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="RCT" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CurrentUserSession">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="SessionId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RCT" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DivisionName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DivisionCode" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IntegratedIssueManagementSystem.dbo.EventLog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="EventLog">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="EventType" />
+            <PropertyRef Name="Details" />
+            <PropertyRef Name="RCT" />
+            <PropertyRef Name="RCB" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="EventType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Details" Type="ntext" Nullable="false" />
+          <Property Name="RCT" Type="smalldatetime" Nullable="false" />
+          <Property Name="RCB" Type="int" Nullable="false" />
+          <Property Name="ApplicationName" Type="varchar" MaxLength="100" />
+          <Property Name="IP" Type="varchar" MaxLength="50" />
+          <Property Name="Url" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="IssueManagementAnchorComment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Comments" Type="varchar" MaxLength="1000" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="ID_Request" Type="varchar" MaxLength="200" />
+          <Property Name="id_System_Name" Type="varchar" MaxLength="50" />
+          <Property Name="RCT" Type="datetime" />
+          <Property Name="RCB" Type="int" />
+          <Property Name="RUT" Type="datetime" />
+          <Property Name="RUB" Type="int" />
+          <Property Name="ID_Pending_With_Email" Type="varchar" MaxLength="100" />
+          <Property Name="RCBEmail" Type="varchar" MaxLength="100" />
+          <Property Name="RCBEmpCode" Type="varchar" MaxLength="50" />
+          <Property Name="RCBEmpName" Type="varchar" MaxLength="200" />
+          <Property Name="RUBEmail" Type="varchar" MaxLength="100" />
+          <Property Name="RUBEmpCode" Type="varchar" MaxLength="50" />
+          <Property Name="RUBEmpName" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="IssueManagementCommentLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Comments" Type="varchar" MaxLength="1000" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="ID_Request" Type="varchar" MaxLength="200" />
+          <Property Name="id_System_Name" Type="varchar" MaxLength="50" />
+          <Property Name="ID_Status" Type="varchar" MaxLength="50" />
+          <Property Name="ID_Pending_With_Email" Type="varchar" MaxLength="100" />
+          <Property Name="RCT" Type="datetime" />
+          <Property Name="RCB" Type="int" />
+          <Property Name="RUT" Type="datetime" />
+          <Property Name="RUB" Type="int" />
+          <Property Name="UploadFlag" Type="bit" />
+          <Property Name="ID_Status_Id" Type="int" />
+          <Property Name="RCBEmail" Type="varchar" MaxLength="100" />
+          <Property Name="RCBEmpCode" Type="varchar" MaxLength="50" />
+          <Property Name="RCBEmpName" Type="varchar" MaxLength="200" />
+          <Property Name="RUBEmail" Type="varchar" MaxLength="100" />
+          <Property Name="RUBEmpCode" Type="varchar" MaxLength="50" />
+          <Property Name="RUBEmpName" Type="varchar" MaxLength="200" />
+          <Property Name="Target_Date" Type="date" />
+        </EntityType>
+        <EntityType Name="StatusMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusDesc" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserDetail">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MobileNo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Picture" Type="varchar" MaxLength="50" />
+          <Property Name="DivisionId" Type="int" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="IsITFH" Type="bit" />
+          <Property Name="DivisionCode" Type="varchar" MaxLength="50" />
+          <Property Name="IsITEvaluator" Type="bit" />
+          <Property Name="orgemail" Type="varchar" MaxLength="100" />
+          <Property Name="RA1" Type="int" />
+          <Property Name="RA2" Type="int" />
+          <Property Name="Designation" Type="varchar" MaxLength="75" />
+          <Property Name="hod" Type="int" />
+          <Property Name="olduserid" Type="int" />
+          <Property Name="newuserid" Type="int" />
+          <Property Name="racd1" Type="varchar" MaxLength="10" />
+          <Property Name="racd2" Type="varchar" MaxLength="10" />
+          <Property Name="OverrideEmail" Type="varchar" MaxLength="250" />
+          <Property Name="OverrideMobile" Type="varchar" MaxLength="15" />
+          <Property Name="IsSubITFH" Type="bit" />
+          <Property Name="IsApproval" Type="bit" />
+          <Property Name="UserType" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="56" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserWiseColumnName">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChapterId" Type="int" />
+          <Property Name="ID_Issue_Detail1" Type="bit" />
+          <Property Name="chapternamedisplay" Type="bit" />
+          <Property Name="id_data_load_date" Type="bit" />
+          <Property Name="title" Type="bit" />
+          <Property Name="chapterOwner" Type="bit" />
+          <Property Name="id_request" Type="bit" />
+          <Property Name="id_status" Type="bit" />
+          <Property Name="id_reported_by_name" Type="bit" />
+          <Property Name="id_reported_by_email" Type="bit" />
+          <Property Name="id_dept" Type="bit" />
+          <Property Name="id_location" Type="bit" />
+          <Property Name="id_pending_with_name" Type="bit" />
+          <Property Name="id_pending_with_email" Type="bit" />
+          <Property Name="ID_Logged_Date" Type="bit" />
+          <Property Name="pendingSince" Type="bit" />
+          <Property Name="id_tat_status" Type="bit" />
+          <Property Name="id_comments" Type="bit" />
+          <Property Name="ID_Target_Date" Type="bit" />
+          <Property Name="ID_Category" Type="bit" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="RCB" Type="int" />
+          <Property Name="RCT" Type="datetime" />
+          <Property Name="RUT" Type="datetime" />
+          <Property Name="RUB" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IntegratedIssueManagementSystem.dbo.webpages_Membership' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="webpages_Membership">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="PasswordFailuresSinceLastSuccess" />
+            <PropertyRef Name="Password" />
+            <PropertyRef Name="PasswordSalt" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="smalldatetime" />
+          <Property Name="ConfirmationToken" Type="nvarchar" MaxLength="128" />
+          <Property Name="IsConfirmed" Type="bit" />
+          <Property Name="LastPasswordFailureDate" Type="smalldatetime" />
+          <Property Name="PasswordFailuresSinceLastSuccess" Type="int" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PasswordChangedDate" Type="smalldatetime" />
+          <Property Name="PasswordSalt" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PasswordVerificationToken" Type="nvarchar" MaxLength="128" />
+          <Property Name="PasswordVerificationTokenExpirationDate" Type="smalldatetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IntegratedIssueManagementSystem.dbo.webpages_OAuthMembership' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="webpages_OAuthMembership">
+          <Key>
+            <PropertyRef Name="Provider" />
+            <PropertyRef Name="ProviderUserId" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="Provider" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ProviderUserId" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IntegratedIssueManagementSystem.dbo.webpages_Roles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="webpages_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="RoleName" />
+          </Key>
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IntegratedIssueManagementSystem.dbo.webpages_UsersInRoles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="webpages_UsersInRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_CurrentUserSession_UserDetail">
+          <End Role="UserDetail" Type="Self.UserDetail" Multiplicity="1" />
+          <End Role="CurrentUserSession" Type="Self.CurrentUserSession" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetail">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="CurrentUserSession">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IssueManagementAnchorComment_UserDetail">
+          <End Role="UserDetail" Type="Self.UserDetail" Multiplicity="0..1" />
+          <End Role="IssueManagementAnchorComment" Type="Self.IssueManagementAnchorComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetail">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="IssueManagementAnchorComment">
+              <PropertyRef Name="RCB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IssueManagementAnchorComment_UserDetail1">
+          <End Role="UserDetail" Type="Self.UserDetail" Multiplicity="0..1" />
+          <End Role="IssueManagementAnchorComment" Type="Self.IssueManagementAnchorComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetail">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="IssueManagementAnchorComment">
+              <PropertyRef Name="RUB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IssueManagementCommentLog_StatusMaster">
+          <End Role="StatusMaster" Type="Self.StatusMaster" Multiplicity="0..1" />
+          <End Role="IssueManagementCommentLog" Type="Self.IssueManagementCommentLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IssueManagementCommentLog">
+              <PropertyRef Name="ID_Status_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IssueManagementCommentLog_UserDetail">
+          <End Role="UserDetail" Type="Self.UserDetail" Multiplicity="0..1" />
+          <End Role="IssueManagementCommentLog" Type="Self.IssueManagementCommentLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetail">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="IssueManagementCommentLog">
+              <PropertyRef Name="RCB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IssueManagementCommentLog_UserDetail1">
+          <End Role="UserDetail" Type="Self.UserDetail" Multiplicity="0..1" />
+          <End Role="IssueManagementCommentLog" Type="Self.IssueManagementCommentLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetail">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="IssueManagementCommentLog">
+              <PropertyRef Name="RUB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetail_Division">
+          <End Role="Division" Type="Self.Division" Multiplicity="0..1" />
+          <End Role="UserDetail" Type="Self.UserDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetail">
+              <PropertyRef Name="DivisionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetCSCDataBYRequestNo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RequestCode" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spDivisionCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ChapterName" Type="varchar" Mode="In" />
+          <Parameter Name="Role" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spGetChaptersforResponsiblePerson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ResponsibleEmail" Type="varchar" Mode="In" />
+          <Parameter Name="Owner" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spGetChaptersNameforResponsiblePerson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ResponsibleEmail" Type="varchar" Mode="In" />
+          <Parameter Name="Owner" Type="varchar" Mode="In" />
+          <Parameter Name="ChapterName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spHodCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ChapterName" Type="varchar" Mode="In" />
+          <Parameter Name="Role" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spHodName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ChapterName" Type="varchar" Mode="In" />
+          <Parameter Name="Role" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spIssueDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Division" Type="varchar" Mode="In" />
+          <Parameter Name="ResponsibleEmail" Type="varchar" Mode="In" />
+          <Parameter Name="ChapterName" Type="varchar" Mode="In" />
+          <Parameter Name="Owner" Type="varchar" Mode="In" />
+          <Parameter Name="RoleName" Type="varchar" Mode="In" />
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SpissuedetailsClose" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ChapterName" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="InitiativeHubFinalModelStoreContainer">
+          <EntitySet Name="ChapterMaster" EntityType="Self.ChapterMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChapterOwnerMapping" EntityType="Self.ChapterOwnerMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CurrentUserSession" EntityType="Self.CurrentUserSession" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Division" EntityType="Self.Division" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IssueManagementAnchorComment" EntityType="Self.IssueManagementAnchorComment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IssueManagementCommentLog" EntityType="Self.IssueManagementCommentLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusMaster" EntityType="Self.StatusMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDetail" EntityType="Self.UserDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserWiseColumnName" EntityType="Self.UserWiseColumnName" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventLog" EntityType="Self.EventLog" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [EventLog].[ID] AS [ID], 
+    [EventLog].[EventType] AS [EventType], 
+    [EventLog].[Details] AS [Details], 
+    [EventLog].[RCT] AS [RCT], 
+    [EventLog].[RCB] AS [RCB], 
+    [EventLog].[ApplicationName] AS [ApplicationName], 
+    [EventLog].[IP] AS [IP], 
+    [EventLog].[Url] AS [Url]
+    FROM [dbo].[EventLog] AS [EventLog]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="webpages_Membership" EntityType="Self.webpages_Membership" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [webpages_Membership].[UserId] AS [UserId], 
+    [webpages_Membership].[CreateDate] AS [CreateDate], 
+    [webpages_Membership].[ConfirmationToken] AS [ConfirmationToken], 
+    [webpages_Membership].[IsConfirmed] AS [IsConfirmed], 
+    [webpages_Membership].[LastPasswordFailureDate] AS [LastPasswordFailureDate], 
+    [webpages_Membership].[PasswordFailuresSinceLastSuccess] AS [PasswordFailuresSinceLastSuccess], 
+    [webpages_Membership].[Password] AS [Password], 
+    [webpages_Membership].[PasswordChangedDate] AS [PasswordChangedDate], 
+    [webpages_Membership].[PasswordSalt] AS [PasswordSalt], 
+    [webpages_Membership].[PasswordVerificationToken] AS [PasswordVerificationToken], 
+    [webpages_Membership].[PasswordVerificationTokenExpirationDate] AS [PasswordVerificationTokenExpirationDate]
+    FROM [dbo].[webpages_Membership] AS [webpages_Membership]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="webpages_OAuthMembership" EntityType="Self.webpages_OAuthMembership" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [webpages_OAuthMembership].[Provider] AS [Provider], 
+    [webpages_OAuthMembership].[ProviderUserId] AS [ProviderUserId], 
+    [webpages_OAuthMembership].[UserId] AS [UserId]
+    FROM [dbo].[webpages_OAuthMembership] AS [webpages_OAuthMembership]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="webpages_Roles" EntityType="Self.webpages_Roles" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [webpages_Roles].[RoleId] AS [RoleId], 
+    [webpages_Roles].[RoleName] AS [RoleName]
+    FROM [dbo].[webpages_Roles] AS [webpages_Roles]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="webpages_UsersInRoles" EntityType="Self.webpages_UsersInRoles" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [webpages_UsersInRoles].[UserId] AS [UserId], 
+    [webpages_UsersInRoles].[RoleId] AS [RoleId], 
+    [webpages_UsersInRoles].[Username] AS [Username]
+    FROM [dbo].[webpages_UsersInRoles] AS [webpages_UsersInRoles]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_CurrentUserSession_UserDetail" Association="Self.FK_CurrentUserSession_UserDetail">
+            <End Role="UserDetail" EntitySet="UserDetail" />
+            <End Role="CurrentUserSession" EntitySet="CurrentUserSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IssueManagementAnchorComment_UserDetail" Association="Self.FK_IssueManagementAnchorComment_UserDetail">
+            <End Role="UserDetail" EntitySet="UserDetail" />
+            <End Role="IssueManagementAnchorComment" EntitySet="IssueManagementAnchorComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IssueManagementAnchorComment_UserDetail1" Association="Self.FK_IssueManagementAnchorComment_UserDetail1">
+            <End Role="UserDetail" EntitySet="UserDetail" />
+            <End Role="IssueManagementAnchorComment" EntitySet="IssueManagementAnchorComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IssueManagementCommentLog_StatusMaster" Association="Self.FK_IssueManagementCommentLog_StatusMaster">
+            <End Role="StatusMaster" EntitySet="StatusMaster" />
+            <End Role="IssueManagementCommentLog" EntitySet="IssueManagementCommentLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IssueManagementCommentLog_UserDetail" Association="Self.FK_IssueManagementCommentLog_UserDetail">
+            <End Role="UserDetail" EntitySet="UserDetail" />
+            <End Role="IssueManagementCommentLog" EntitySet="IssueManagementCommentLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IssueManagementCommentLog_UserDetail1" Association="Self.FK_IssueManagementCommentLog_UserDetail1">
+            <End Role="UserDetail" EntitySet="UserDetail" />
+            <End Role="IssueManagementCommentLog" EntitySet="IssueManagementCommentLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetail_Division" Association="Self.FK_UserDetail_Division">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="UserDetail" EntitySet="UserDetail" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="InitiativeHubFinalModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="InitiativeHubFinalEntities" p1:LazyLoadingEnabled="true">
+          <FunctionImport Name="spGetColorCode" ReturnType="Collection(InitiativeHubFinalModel.spGetColorCode_Result)">
+            <Parameter Name="initiativeId" Mode="In" Type="Int32" />
+            <Parameter Name="milesoneId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spGetColorCodeforMilestone" ReturnType="Collection(InitiativeHubFinalModel.spGetColorCodeforMilestone_Result)">
+          <Parameter Name="milestoneId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spGetCommentLog" ReturnType="Collection(InitiativeHubFinalModel.spGetCommentLog_Result)">
+          <Parameter Name="milestoneId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spAllData" ReturnType="Collection(InitiativeHubFinalModel.spAllData_Result)" />
+          <FunctionImport Name="spMilestoneLogDetails" ReturnType="Collection(InitiativeHubFinalModel.spMilestoneLogDetails_Result)">
+            <Parameter Name="milestoneId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spGetTSIDetail" ReturnType="Collection(InitiativeHubFinalModel.spGetTSIDetail_Result)">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="TSICode" Mode="InOut" Type="String" />
+            <Parameter Name="TSIDesc" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spGetTSIDetailH2">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="EmpSHCode" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spDealerFeedbackDetail" ReturnType="Collection(InitiativeHubFinalModel.spDealerFeedbackDetail_Result)" />
+          <FunctionImport Name="spGetChaptersforResponsiblePerson" ReturnType="Collection(InitiativeHubFinalModel.spGetChaptersforResponsiblePerson_Result)">
+            <Parameter Name="ResponsibleEmail" Mode="In" Type="String" />
+            <Parameter Name="Owner" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="ChapterOwnerMappings" EntityType="InitiativeHubFinalModel.ChapterOwnerMapping" />
+          <EntitySet Name="CurrentUserSessions" EntityType="InitiativeHubFinalModel.CurrentUserSession" />
+          <EntitySet Name="Divisions" EntityType="InitiativeHubFinalModel.Division" />
+          <EntitySet Name="EventLogs" EntityType="InitiativeHubFinalModel.EventLog" />
+          <EntitySet Name="UserProfiles" EntityType="InitiativeHubFinalModel.UserProfile" />
+          <EntitySet Name="webpages_Membership" EntityType="InitiativeHubFinalModel.webpages_Membership" />
+          <EntitySet Name="webpages_OAuthMembership" EntityType="InitiativeHubFinalModel.webpages_OAuthMembership" />
+          <EntitySet Name="webpages_Roles" EntityType="InitiativeHubFinalModel.webpages_Roles" />
+          <EntitySet Name="webpages_UsersInRoles" EntityType="InitiativeHubFinalModel.webpages_UsersInRoles" />
+          <EntitySet Name="UserDetails" EntityType="InitiativeHubFinalModel.UserDetail" />
+          <AssociationSet Name="FK_CurrentUserSession_UserDetail" Association="InitiativeHubFinalModel.FK_CurrentUserSession_UserDetail">
+            <End Role="UserDetail" EntitySet="UserDetails" />
+            <End Role="CurrentUserSession" EntitySet="CurrentUserSessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetail_Division" Association="InitiativeHubFinalModel.FK_UserDetail_Division">
+            <End Role="Division" EntitySet="Divisions" />
+            <End Role="UserDetail" EntitySet="UserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetail_UserDetail" Association="InitiativeHubFinalModel.FK_UserDetail_UserDetail">
+            <End Role="UserDetail" EntitySet="UserDetails" />
+            <End Role="UserDetail1" EntitySet="UserDetails" />
+          </AssociationSet>
+          <EntitySet Name="StatusMasters" EntityType="InitiativeHubFinalModel.StatusMaster" />
+          <FunctionImport Name="spIssueDetails1" ReturnType="Collection(InitiativeHubFinalModel.spIssueDetails1_Result)">
+            <Parameter Name="ResponsibleEmail" Mode="In" Type="String" />
+            <Parameter Name="ChapterName" Mode="In" Type="String" />
+            <Parameter Name="Owner" Mode="In" Type="String" />
+            <Parameter Name="RoleName" Mode="In" Type="String" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spDivisionCount" ReturnType="Collection(InitiativeHubFinalModel.spDivisionCount_Result)">
+            <Parameter Name="ChapterName" Mode="In" Type="String" />
+            <Parameter Name="Role" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spHodCount" ReturnType="Collection(InitiativeHubFinalModel.spHodCount_Result)">
+            <Parameter Name="ChapterName" Mode="In" Type="String" />
+            <Parameter Name="Role" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spHodName" ReturnType="Collection(InitiativeHubFinalModel.spHodName_Result)">
+            <Parameter Name="ChapterName" Mode="In" Type="String" />
+            <Parameter Name="Role" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="ChapterMasters" EntityType="InitiativeHubFinalModel.ChapterMaster" />
+          <EntitySet Name="IssueManagementCommentLogs" EntityType="InitiativeHubFinalModel.IssueManagementCommentLog" />
+          <AssociationSet Name="FK_IssueManagementCommentLog_StatusMaster" Association="InitiativeHubFinalModel.FK_IssueManagementCommentLog_StatusMaster">
+            <End Role="StatusMaster" EntitySet="StatusMasters" />
+            <End Role="IssueManagementCommentLog" EntitySet="IssueManagementCommentLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IssueManagementCommentLog_UserDetail" Association="InitiativeHubFinalModel.FK_IssueManagementCommentLog_UserDetail">
+            <End Role="UserDetail" EntitySet="UserDetails" />
+            <End Role="IssueManagementCommentLog" EntitySet="IssueManagementCommentLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IssueManagementCommentLog_UserDetail1" Association="InitiativeHubFinalModel.FK_IssueManagementCommentLog_UserDetail1">
+            <End Role="UserDetail" EntitySet="UserDetails" />
+            <End Role="IssueManagementCommentLog" EntitySet="IssueManagementCommentLogs" />
+          </AssociationSet>
+          <EntitySet Name="IssueManagementAnchorComments" EntityType="InitiativeHubFinalModel.IssueManagementAnchorComment" />
+          <AssociationSet Name="FK_IssueManagementAnchorComment_UserDetail" Association="InitiativeHubFinalModel.FK_IssueManagementAnchorComment_UserDetail">
+            <End Role="UserDetail" EntitySet="UserDetails" />
+            <End Role="IssueManagementAnchorComment" EntitySet="IssueManagementAnchorComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IssueManagementAnchorComment_UserDetail1" Association="InitiativeHubFinalModel.FK_IssueManagementAnchorComment_UserDetail1">
+            <End Role="UserDetail" EntitySet="UserDetails" />
+            <End Role="IssueManagementAnchorComment" EntitySet="IssueManagementAnchorComments" />
+          </AssociationSet>
+          <FunctionImport Name="SpissuedetailsClose" ReturnType="Collection(InitiativeHubFinalModel.SpissuedetailsClose_Result)">
+          <Parameter Name="ChapterName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spIssueDetails" ReturnType="Collection(InitiativeHubFinalModel.spIssueDetails_Result1)">
+            <Parameter Name="Division" Mode="In" Type="String" />
+            <Parameter Name="ResponsibleEmail" Mode="In" Type="String" />
+            <Parameter Name="ChapterName" Mode="In" Type="String" />
+            <Parameter Name="Owner" Mode="In" Type="String" />
+            <Parameter Name="RoleName" Mode="In" Type="String" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="UserWiseColumnNames" EntityType="InitiativeHubFinalModel.UserWiseColumnName" />
+          <FunctionImport Name="spGetChaptersNameforResponsiblePerson" ReturnType="Collection(InitiativeHubFinalModel.spGetChaptersNameforResponsiblePerson_Result)">
+            <Parameter Name="ResponsibleEmail" Mode="In" Type="String" />
+            <Parameter Name="Owner" Mode="In" Type="String" />
+            <Parameter Name="ChapterName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetCSCDataBYRequestNo" ReturnType="Collection(InitiativeHubFinalModel.GetCSCDataBYRequestNo_Result)">
+            <Parameter Name="RequestCode" Mode="In" Type="String" />
+          </FunctionImport>
+          </EntityContainer>
+        <ComplexType Name="spGetColorCode_Result">
+          <Property Type="String" Name="StatusDesc" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="DiffDate" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spGetColorCodeforMilestone_Result">
+          <Property Type="String" Name="StatusDesc" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="DiffDate" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spGetCommentLog_Result">
+          <Property Type="String" Name="title" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="RUB" Nullable="true" />
+          <Property Type="String" Name="Comments" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="role" Nullable="false" MaxLength="17" />
+          <Property Type="DateTime" Name="RCT" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="spAllData_Result">
+          <Property Type="Int32" Name="id" Nullable="true" />
+          <Property Type="String" Name="initiativeTitle" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="initiativeDescription" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="initiativeDesiredOutput" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="initiativeComments" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="initiativeDepartment" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="initiativeDepartmentHead" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="initiativeOwnerName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="initiativeTypeData" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="initiativeRCB" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SubDepartmentName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="initiativeId" Nullable="false" />
+          <Property Type="DateTime" Name="initiativeRCT" Nullable="true" Precision="23" />
+          <Property Type="String" Name="milestoneTitle" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="milestoneDescription" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="milestoneDesiredOutput" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="milestoneComments" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="segmentName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SubSegmentName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="milestoneStatus" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="milestoneRCB" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="milestoneRCT" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="draftcompleted" Nullable="true" />
+          <Property Type="String" Name="responsiblePersonName" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="responsibleStartDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="responsibleEndDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="dependentPersonName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="dependentDepartment" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="dependentStartDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="dependentEndDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="resStatus" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="depStatus" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="DepartmentId" Nullable="false" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="spMilestoneLogDetails_Result">
+          <Property Type="String" Name="milestoneDesc" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="initiativeDepartment" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="initiativeDepartmentHead" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="initiativeTypeData" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SubDepartmentName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="milestoneTitle" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="milestoneDescription" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="milestoneDesiredOutput" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="milestoneComments" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="segmentName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SubSegmentName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="milestoneStatus" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="milestoneRCB" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="milestoneRCT" Nullable="true" Precision="23" />
+          <Property Type="String" Name="responsiblePersonName" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="responsibleStartDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="responsibleEndDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="dependentPersonName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="dependentDepartment" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="dependentStartDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="dependentEndDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="resStatus" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="depStatus" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="DepartmentId" Nullable="true" />
+          <Property Type="String" Name="ProductName" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="spGetTSIDetail_Result">
+          <Property Type="String" Name="VcTSICode" Nullable="true" />
+          <Property Type="String" Name="VcTsiDesc" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spDealerFeedbackDetail_Result">
+          <Property Type="String" Name="RequestCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="dealercode" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="dealername" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="dealermobile" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="dealercity" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="dealerdivision" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="nsmcode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="nsmdesc" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="nsmemail" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="NSMMobile" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ZSMCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ZSMDesc" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ZSMEmail" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ZSMMobile" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="RSMCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="RSMDec" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="RSMEmail" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="RSMMobile" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="BMCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="BMDesc" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="BMEmail" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="BMMobile" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="asmcode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="asmdesc" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="asmemail" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="asmmobile" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="tsicode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="tsidesc" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="tsiemail" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="tsimobile" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="WSSCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="WSSDesc" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="WSSEmail" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="WSSMobile" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SRType" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="SourceDesc" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="calltype" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CallStartTime" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CalledBy" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CalledNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="statusDesc" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="CreatorName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CreatorUsername" Nullable="true" MaxLength="250" />
+          <Property Type="DateTime" Name="rct" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="spGetChaptersforResponsiblePerson_Result">
+          <Property Type="String" Name="chapternamedisplay" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="ChapterOwner" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="issueCount" Nullable="true" />
+          <Property Type="String" Name="id_data_load_date" Nullable="true" />
+          <Property Type="String" Name="chapternamefromsystem" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="editflag" Nullable="false" MaxLength="5" />
+        </ComplexType>
+        <EntityType Name="ChapterOwnerMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ChapterId" Nullable="false" />
+          <Property Type="String" Name="ChapterOwner" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="RCT" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="CurrentUserSession">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="String" Name="SessionId" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="RCT" Nullable="false" Precision="0" />
+          <NavigationProperty Name="UserDetail" Relationship="InitiativeHubFinalModel.FK_CurrentUserSession_UserDetail" FromRole="CurrentUserSession" ToRole="UserDetail" />
+        </EntityType>
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="DivisionName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DivisionCode" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserDetails" Relationship="InitiativeHubFinalModel.FK_UserDetail_Division" FromRole="Division" ToRole="UserDetail" />
+        </EntityType>
+        <EntityType Name="EventLog">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="EventType" />
+            <PropertyRef Name="Details" />
+            <PropertyRef Name="RCT" />
+            <PropertyRef Name="RCB" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="EventType" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Details" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="RCT" Nullable="false" Precision="0" />
+          <Property Type="Int32" Name="RCB" Nullable="false" />
+          <Property Type="String" Name="ApplicationName" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="IP" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Url" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Type="Int32" Name="UserId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="56" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="webpages_Membership">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="PasswordFailuresSinceLastSuccess" />
+            <PropertyRef Name="Password" />
+            <PropertyRef Name="PasswordSalt" />
+          </Key>
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="DateTime" Name="CreateDate" Precision="0" />
+          <Property Type="String" Name="ConfirmationToken" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsConfirmed" />
+          <Property Type="DateTime" Name="LastPasswordFailureDate" Precision="0" />
+          <Property Type="Int32" Name="PasswordFailuresSinceLastSuccess" Nullable="false" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="PasswordChangedDate" Precision="0" />
+          <Property Type="String" Name="PasswordSalt" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PasswordVerificationToken" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="PasswordVerificationTokenExpirationDate" Precision="0" />
+        </EntityType>
+        <EntityType Name="webpages_OAuthMembership">
+          <Key>
+            <PropertyRef Name="Provider" />
+            <PropertyRef Name="ProviderUserId" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Type="String" Name="Provider" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ProviderUserId" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="RoleName" />
+          </Key>
+          <Property Type="Int32" Name="RoleId" Nullable="false" />
+          <Property Type="String" Name="RoleName" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="webpages_UsersInRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="Int32" Name="RoleId" Nullable="false" />
+          <Property Type="String" Name="Username" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserDetail">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Email" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Type="String" Name="MobileNo" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Type="String" Name="Picture" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="DivisionId" />
+          <Property Type="Int32" Name="CompanyId" />
+          <Property Type="String" Name="DivisionCode" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="IsApproval" />
+          <Property Type="Int32" Name="RA1" />
+          <Property Type="Int32" Name="RA2" />
+          <Property Type="String" Name="racd1" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="racd2" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="UserType" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CurrentUserSession" Relationship="InitiativeHubFinalModel.FK_CurrentUserSession_UserDetail" FromRole="UserDetail" ToRole="CurrentUserSession" />
+          <NavigationProperty Name="Division" Relationship="InitiativeHubFinalModel.FK_UserDetail_Division" FromRole="UserDetail" ToRole="Division" />
+          <NavigationProperty Name="UserDetail1" Relationship="InitiativeHubFinalModel.FK_UserDetail_UserDetail" FromRole="UserDetail" ToRole="UserDetail1" />
+          <NavigationProperty Name="UserDetail2" Relationship="InitiativeHubFinalModel.FK_UserDetail_UserDetail" FromRole="UserDetail1" ToRole="UserDetail" />
+          <Property Name="IsITFH" Type="Boolean" />
+          <Property Name="IsITEvaluator" Type="Boolean" />
+          <Property Name="orgemail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Designation" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="hod" Type="Int32" />
+          <Property Name="olduserid" Type="Int32" />
+          <Property Name="newuserid" Type="Int32" />
+          <Property Name="OverrideEmail" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="OverrideMobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="IsSubITFH" Type="Boolean" />
+          <NavigationProperty Name="IssueManagementCommentLogs" Relationship="InitiativeHubFinalModel.FK_IssueManagementCommentLog_UserDetail" FromRole="UserDetail" ToRole="IssueManagementCommentLog" />
+          <NavigationProperty Name="IssueManagementCommentLogs1" Relationship="InitiativeHubFinalModel.FK_IssueManagementCommentLog_UserDetail1" FromRole="UserDetail" ToRole="IssueManagementCommentLog" />
+          <NavigationProperty Name="IssueManagementAnchorComments" Relationship="InitiativeHubFinalModel.FK_IssueManagementAnchorComment_UserDetail" FromRole="UserDetail" ToRole="IssueManagementAnchorComment" />
+          <NavigationProperty Name="IssueManagementAnchorComments1" Relationship="InitiativeHubFinalModel.FK_IssueManagementAnchorComment_UserDetail1" FromRole="UserDetail" ToRole="IssueManagementAnchorComment" />
+        </EntityType>
+        <Association Name="FK_CurrentUserSession_UserDetail">
+          <End Type="InitiativeHubFinalModel.UserDetail" Role="UserDetail" Multiplicity="1" />
+          <End Type="InitiativeHubFinalModel.CurrentUserSession" Role="CurrentUserSession" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetail">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="CurrentUserSession">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetail_Division">
+          <End Type="InitiativeHubFinalModel.Division" Role="Division" Multiplicity="0..1" />
+          <End Type="InitiativeHubFinalModel.UserDetail" Role="UserDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetail">
+              <PropertyRef Name="DivisionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetail_UserDetail">
+          <End Type="InitiativeHubFinalModel.UserDetail" Role="UserDetail" Multiplicity="1" />
+          <End Type="InitiativeHubFinalModel.UserDetail" Role="UserDetail1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetail">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserDetail1">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="StatusMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="StatusDesc" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="IssueManagementCommentLogs" Relationship="InitiativeHubFinalModel.FK_IssueManagementCommentLog_StatusMaster" FromRole="StatusMaster" ToRole="IssueManagementCommentLog" />
+        </EntityType>
+        <ComplexType Name="spHodName1_Result">
+          <Property Type="String" Name="HODName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="HODUserCode" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="count" Nullable="true" />
+          <Property Type="String" Name="HodEmail" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="spHodCount1_Result">
+          <Property Type="String" Name="HODName" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spIssueDetails1_Result">
+          <Property Type="String" Name="ChapterNameFromSystem" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="chapternamedisplay" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="id_data_load_date" Nullable="true" />
+          <Property Type="String" Name="chapterOwner" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ID_Request" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ID_Issue_Detail1" Nullable="true" MaxLength="6002" />
+          <Property Type="String" Name="ID_status" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ID_Reported_by_name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ID_Dept" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ID_Location" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ID_Pending_with_Name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ID_Pending_with_Email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ID_Logged_Date" Nullable="true" />
+          <Property Type="Int32" Name="pendingSince" Nullable="true" />
+          <Property Type="String" Name="ID_Comments" Nullable="true" MaxLength="1000" />
+        </ComplexType>
+        <ComplexType Name="spDivisionCount_Result">
+          <Property Type="Int32" Name="count" Nullable="true" />
+          <Property Type="String" Name="divisionCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="divisionName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="spHodCount_Result">
+          <Property Type="String" Name="SAPDivisionName" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spHodName_Result">
+          <Property Type="String" Name="SAPDivisionName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="SAPDivisionCode" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="count" Nullable="true" />
+          <Property Type="String" Name="HodEmail" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <EntityType Name="ChapterMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChapterNameFromSystem" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ChapterNameDisplay" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="EmailFlag" Type="Boolean" />
+          <Property Name="EmailTo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="RCT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EmailCC" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="IssueManagementCommentLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="ID_Request" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="id_System_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Pending_With_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RCT" Type="DateTime" Precision="3" />
+          <Property Name="RCB" Type="Int32" />
+          <Property Name="RUT" Type="DateTime" Precision="3" />
+          <Property Name="RUB" Type="Int32" />
+          <Property Name="UploadFlag" Type="Boolean" />
+          <Property Name="ID_Status_Id" Type="Int32" />
+          <Property Name="RCBEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RCBEmpCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RCBEmpName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="RUBEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RUBEmpCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RUBEmpName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Target_Date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="StatusMaster" Relationship="InitiativeHubFinalModel.FK_IssueManagementCommentLog_StatusMaster" FromRole="IssueManagementCommentLog" ToRole="StatusMaster" />
+          <NavigationProperty Name="UserDetail" Relationship="InitiativeHubFinalModel.FK_IssueManagementCommentLog_UserDetail" FromRole="IssueManagementCommentLog" ToRole="UserDetail" />
+          <NavigationProperty Name="UserDetail1" Relationship="InitiativeHubFinalModel.FK_IssueManagementCommentLog_UserDetail1" FromRole="IssueManagementCommentLog" ToRole="UserDetail" />
+        </EntityType>
+        <Association Name="FK_IssueManagementCommentLog_StatusMaster">
+          <End Type="InitiativeHubFinalModel.StatusMaster" Role="StatusMaster" Multiplicity="0..1" />
+          <End Type="InitiativeHubFinalModel.IssueManagementCommentLog" Role="IssueManagementCommentLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IssueManagementCommentLog">
+              <PropertyRef Name="ID_Status_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IssueManagementCommentLog_UserDetail">
+          <End Type="InitiativeHubFinalModel.UserDetail" Role="UserDetail" Multiplicity="0..1" />
+          <End Type="InitiativeHubFinalModel.IssueManagementCommentLog" Role="IssueManagementCommentLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetail">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="IssueManagementCommentLog">
+              <PropertyRef Name="RCB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IssueManagementCommentLog_UserDetail1">
+          <End Type="InitiativeHubFinalModel.UserDetail" Role="UserDetail" Multiplicity="0..1" />
+          <End Type="InitiativeHubFinalModel.IssueManagementCommentLog" Role="IssueManagementCommentLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetail">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="IssueManagementCommentLog">
+              <PropertyRef Name="RUB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="IssueManagementAnchorComment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="ID_Request" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="id_System_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RCT" Type="DateTime" Precision="3" />
+          <Property Name="RCB" Type="Int32" />
+          <Property Name="RUT" Type="DateTime" Precision="3" />
+          <Property Name="RUB" Type="Int32" />
+          <NavigationProperty Name="UserDetail" Relationship="InitiativeHubFinalModel.FK_IssueManagementAnchorComment_UserDetail" FromRole="IssueManagementAnchorComment" ToRole="UserDetail" />
+          <NavigationProperty Name="UserDetail1" Relationship="InitiativeHubFinalModel.FK_IssueManagementAnchorComment_UserDetail1" FromRole="IssueManagementAnchorComment" ToRole="UserDetail" />
+          <Property Name="ID_Pending_With_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RCBEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RCBEmpCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RCBEmpName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="RUBEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RUBEmpCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RUBEmpName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_IssueManagementAnchorComment_UserDetail">
+          <End Type="InitiativeHubFinalModel.UserDetail" Role="UserDetail" Multiplicity="0..1" />
+          <End Type="InitiativeHubFinalModel.IssueManagementAnchorComment" Role="IssueManagementAnchorComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetail">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="IssueManagementAnchorComment">
+              <PropertyRef Name="RCB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IssueManagementAnchorComment_UserDetail1">
+          <End Type="InitiativeHubFinalModel.UserDetail" Role="UserDetail" Multiplicity="0..1" />
+          <End Type="InitiativeHubFinalModel.IssueManagementAnchorComment" Role="IssueManagementAnchorComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetail">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="IssueManagementAnchorComment">
+              <PropertyRef Name="RUB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="SpissuedetailsClose_Result">
+          <Property Type="String" Name="chapternamefromsystem" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="chapternamedisplay" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="id_data_load_date" Nullable="true" />
+          <Property Type="String" Name="chapterOwner" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="id_request" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ID_Issue_Detail1" Nullable="true" MaxLength="6002" />
+          <Property Type="String" Name="id_status" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="id_reported_by_name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="id_reported_by_email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="id_dept" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="id_location" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="id_pending_with_name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="id_pending_with_email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ID_Logged_Date" Nullable="true" />
+          <Property Type="Int32" Name="pendingSince" Nullable="true" />
+          <Property Type="String" Name="id_tat_status" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="id_comments" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="ID_Responsible_Name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ID_Responsible_Email" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="spIssueDetails_Result">
+          <Property Type="String" Name="chapternamefromsystem" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="chapternamedisplay" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="id_data_load_date" Nullable="true" />
+          <Property Type="String" Name="chapterOwner" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="id_request" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ID_Issue_Detail1" Nullable="true" MaxLength="6002" />
+          <Property Type="String" Name="id_status" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="id_reported_by_name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="id_reported_by_email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="id_dept" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="id_location" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="id_pending_with_name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="id_pending_with_email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ID_Logged_Date" Nullable="true" />
+          <Property Type="Int32" Name="pendingSince" Nullable="true" />
+          <Property Type="String" Name="id_tat_status" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="id_comments" Nullable="true" MaxLength="1000" />
+          <Property Type="DateTime" Name="ID_Target_Date" Nullable="true" />
+          <Property Type="String" Name="ID_Category" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <EntityType Name="UserWiseColumnName">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChapterId" Type="Int32" />
+          <Property Name="ID_Issue_Detail1" Type="Boolean" />
+          <Property Name="chapternamedisplay" Type="Boolean" />
+          <Property Name="id_data_load_date" Type="Boolean" />
+          <Property Name="title" Type="Boolean" />
+          <Property Name="chapterOwner" Type="Boolean" />
+          <Property Name="id_request" Type="Boolean" />
+          <Property Name="id_status" Type="Boolean" />
+          <Property Name="id_reported_by_name" Type="Boolean" />
+          <Property Name="id_reported_by_email" Type="Boolean" />
+          <Property Name="id_dept" Type="Boolean" />
+          <Property Name="id_location" Type="Boolean" />
+          <Property Name="id_pending_with_name" Type="Boolean" />
+          <Property Name="id_pending_with_email" Type="Boolean" />
+          <Property Name="ID_Logged_Date" Type="Boolean" />
+          <Property Name="pendingSince" Type="Boolean" />
+          <Property Name="id_tat_status" Type="Boolean" />
+          <Property Name="id_comments" Type="Boolean" />
+          <Property Name="ID_Target_Date" Type="Boolean" />
+          <Property Name="ID_Category" Type="Boolean" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="RCB" Type="Int32" />
+          <Property Name="RCT" Type="DateTime" Precision="3" />
+          <Property Name="RUT" Type="DateTime" Precision="3" />
+          <Property Name="RUB" Type="Int32" />
+        </EntityType>
+        <ComplexType Name="spGetChaptersNameforResponsiblePerson_Result">
+          <Property Type="String" Name="chapternamedisplay" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="ChapterOwner" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="issueCount" Nullable="true" />
+          <Property Type="String" Name="id_data_load_date" Nullable="true" />
+          <Property Type="String" Name="chapternamefromsystem" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="editflag" Nullable="false" MaxLength="5" />
+        </ComplexType>
+        <ComplexType Name="spIssueDetails_Result1">
+          <Property Type="String" Name="chapternamefromsystem" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="chapternamedisplay" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="id_data_load_date" Nullable="true" />
+          <Property Type="String" Name="chapterOwner" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="id_request" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ID_Issue_Detail1" Nullable="true" MaxLength="6002" />
+          <Property Type="String" Name="id_status" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="id_reported_by_name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="id_reported_by_email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="id_dept" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="id_location" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="id_pending_with_name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="id_pending_with_email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ID_Responsible_Name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ID_Responsible_Email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ID_Logged_Date" Nullable="true" />
+          <Property Type="Int32" Name="pendingSince" Nullable="true" />
+          <Property Type="String" Name="id_tat_status" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="id_comments" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="ID_Target_Date" Nullable="true" />
+          <Property Type="String" Name="ID_Category" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="AnchorSentBackComments" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="AnchorCommentDate" Nullable="true" />
+          <Property Type="String" Name="AnchorName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="pendingStatus" Nullable="true" MaxLength="11" />
+        </ComplexType>
+        <ComplexType Name="GetCSCDataBYRequestNo_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="requestNo" Nullable="false" />
+          <Property Type="String" Name="requestCode" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="requestDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="contactNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ContactEmail" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="States" Nullable="true" />
+          <Property Type="String" Name="PinCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="BatchNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MfgDate" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Quantity" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="1000" />
+          <Property Type="Int32" Name="Source" Nullable="true" />
+          <Property Type="Int32" Name="CustomerCategory" Nullable="true" />
+          <Property Type="Int32" Name="Division" Nullable="true" />
+          <Property Type="Int32" Name="Product" Nullable="true" />
+          <Property Type="Int32" Name="Type" Nullable="true" />
+          <Property Type="Int32" Name="SubType" Nullable="false" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+          <Property Type="Int32" Name="AssignedTo" Nullable="true" />
+          <Property Type="Int32" Name="RCB" Nullable="true" />
+          <Property Type="DateTime" Name="RCT" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="RUB" Nullable="true" />
+          <Property Type="DateTime" Name="RUT" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Comments" Nullable="true" MaxLength="1000" />
+        </ComplexType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="InitiativeHubFinalModelStoreContainer" CdmEntityContainer="InitiativeHubFinalEntities">
+          <FunctionImportMapping FunctionImportName="spGetChaptersforResponsiblePerson" FunctionName="InitiativeHubFinalModel.Store.spGetChaptersforResponsiblePerson">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InitiativeHubFinalModel.spGetChaptersforResponsiblePerson_Result">
+                <ScalarProperty Name="chapternamedisplay" ColumnName="chapternamedisplay" />
+                <ScalarProperty Name="ChapterOwner" ColumnName="ChapterOwner" />
+                <ScalarProperty Name="issueCount" ColumnName="issueCount" />
+                <ScalarProperty Name="id_data_load_date" ColumnName="id_data_load_date" />
+                <ScalarProperty Name="chapternamefromsystem" ColumnName="chapternamefromsystem" />
+                <ScalarProperty Name="editflag" ColumnName="editflag" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="ChapterOwnerMappings">
+            <EntityTypeMapping TypeName="InitiativeHubFinalModel.ChapterOwnerMapping">
+              <MappingFragment StoreEntitySet="ChapterOwnerMapping">
+                <ScalarProperty Name="RCT" ColumnName="RCT" />
+                <ScalarProperty Name="ChapterOwner" ColumnName="ChapterOwner" />
+                <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CurrentUserSessions">
+            <EntityTypeMapping TypeName="InitiativeHubFinalModel.CurrentUserSession">
+              <MappingFragment StoreEntitySet="CurrentUserSession">
+                <ScalarProperty Name="RCT" ColumnName="RCT" />
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Divisions">
+            <EntityTypeMapping TypeName="InitiativeHubFinalModel.Division">
+              <MappingFragment StoreEntitySet="Division">
+                <ScalarProperty Name="DivisionCode" ColumnName="DivisionCode" />
+                <ScalarProperty Name="DivisionName" ColumnName="DivisionName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventLogs">
+            <EntityTypeMapping TypeName="InitiativeHubFinalModel.EventLog">
+              <MappingFragment StoreEntitySet="EventLog">
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="ApplicationName" ColumnName="ApplicationName" />
+                <ScalarProperty Name="RCB" ColumnName="RCB" />
+                <ScalarProperty Name="RCT" ColumnName="RCT" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProfiles">
+            <EntityTypeMapping TypeName="InitiativeHubFinalModel.UserProfile">
+              <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_Membership">
+            <EntityTypeMapping TypeName="InitiativeHubFinalModel.webpages_Membership">
+              <MappingFragment StoreEntitySet="webpages_Membership">
+                <ScalarProperty Name="PasswordVerificationTokenExpirationDate" ColumnName="PasswordVerificationTokenExpirationDate" />
+                <ScalarProperty Name="PasswordVerificationToken" ColumnName="PasswordVerificationToken" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="PasswordChangedDate" ColumnName="PasswordChangedDate" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PasswordFailuresSinceLastSuccess" ColumnName="PasswordFailuresSinceLastSuccess" />
+                <ScalarProperty Name="LastPasswordFailureDate" ColumnName="LastPasswordFailureDate" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="ConfirmationToken" ColumnName="ConfirmationToken" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_OAuthMembership">
+            <EntityTypeMapping TypeName="InitiativeHubFinalModel.webpages_OAuthMembership">
+              <MappingFragment StoreEntitySet="webpages_OAuthMembership">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderUserId" ColumnName="ProviderUserId" />
+                <ScalarProperty Name="Provider" ColumnName="Provider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_Roles">
+            <EntityTypeMapping TypeName="InitiativeHubFinalModel.webpages_Roles">
+              <MappingFragment StoreEntitySet="webpages_Roles">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_UsersInRoles">
+            <EntityTypeMapping TypeName="InitiativeHubFinalModel.webpages_UsersInRoles">
+              <MappingFragment StoreEntitySet="webpages_UsersInRoles">
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDetails">
+            <EntityTypeMapping TypeName="InitiativeHubFinalModel.UserDetail">
+              <MappingFragment StoreEntitySet="UserDetail">
+                <ScalarProperty Name="IsSubITFH" ColumnName="IsSubITFH" />
+                <ScalarProperty Name="OverrideMobile" ColumnName="OverrideMobile" />
+                <ScalarProperty Name="OverrideEmail" ColumnName="OverrideEmail" />
+                <ScalarProperty Name="newuserid" ColumnName="newuserid" />
+                <ScalarProperty Name="olduserid" ColumnName="olduserid" />
+                <ScalarProperty Name="hod" ColumnName="hod" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="orgemail" ColumnName="orgemail" />
+                <ScalarProperty Name="IsITEvaluator" ColumnName="IsITEvaluator" />
+                <ScalarProperty Name="IsITFH" ColumnName="IsITFH" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="racd2" ColumnName="racd2" />
+                <ScalarProperty Name="racd1" ColumnName="racd1" />
+                <ScalarProperty Name="RA2" ColumnName="RA2" />
+                <ScalarProperty Name="RA1" ColumnName="RA1" />
+                <ScalarProperty Name="IsApproval" ColumnName="IsApproval" />
+                <ScalarProperty Name="DivisionCode" ColumnName="DivisionCode" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusMasters">
+            <EntityTypeMapping TypeName="InitiativeHubFinalModel.StatusMaster">
+              <MappingFragment StoreEntitySet="StatusMaster">
+                <ScalarProperty Name="StatusDesc" ColumnName="StatusDesc" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spDivisionCount" FunctionName="InitiativeHubFinalModel.Store.spDivisionCount">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InitiativeHubFinalModel.spDivisionCount_Result">
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="divisionCode" ColumnName="divisionCode" />
+                <ScalarProperty Name="divisionName" ColumnName="divisionName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spHodCount" FunctionName="InitiativeHubFinalModel.Store.spHodCount">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InitiativeHubFinalModel.spHodCount_Result">
+                <ScalarProperty Name="SAPDivisionName" ColumnName="SAPDivisionName" />
+                <ScalarProperty Name="count" ColumnName="count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spHodName" FunctionName="InitiativeHubFinalModel.Store.spHodName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InitiativeHubFinalModel.spHodName_Result">
+                <ScalarProperty Name="SAPDivisionName" ColumnName="SAPDivisionName" />
+                <ScalarProperty Name="SAPDivisionCode" ColumnName="SAPDivisionCode" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="HodEmail" ColumnName="HodEmail" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="ChapterMasters">
+            <EntityTypeMapping TypeName="InitiativeHubFinalModel.ChapterMaster">
+              <MappingFragment StoreEntitySet="ChapterMaster">
+                <ScalarProperty Name="EmailCC" ColumnName="EmailCC" />
+                <ScalarProperty Name="RCT" ColumnName="RCT" />
+                <ScalarProperty Name="EmailTo" ColumnName="EmailTo" />
+                <ScalarProperty Name="EmailFlag" ColumnName="EmailFlag" />
+                <ScalarProperty Name="ChapterNameDisplay" ColumnName="ChapterNameDisplay" />
+                <ScalarProperty Name="ChapterNameFromSystem" ColumnName="ChapterNameFromSystem" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IssueManagementCommentLogs">
+            <EntityTypeMapping TypeName="InitiativeHubFinalModel.IssueManagementCommentLog">
+              <MappingFragment StoreEntitySet="IssueManagementCommentLog">
+                <ScalarProperty Name="Target_Date" ColumnName="Target_Date" />
+                <ScalarProperty Name="RUBEmpName" ColumnName="RUBEmpName" />
+                <ScalarProperty Name="RUBEmpCode" ColumnName="RUBEmpCode" />
+                <ScalarProperty Name="RUBEmail" ColumnName="RUBEmail" />
+                <ScalarProperty Name="RCBEmpName" ColumnName="RCBEmpName" />
+                <ScalarProperty Name="RCBEmpCode" ColumnName="RCBEmpCode" />
+                <ScalarProperty Name="RCBEmail" ColumnName="RCBEmail" />
+                <ScalarProperty Name="ID_Status_Id" ColumnName="ID_Status_Id" />
+                <ScalarProperty Name="UploadFlag" ColumnName="UploadFlag" />
+                <ScalarProperty Name="RUB" ColumnName="RUB" />
+                <ScalarProperty Name="RUT" ColumnName="RUT" />
+                <ScalarProperty Name="RCB" ColumnName="RCB" />
+                <ScalarProperty Name="RCT" ColumnName="RCT" />
+                <ScalarProperty Name="ID_Pending_With_Email" ColumnName="ID_Pending_With_Email" />
+                <ScalarProperty Name="ID_Status" ColumnName="ID_Status" />
+                <ScalarProperty Name="id_System_Name" ColumnName="id_System_Name" />
+                <ScalarProperty Name="ID_Request" ColumnName="ID_Request" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ID_Comments" ColumnName="ID_Comments" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IssueManagementAnchorComments">
+            <EntityTypeMapping TypeName="InitiativeHubFinalModel.IssueManagementAnchorComment">
+              <MappingFragment StoreEntitySet="IssueManagementAnchorComment">
+                <ScalarProperty Name="RUBEmpName" ColumnName="RUBEmpName" />
+                <ScalarProperty Name="RUBEmpCode" ColumnName="RUBEmpCode" />
+                <ScalarProperty Name="RUBEmail" ColumnName="RUBEmail" />
+                <ScalarProperty Name="RCBEmpName" ColumnName="RCBEmpName" />
+                <ScalarProperty Name="RCBEmpCode" ColumnName="RCBEmpCode" />
+                <ScalarProperty Name="RCBEmail" ColumnName="RCBEmail" />
+                <ScalarProperty Name="ID_Pending_With_Email" ColumnName="ID_Pending_With_Email" />
+                <ScalarProperty Name="RUB" ColumnName="RUB" />
+                <ScalarProperty Name="RUT" ColumnName="RUT" />
+                <ScalarProperty Name="RCB" ColumnName="RCB" />
+                <ScalarProperty Name="RCT" ColumnName="RCT" />
+                <ScalarProperty Name="id_System_Name" ColumnName="id_System_Name" />
+                <ScalarProperty Name="ID_Request" ColumnName="ID_Request" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ID_Comments" ColumnName="ID_Comments" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SpissuedetailsClose" FunctionName="InitiativeHubFinalModel.Store.SpissuedetailsClose">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InitiativeHubFinalModel.SpissuedetailsClose_Result">
+                <ScalarProperty Name="chapternamefromsystem" ColumnName="chapternamefromsystem" />
+                <ScalarProperty Name="chapternamedisplay" ColumnName="chapternamedisplay" />
+                <ScalarProperty Name="id_data_load_date" ColumnName="id_data_load_date" />
+                <ScalarProperty Name="chapterOwner" ColumnName="chapterOwner" />
+                <ScalarProperty Name="id_request" ColumnName="id_request" />
+                <ScalarProperty Name="ID_Issue_Detail1" ColumnName="ID_Issue_Detail1" />
+                <ScalarProperty Name="id_status" ColumnName="id_status" />
+                <ScalarProperty Name="id_reported_by_name" ColumnName="id_reported_by_name" />
+                <ScalarProperty Name="id_reported_by_email" ColumnName="id_reported_by_email" />
+                <ScalarProperty Name="id_dept" ColumnName="id_dept" />
+                <ScalarProperty Name="id_location" ColumnName="id_location" />
+                <ScalarProperty Name="id_pending_with_name" ColumnName="id_pending_with_name" />
+                <ScalarProperty Name="id_pending_with_email" ColumnName="id_pending_with_email" />
+                <ScalarProperty Name="ID_Logged_Date" ColumnName="ID_Logged_Date" />
+                <ScalarProperty Name="pendingSince" ColumnName="pendingSince" />
+                <ScalarProperty Name="id_tat_status" ColumnName="id_tat_status" />
+                <ScalarProperty Name="id_comments" ColumnName="id_comments" />
+                <ScalarProperty Name="ID_Responsible_Name" ColumnName="ID_Responsible_Name" />
+                <ScalarProperty Name="ID_Responsible_Email" ColumnName="ID_Responsible_Email" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spIssueDetails" FunctionName="InitiativeHubFinalModel.Store.spIssueDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InitiativeHubFinalModel.spIssueDetails_Result1">
+                <ScalarProperty Name="chapternamefromsystem" ColumnName="chapternamefromsystem" />
+                <ScalarProperty Name="chapternamedisplay" ColumnName="chapternamedisplay" />
+                <ScalarProperty Name="id_data_load_date" ColumnName="id_data_load_date" />
+                <ScalarProperty Name="chapterOwner" ColumnName="chapterOwner" />
+                <ScalarProperty Name="id_request" ColumnName="id_request" />
+                <ScalarProperty Name="ID_Issue_Detail1" ColumnName="ID_Issue_Detail1" />
+                <ScalarProperty Name="id_status" ColumnName="id_status" />
+                <ScalarProperty Name="id_reported_by_name" ColumnName="id_reported_by_name" />
+                <ScalarProperty Name="id_reported_by_email" ColumnName="id_reported_by_email" />
+                <ScalarProperty Name="id_dept" ColumnName="id_dept" />
+                <ScalarProperty Name="id_location" ColumnName="id_location" />
+                <ScalarProperty Name="id_pending_with_name" ColumnName="id_pending_with_name" />
+                <ScalarProperty Name="id_pending_with_email" ColumnName="id_pending_with_email" />
+                <ScalarProperty Name="ID_Responsible_Name" ColumnName="ID_Responsible_Name" />
+                <ScalarProperty Name="ID_Responsible_Email" ColumnName="ID_Responsible_Email" />
+                <ScalarProperty Name="ID_Logged_Date" ColumnName="ID_Logged_Date" />
+                <ScalarProperty Name="pendingSince" ColumnName="pendingSince" />
+                <ScalarProperty Name="id_tat_status" ColumnName="id_tat_status" />
+                <ScalarProperty Name="id_comments" ColumnName="id_comments" />
+                <ScalarProperty Name="ID_Target_Date" ColumnName="ID_Target_Date" />
+                <ScalarProperty Name="ID_Category" ColumnName="ID_Category" />
+                <ScalarProperty Name="AnchorSentBackComments" ColumnName="AnchorSentBackComments" />
+                <ScalarProperty Name="AnchorCommentDate" ColumnName="AnchorCommentDate" />
+                <ScalarProperty Name="AnchorName" ColumnName="AnchorName" />
+                <ScalarProperty Name="pendingStatus" ColumnName="pendingStatus" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="UserWiseColumnNames">
+            <EntityTypeMapping TypeName="InitiativeHubFinalModel.UserWiseColumnName">
+              <MappingFragment StoreEntitySet="UserWiseColumnName">
+                <ScalarProperty Name="RUB" ColumnName="RUB" />
+                <ScalarProperty Name="RUT" ColumnName="RUT" />
+                <ScalarProperty Name="RCT" ColumnName="RCT" />
+                <ScalarProperty Name="RCB" ColumnName="RCB" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ID_Category" ColumnName="ID_Category" />
+                <ScalarProperty Name="ID_Target_Date" ColumnName="ID_Target_Date" />
+                <ScalarProperty Name="id_comments" ColumnName="id_comments" />
+                <ScalarProperty Name="id_tat_status" ColumnName="id_tat_status" />
+                <ScalarProperty Name="pendingSince" ColumnName="pendingSince" />
+                <ScalarProperty Name="ID_Logged_Date" ColumnName="ID_Logged_Date" />
+                <ScalarProperty Name="id_pending_with_email" ColumnName="id_pending_with_email" />
+                <ScalarProperty Name="id_pending_with_name" ColumnName="id_pending_with_name" />
+                <ScalarProperty Name="id_location" ColumnName="id_location" />
+                <ScalarProperty Name="id_dept" ColumnName="id_dept" />
+                <ScalarProperty Name="id_reported_by_email" ColumnName="id_reported_by_email" />
+                <ScalarProperty Name="id_reported_by_name" ColumnName="id_reported_by_name" />
+                <ScalarProperty Name="id_status" ColumnName="id_status" />
+                <ScalarProperty Name="id_request" ColumnName="id_request" />
+                <ScalarProperty Name="chapterOwner" ColumnName="chapterOwner" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id_data_load_date" ColumnName="id_data_load_date" />
+                <ScalarProperty Name="chapternamedisplay" ColumnName="chapternamedisplay" />
+                <ScalarProperty Name="ID_Issue_Detail1" ColumnName="ID_Issue_Detail1" />
+                <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spGetChaptersNameforResponsiblePerson" FunctionName="InitiativeHubFinalModel.Store.spGetChaptersNameforResponsiblePerson">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InitiativeHubFinalModel.spGetChaptersNameforResponsiblePerson_Result">
+                <ScalarProperty Name="chapternamedisplay" ColumnName="chapternamedisplay" />
+                <ScalarProperty Name="ChapterOwner" ColumnName="ChapterOwner" />
+                <ScalarProperty Name="issueCount" ColumnName="issueCount" />
+                <ScalarProperty Name="id_data_load_date" ColumnName="id_data_load_date" />
+                <ScalarProperty Name="chapternamefromsystem" ColumnName="chapternamefromsystem" />
+                <ScalarProperty Name="editflag" ColumnName="editflag" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCSCDataBYRequestNo" FunctionName="InitiativeHubFinalModel.Store.GetCSCDataBYRequestNo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InitiativeHubFinalModel.GetCSCDataBYRequestNo_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="requestNo" ColumnName="requestNo" />
+                <ScalarProperty Name="requestCode" ColumnName="requestCode" />
+                <ScalarProperty Name="requestDate" ColumnName="requestDate" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="contactNo" ColumnName="contactNo" />
+                <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="States" ColumnName="States" />
+                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+                <ScalarProperty Name="BatchNo" ColumnName="BatchNo" />
+                <ScalarProperty Name="MfgDate" ColumnName="MfgDate" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="CustomerCategory" ColumnName="CustomerCategory" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="SubType" ColumnName="SubType" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="AssignedTo" ColumnName="AssignedTo" />
+                <ScalarProperty Name="RCB" ColumnName="RCB" />
+                <ScalarProperty Name="RCT" ColumnName="RCT" />
+                <ScalarProperty Name="RUB" ColumnName="RUB" />
+                <ScalarProperty Name="RUT" ColumnName="RUT" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

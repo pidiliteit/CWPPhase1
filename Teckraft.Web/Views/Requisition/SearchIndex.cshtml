@@ -1,0 +1,103 @@
+﻿@if (User.IsInRole("Creator") || User.IsInRole("CallCentre"))
+{
+<section class="content-header">
+    <div class="row pnl-page-detail-action">
+        <div class="col-md-12">
+            <h1>
+                Search for Creating Requisition
+            </h1>
+
+        </div>
+    </div>
+   <div class="row" ng-hide="true"  >
+                    <div class="col-sm-4">  <label><i class=""></i>TSI</label>
+                            <select class="form-control module" ng-model="item.tsi"  ng-options="md.VcTSICode +' - '+ md.VcTSIDesc for md in tsiUserDetails track by md.VcTSICode"> 
+                               <option value="">Select..</option>
+                            </select>
+                    </div>
+                        <div class="col-sm-4"> 
+                        <label><i class=""></i>ASM</label>
+                           <select class="form-control module" ng-model="item.asm" ng-options="md.VcASMCode + ' - ' + md.VcASMDesc for md in asmCurUser track by md.VcASMCode"> 
+                              <option value="">Select..</option>
+                            </select>
+                    </div>
+<div class="col-sm-4"> <label><i class=""></i>BM</label>
+                         <select class="form-control" ng-model="item.bm" ng-options="md.VcBMCode + ' - ' + md.VcBMDesc for md in bmCurUser track by md.VcBMCode">
+                                <option value="">Select..</option>
+                            </select>
+                    </div>
+                </div>
+
+    <div class="row pnl-page-detail-action">
+@if (User.IsInRole("CallCentre"))
+{
+        <div class="col-md-3">
+            <label><font color="red">*</font> Division</label>
+            <select class="form-control" ng-model="item.division" ng-options="md.divisionName for md in departmentData track by md.id">
+                <option value="">Select..</option>
+            </select>
+        </div>
+}
+        <div class="col-md-3">
+             <label>Dealer Code</label>
+           <input type="textbox" class="form-control" ng-model="item.dealerCode"   placeholder="Enter Minimum 6 Characters">
+        </div>
+        <div class="col-md-3">
+             <label>Dealer Name</label>
+           <input type="textbox" class="form-control" ng-model="item.dealerName"   placeholder="Enter Minimum 5 Characters">
+        </div>
+<div class="col-md-3">
+             <label>Dealer Contact No.</label>
+           <input type="textbox" class="form-control" ng-model="item.dealerMobileNo"   placeholder="Enter 10 digit Mobile No.">
+        </div>
+    </div>
+    <div class="row footer-action" style="margin: 0px;">
+        <br />
+        <input type="button" class="btn btn-primary" value="Search" ng-click="searchData()"   />
+    </div>
+  <div class="overlay" ng-show="loading" align="center">
+     
+        <img src="~/Content/img/loader--multicolor-2.gif" />
+    </div>
+</section>
+
+<section class="content">
+    <div class="table-responsive">
+        <table class="table table-hover table-striped table-bordered" ng-hide="dealerList.length==0">
+             <thead>
+                <tr>
+                    <th>Sr.No.</th>
+                    <th>Dealer Code</th>
+                    <th>Dealer Name</th>
+                    <th>Dealer Contact No.</th>
+                    <th>RTR Status</th>
+                    <th>Dealer City</th>
+                    <th>Division</th>
+                    <th>WSS Name</th>
+                    <th>Add Request</th>
+                </tr>
+            </thead>
+          <tbody>
+                <tr data-ng-repeat="item in dealerList">
+                    <td><div ng-hide="HideDuplicate($index)">{{$index+1}}</div></td>   
+                    <td><div ng-hide="HideDuplicate($index)">{{item.ssdM_RTR_CODE}}</div></td>
+                    <td><div ng-hide="HideDuplicate($index)">{{item.ssdM_RTR_NAME}}</div></td>
+                    <td><div ng-hide="HideDuplicate($index)">{{item.ssdM_RTR_MOBILE}}</div></td>
+                    <td><div ng-hide="HideDuplicate($index)"  ng-if="item.ssdM_RTR_STATUS == 'Y'" style="background-color:Green;color:yellow">Active</div>
+                        <div ng-hide="HideDuplicate($index)"  ng-if="item.ssdM_RTR_STATUS == 'N'" style="background-color:red;color:yellow">Inactive</div>
+                    </td>
+                    <td><div ng-hide="HideDuplicate($index)">{{item.ssdM_RTR_CITY}}</div></td>
+                    <td><div ng-hide="HideDuplicate($index)">{{item.ssdM_RTR_DIVISION}}</td>
+                    <td><div ng-hide="HideDuplicate($index)">{{item.ssdM_PARENT_CODE_PRWSS}}</td>
+                    <td><div ng-hide="HideDuplicate($index)"><a href="#/AddRequestWss/{{item.ssdM_RTR_CODE + '/' +  item.ssdM_PARENT_CODE_PRWSS.split('-')[0]}}" style="text-decoration: underline; font-size: 15px;
+                        text-transform: uppercase;">add</a></div>
+                    </td>
+                 </tr>
+             </tbody>
+             <div ng-show="dealerList.length==0" class="alert alert-danger">
+                <i class="fa fa-ban"></i>No Records Found
+            </div>
+        </table>
+    </div>
+</section>
+}

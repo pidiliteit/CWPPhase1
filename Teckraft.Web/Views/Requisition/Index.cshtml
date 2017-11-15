@@ -1,0 +1,58 @@
+﻿ @if (User.IsInRole("Creator")){
+<section class="content-header">
+    <div class="row pnl-page-detail-action">
+
+        <div class="col-md-12">
+       
+            <h1>
+                <a href="#/AddReq">
+                    <input type="button" value="Add Requisition" class="btn btn-primary"></a> 
+                 
+              </h1>
+
+        </div>
+ 
+    </div>
+</section>
+}
+ @if (User.IsInRole("Viewer")){
+<section class="content">
+    <div class="table-responsive">
+        <table class="table table-hover table-striped table-bordered" ng-hide="feedbackList.length==0">
+             <thead>
+                <tr>
+                    <th>Dealer Code</th>
+                    <th>Dealer Name</th>
+                    <th>NSM Code / Name</th>
+                    <th>ZSM Code / Name</th>
+                    <th>BM Code / Name</th>
+                    <th>ASM Code / Name</th>
+                    <th>TSI Code / Name</th>
+                    <th>Reason</th>     
+                    <th>Reason Description</th>
+                    <th>Created By</th>
+                    <th>Created On</th>
+                    
+                </tr>
+            </thead>
+          <tbody>
+                <tr data-ng-repeat="item in feedbackList">
+                     <td><a href="#/AddReq/{{item.id}}" style="text-decoration: underline; font-size: 15px;
+                        text-transform: uppercase;">{{item.dealerCode}}</a></td>
+                    <td>{{item.dealerName}}</td>
+                    <td>{{item.nsmCode}} + ' - ' + {{item.nsmName}} </td>
+                    <td>{{item.zsmCode}} + ' - ' + {{item.zsmName}} </td>
+                    <td>{{item.bmCode}} + ' - ' + {{item.bmName}} </td>
+                    <td>{{item.asmCode}} + ' - ' + {{item.asmName}} </td>
+                    <td>{{item.tsiCode}} + ' - ' + {{item.tsiName}} </td>
+                    <td>{{item.reason.reasonDesc}} </td>
+                    <tds>{{item.reasonDesc}}</tds>
+                    <td>{{item.rcb.title}}</td>
+                    <td>{{ite.rct}}</td>
+                 </tr>
+             </tbody>
+             <div ng-show="feedbackList.length==0" class="alert alert-danger">
+                <i class="fa fa-ban"></i>No Records Found
+            </div>
+</section>
+}

@@ -1,0 +1,115 @@
+﻿                            <table class="table no-margin crgrid table-bordered table-striped table-hover table-striped" >
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>CR No</th>
+                                        <th>Requested Date</th>
+                                        <th>Module</th>
+                                        <th>SubModule</th>
+                                        <th>Division</th>
+                                        <th>Function</th>
+                                        <th>Requested By</th>
+                                        <th>Project stage</th>
+                                        <th>Status</th>
+                                        <th>Pending With</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat-start="cr in crList|filter:{projectCreated :true }" ng-hide="cr.rcb.id==currentUser.id">
+                                        <td> <a style="padding-right: 5px;cursor: pointer;" ng-click="toggleDetail1(cr)"  ng-show="cr.projectCreated" >
+                                                <i class="fa " ng-class="{'fa-minus': cr.showdetail1, 'fa-plus': !cr.showdetail1}"></i>
+                                            </a> </td>
+                                        <td style="  width: 102px;">
+                                           
+                                            <a href="#/requisitions/{{cr.id}}">{{cr.changeRequestCode}}</a>
+                                        </td>
+                                        <td>{{cr.requestDate|date:'dd-MMM-yyyy'}}</td>
+                                      
+                                        <td>{{cr.module.moduleName}}</td>
+                                        <td>{{ cr.subModule?cr.subModule.subModuleName:subModuleCodes(cr)}}</td>
+                                        <td>{{cr.division.divisionCode}}</td>
+                                        <td>{{cr.businessFunction.functionName}}</td>
+                                        <td>{{cr.rcb.title}}</td>
+                                        <td>{{cr.currentStageText}}</td>
+                                        <td><span class="label " ng-class="'label-'+cr.statusDesc">{{cr.statusText}}</span></td>
+                                        <td>{{cr.pendingWithUser.title}}</td>
+                                    </tr>
+                                    <tr ng-repeat-end="" ng-show="cr.showdetail1">
+                                        
+                                        <td colspan="11" style="background-color: lightblue;">
+                                            <div>
+                                                <table class="details table table-bordered table-striped table-hover" style="font-size:13px ">
+                                                    <tr ng-if="cr.crTypeId>=4">
+                                                        <td class="strong blue">Target Date:</td>
+                                                        <td class="blue">{{cr.endDate|date:'dd-MMM-yyyy'}}</td>
+                                                        <td class="strong r ed">Revised Target Date:</td>
+                                                        <td class="red">{{cr.revisedEndDate|date:'dd-MMM-yyyy'}}</td>
+                                                    </tr>
+                                                    <tr ng-if="cr.crTypeId<=3">
+                                                        <td ng-show="cr.designDocumentRequired" class="strong blue">Prototype Date:</td>
+                                                        <td ng-show="cr.designDocumentRequired" class="blue">{{cr.wireFrameDate|date:'dd-MMM-yyyy'}}</td>
+                                                        <td class="strong" >Estimated Days:</td>
+                                                        <td class="">{{cr.estimatedDays}}</td>
+                                                        <td class="blue strong">Start Date :</td>
+                                                        <td class="blue">{{cr.startDate|date:'dd-MMM-yyyy'}}</td>
+                                                        <td class="blue strong">End Date :</td>
+                                                        <td  class="blue">{{cr.endDate|date:'dd-MMM-yyyy'}}</td>
+                                                        <td class="red strong">Revised-ITAT Date:</td>
+                                                       <td class="red">{{cr.revisedITATDate|date:'dd-MMM-yyyy'}}</td>
+                                                       
+                                                    </tr>
+                                                    <tr ng-if="cr.crTypeId<=3">
+                                                        <td  ng-show="cr.designDocumentRequired" class="strong">Revised Prototype Date:</td>
+                                                        <td style="width:100px;" ng-show="cr.designDocumentRequired" >{{cr.revisedWireFrameDate|date:'dd-MMM-yyyy'}}</td>
+                                                        <td  class="green strong">ITAT Date:</td>
+                                                        <td class="green" style="width:100px;">{{cr.itatDate|date:'dd-MMM-yyyy'}}</td>
+                                                        <td class="green strong">UAT Date:</td>
+                                                        <td class="green" style="width:100px;">{{cr.uatDate|date:'dd-MMM-yyyy'}}</td>
+                                                        <td  class="orange strong">On hold date:</td>
+                                                        <td class="orange" style="width:100px;">{{cr.onHoldDate|date:'dd-MMM-yyyy'}}</td>
+                                                         <td  class="red strong">Revised-UAT Date :</td>
+                                                       <td  class="red">{{cr.revisedUATDate|date:'dd-MMM-yyyy'}}</td>
+                                                    </tr>
+                                                </table>
+
+                                                <table class="table table-bordered table-striped table-hover no-margin" ng-repeat="phase in cr.phases">
+                                <thead>
+                                    <tr>
+                                       @* <th>CR No</th>*@
+                                        <th>Task No</th>
+                                        <th>TaskData</th>
+                                        <th>Assigned to</th>
+                                        <th>StartDate</th>
+                                        <th>EndDate</th>
+                                        <th>ITATDate</th>
+                                        <th>RevisionDate</th>
+                                        <th>No of Days</th>
+                                       <th>Status</th>
+                                       <th>Pending With</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                     <tr ng-repeat="pt in phase.tasks">
+                                       @* <td>{{pt.stage.cr.changeRequestCode}}</td>*@
+                                        <td> <a href="#/requisitions/{{pt.stage.cr.id}}">{{pt.taskCode}}</a></td>
+                                        <td>{{pt.subject}}</td>
+                                        <td>{{pt.assignedTo.title}}</td>
+                                        <td>{{pt.startDate|date:'dd-MMM-yyyy'}}</td>
+                                        <td>{{pt.endDate|date:'dd-MMM-yyyy'}}</td>
+                                        <td>{{pt.itatDate|date:'dd-MMM-yyyy'}}</td>
+                                        <td>{{pt.revisedITATDate|date:'dd-MMM-yyyy'}}</td>
+                                      <td>{{pt.noOfDays}}</td>
+                                        <td> {{pt.completed|pendingCompleted}}</td>
+                                                                                  <td> {{pt.teamMember.title||pt.assignedTo.title}}</td>
+
+                                    </tr>
+
+                                    
+                                </tbody>
+                            </table>
+                                            </div>
+                                        </td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>

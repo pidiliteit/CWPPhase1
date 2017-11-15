@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2E750B23-E070-4CF5-9B20-3EA034D08601}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Teckraft.Data</RootNamespace>
+    <AssemblyName>Teckraft.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActionResult.cs" />
+    <Compile Include="CompareOperator.cs" />
+    <Compile Include="DataHelper.cs" />
+    <Compile Include="EventLogRepository.cs" />
+    <Compile Include="IReadableRepository.cs" />
+    <Compile Include="IWriteableRepository.cs" />
+    <Compile Include="IRepository.cs" />
+    <Compile Include="ListQuery.cs" />
+    <Compile Include="ListQueryResult.cs" />
+    <Compile Include="ListQueryTest.cs" />
+    <Compile Include="Mappings\ChapterMasterMapping.cs" />
+    <Compile Include="Mappings\DepartmentMapping.cs" />
+    <Compile Include="Mappings\DivisionMapping.cs" />
+    <Compile Include="Mappings\HodNamesMapping.cs" />
+    <Compile Include="Mappings\HODWiseCountMapping.cs" />
+    <Compile Include="Mappings\IMappingProvider.cs" />
+    <Compile Include="Mappings\IssueManagementAnchorCommentMapping.cs" />
+    <Compile Include="Mappings\IssueManagementCommentLogMapping.cs" />
+    <Compile Include="Mappings\StatusMasterMapping.cs" />
+    <Compile Include="Mappings\UserDetailMapping.cs" />
+    <Compile Include="Mappings\UserWiseColumnNameMapping.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryParameter.cs" />
+    <Compile Include="Mappings\UserMapping.cs" />
+    <Compile Include="SAP\DivisionReposiory.cs" />
+    <Compile Include="Settings\UserRepository.cs" />
+    <Compile Include="Sql\ChapterMaster.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\ChapterOwnerMapping.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\CurrentUserSession.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\Division.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\EventLog.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\GetCSCDataBYRequestNo_Result.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\IssueManagementAnchorComment.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\IssueManagementCommentLog.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\PESModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PESModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\PESModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\PESModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PESModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\spAllData_Result.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\spDealerFeedbackDetail_Result.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\spDivisionCount_Result.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\spGetChaptersforResponsiblePerson_Result.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\spGetChaptersNameforResponsiblePerson_Result.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\spGetColorCodeforMilestone_Result.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\spGetColorCode_Result.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\spGetCommentLog_Result.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\spGetTSIDetail_Result.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\spHodCount1_Result.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\spHodCount_Result.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\spHodName1_Result.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\spHodName_Result.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\spIssueDetails1_Result.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\SpissuedetailsClose_Result.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\spIssueDetails_Result.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\spIssueDetails_Result1.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\spMilestoneLogDetails_Result.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\StatusMaster.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\Transaction\DepartmentRepository.cs" />
+    <Compile Include="Sql\Transaction\IssueManagementAnchorCommentRepository.cs" />
+    <Compile Include="Sql\Transaction\IssueManagementCommentLogRepository.cs" />
+    <Compile Include="Sql\UserDetail.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\UserProfile.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\UserWiseColumnName.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\webpages_Membership.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\webpages_OAuthMembership.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\webpages_Roles.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sql\webpages_UsersInRoles.cs">
+      <DependentUpon>PESModel.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Teckraft.Core\Teckraft.Core.csproj">
+      <Project>{a82d77af-0ef1-439d-92b6-d88501b25911}</Project>
+      <Name>Teckraft.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
+    <EntityDeploy Include="Sql\PESModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PESModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Sql\PESModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PESModel.edmx</DependentUpon>
+      <LastGenOutput>PESModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Sql\PESModel.edmx.diagram">
+      <DependentUpon>PESModel.edmx</DependentUpon>
+    </None>
+    <None Include="Sql\PESModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PESModel.edmx</DependentUpon>
+      <LastGenOutput>PESModel.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\" />
+    <Folder Include="Reports\" />
+    <Folder Include="Sql\Partial\" />
+    <Folder Include="Workflow\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

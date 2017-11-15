@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:54461/CRCustomWFService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Transactions" />
+  <xs:import schemaLocation="http://localhost:54461/CRCustomWFService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Teckraft.Core.Workflow" />
+  <xs:element name="Update">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Transactions" minOccurs="0" name="workItem" nillable="true" type="q1:CR" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Transactions" minOccurs="0" name="UpdateResult" nillable="true" type="q2:CR" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateTask">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Teckraft.Core.Workflow" minOccurs="0" name="workItem" nillable="true" type="q3:Task" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateTaskResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Teckraft.Core.Workflow" minOccurs="0" name="UpdateTaskResult" nillable="true" type="q4:Task" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Create">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Transactions" minOccurs="0" name="workItem" nillable="true" type="q5:CR" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Transactions" minOccurs="0" name="CreateResult" nillable="true" type="q6:CR" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

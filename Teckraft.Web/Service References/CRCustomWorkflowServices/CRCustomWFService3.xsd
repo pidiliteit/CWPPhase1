@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:54461/CRCustomWFService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" />
+  <xs:complexType name="BaseEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="RCB" nillable="true" type="q1:User" />
+      <xs:element minOccurs="0" name="RCT" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="RUT" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BaseEntity" nillable="true" type="tns:BaseEntity" />
+  <xs:complexType name="ArrayOfTeam">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Team" nillable="true" type="tns:Team" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTeam" nillable="true" type="tns:ArrayOfTeam" />
+  <xs:complexType name="Team">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="TeamCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TeamName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Team" nillable="true" type="tns:Team" />
+</xs:schema>

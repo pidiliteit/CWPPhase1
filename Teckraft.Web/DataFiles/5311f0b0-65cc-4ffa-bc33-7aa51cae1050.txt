@@ -1,0 +1,25 @@
+--	between 7 and 10 days
+select distinct r1.Title ra1, ChangeRequestCode, u.Title, cr.StatusText,cr.StageText,DATEDIFF(day,t.startdate,t.enddate) as daydif,r1.Email 
+from CRPhaseTask t inner join UserDetail u on u.userid=t.AssignedTo
+inner join UserDetail r1 on r1.UserId=u.RA1
+inner join CRStage stg on stg.id=t.CRStageId
+inner join cr on cr.Id=stg.CRId
+where Completed=0
+AND CR.StatusCode not in (0,99,98)
+and t.enddate > '2015-01-01'
+and DATEDIFF(day,t.startdate,t.enddate) between '7' and '10'
+order by r1.Title
+
+--	greater than 7 
+select distinct r1.Title ra1, ChangeRequestCode, u.Title, cr.StatusText,cr.StageText,DATEDIFF(day,t.startdate,t.enddate) as daydif,r1.Email 
+from CRPhaseTask t inner join UserDetail u on u.userid=t.AssignedTo
+inner join UserDetail r1 on r1.UserId=u.RA1
+inner join CRStage stg on stg.id=t.CRStageId
+inner join cr on cr.Id=stg.CRId
+where Completed=0
+AND CR.StatusCode not in (0,99,98)
+and t.enddate > '2015-01-01'
+and DATEDIFF(day,t.startdate,t.enddate) > '7'
+order by r1.Title
+
+--select * from CRPhaseTask

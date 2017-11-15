@@ -1,0 +1,3 @@
+<select  name="example-presets" multiple="multiple" size="5" data-ng-model="filterMonths" id="monthselect">
+	<option ng-repeat="mth in selFinMonths" value="{{mth}}">{{mth}}</option>
+</select>

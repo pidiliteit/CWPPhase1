@@ -1,0 +1,29 @@
+D:\teckraft\Prj\TeckraftWorkflowServiceApp\Teckraft.Core\Domian\Settings\vwStatusReport.cs
+
+D:\teckraft\Prj\TeckraftWorkflowServiceApp\Teckraft.Data\Sql\PESModel.edmx	
+
+D:\teckraft\Prj\TeckraftWorkflowServiceApp\Teckraft.Data\Mappings\VwStatusReportMapping.cs
+
+D:\teckraft\Prj\TeckraftWorkflowServiceApp\Teckraft.Data\Settings\VwStatusReportRepository.cs
+
+D:\teckraft\Prj\TeckraftWorkflowServiceApp\Teckraft.Services\VwStatusReportService.cs
+
+D:\teckraft\Prj\TeckraftWorkflowServiceApp\Teckraft.Web\API\vwStatusReportController.cs
+
+
+
+*************************************
+ public class VwStatusReportMapping : IMappingProvider<vwStatusReport, Sql.vw_statusReport>
+    {
+
+public vwStatusReport Map(Sql.vw_statusReport item)
+{
+    return new vwStatusReport() { TOTALCR = item.TOTALCR, EXCEPTION = item.EXCEPTION, NEWCR = item.NEWCR };
+}
+
+public vwStatusReport Map(Sql.vw_statusReport item)
+{
+    throw new NotImplementedException();
+}
+    }
+}

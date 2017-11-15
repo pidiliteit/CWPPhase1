@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Transactions" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Transactions" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:54461/CRCustomWFService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" />
+  <xs:import schemaLocation="http://localhost:54461/CRCustomWFService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.SAP" />
+  <xs:import schemaLocation="http://localhost:54461/CRCustomWFService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Teckraft.Core.Workflow" />
+  <xs:import schemaLocation="http://localhost:54461/CRCustomWFService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://localhost:54461/CRCustomWFService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" />
+  <xs:complexType name="CR">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" base="q1:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Agreed" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Attachments" nillable="true" type="tns:ArrayOfAttachment" />
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="BasisUser" nillable="true" type="q2:User" />
+          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="BusinessFunction" nillable="true" type="q3:BusinessFunction" />
+          <xs:element minOccurs="0" name="CRTypeId" type="xs:int" />
+          <xs:element minOccurs="0" name="ChangeRequestCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ChangeRequestNo" type="xs:int" />
+          <xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string" />
+          <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.SAP" minOccurs="0" name="Company" nillable="true" type="q4:Company" />
+          <xs:element minOccurs="0" name="Cost" type="xs:decimal" />
+          <xs:element minOccurs="0" name="CurrentStageText" nillable="true" type="xs:string" />
+          <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Teckraft.Core.Workflow" minOccurs="0" name="CurrentTask" nillable="true" type="q5:Task" />
+          <xs:element minOccurs="0" name="DesignDocumentRequired" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Details" nillable="true" type="xs:string" />
+          <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.SAP" minOccurs="0" name="Division" nillable="true" type="q6:Division" />
+          <xs:element minOccurs="0" name="DivisionApprover" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="DivisionApproverStatus" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EmailId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EndDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="EstimatedDays" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="ExecutionFlag" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="FAApprovalFlag" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="FunctionHeadApprovedDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="FunctionHeadRemarks" nillable="true" type="xs:string" />
+          <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="HODApprover" nillable="true" type="q7:User" />
+          <xs:element minOccurs="0" name="HardwareCostReceived" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="HardwareRequired" type="xs:boolean" />
+          <xs:element minOccurs="0" name="ITATDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ITATFlag" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="ITEvaluator" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="ITEvaluatorApprovedOn" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ITEvaluatorFlag" nillable="true" type="xs:boolean" />
+          <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="ITEvaluatorUser" nillable="true" type="q8:User" />
+          <xs:element minOccurs="0" name="ITFHFlag" nillable="true" type="xs:boolean" />
+          <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="ITFHUser" nillable="true" type="q9:User" />
+          <xs:element minOccurs="0" name="InfraCosting" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="InfraFlag" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Justification" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Logs" nillable="true" type="tns:ArrayOfCRLog" />
+          <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="MDCSubModules" nillable="true" type="q10:ArrayOfSubModule" />
+          <xs:element minOccurs="0" name="MeetingRequestDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+          <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="Module" nillable="true" type="q11:Module" />
+          <xs:element minOccurs="0" name="OnHoldDate" nillable="true" type="xs:dateTime" />
+          <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="OnHoldReason" nillable="true" type="q12:Reason" />
+          <xs:element minOccurs="0" name="PDDRequired" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="PIRequired" type="xs:boolean" />
+          <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="PendingWithUser" nillable="true" type="q13:User" />
+          <xs:element minOccurs="0" name="Phases" nillable="true" type="tns:ArrayOfCRPhase" />
+          <xs:element minOccurs="0" name="Priority" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ProcessApprovalCompleted" nillable="true" type="xs:boolean" />
+          <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="ProcessApprover" nillable="true" type="q14:User" />
+          <xs:element minOccurs="0" name="ProcessApproverFlag" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="ProjectCategorizedDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ProjectCategory" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ProjectCreated" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="ProjectStage" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RCT" type="xs:dateTime" />
+          <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="RUB" nillable="true" type="q15:User" />
+          <xs:element minOccurs="0" name="RUT" type="xs:dateTime" />
+          <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="RejectReason" nillable="true" type="q16:Reason" />
+          <xs:element minOccurs="0" name="Rejected" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Remarks" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RequestDate" type="xs:dateTime" />
+          <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="RequestType" nillable="true" type="q17:RequestType" />
+          <xs:element minOccurs="0" name="RequestTypeId" type="xs:int" />
+          <xs:element minOccurs="0" name="RevisedEndDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="RevisedITATDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="RevisedMeetingDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="RevisedUATDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="RevisedWireFrameDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="SAPTransportRemarks" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SAPUserId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityCheckCompleteDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="SecurityCheckEndDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="SecurityCheckFlag" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="SecurityCheckRequired" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="SecurityCheckStartDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="SendBackOtherReason" nillable="true" type="xs:string" />
+          <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="SendBackReason" nillable="true" type="q18:Reason" />
+          <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Teckraft.Core.Workflow" minOccurs="0" name="Sla" nillable="true" type="q19:SLA" />
+          <xs:element minOccurs="0" name="Stages" nillable="true" type="tns:ArrayOfCRStage" />
+          <xs:element minOccurs="0" name="StartDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="StatusCode" type="xs:int" />
+          <xs:element minOccurs="0" name="StatusText" nillable="true" type="xs:string" />
+          <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="SubModule" nillable="true" type="q20:SubModule" />
+          <xs:element minOccurs="0" name="Subject" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Success" type="xs:boolean" />
+          <xs:element minOccurs="0" name="TCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TotalCost" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="TransportSAPRequired" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="UATAccepted" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="UATDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="UATFlag" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="UATSignOffFlag" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="UatRequired" type="xs:boolean" />
+          <xs:element minOccurs="0" name="UnderstandingDocumentRequired" type="xs:boolean" />
+          <xs:element minOccurs="0" name="UniqueId" type="ser:guid" />
+          <xs:element minOccurs="0" name="VendorDetails" nillable="true" type="tns:ArrayOfVendorDetail" />
+          <xs:element minOccurs="0" name="WFInstianceId" type="ser:guid" />
+          <xs:element minOccurs="0" name="WireFrameCompleteDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="WireFrameDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="WireframeFlag" nillable="true" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CR" nillable="true" type="tns:CR" />
+  <xs:complexType name="ArrayOfAttachment">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Attachment" nillable="true" type="tns:Attachment" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAttachment" nillable="true" type="tns:ArrayOfAttachment" />
+  <xs:complexType name="Attachment">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q21="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" base="q21:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AttachmentType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Deleted" type="xs:boolean" />
+          <xs:element minOccurs="0" name="FileId" type="ser:guid" />
+          <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FileType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RelatedDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="TaskId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="TempPath" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VendorDetailId" nillable="true" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Attachment" nillable="true" type="tns:Attachment" />
+  <xs:complexType name="CRStage">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q22="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" base="q22:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CR" nillable="true" type="tns:CR" />
+          <xs:element minOccurs="0" name="CRId" type="xs:int" />
+          <xs:element minOccurs="0" name="Phases" nillable="true" type="tns:ArrayOfCRPhase" />
+          <xs:element minOccurs="0" name="Remarks" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SrNo" type="xs:int" />
+          <xs:element minOccurs="0" name="StageCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TeamId" type="xs:int" />
+          <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CRStage" nillable="true" type="tns:CRStage" />
+  <xs:complexType name="ArrayOfCRPhase">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CRPhase" nillable="true" type="tns:CRPhase" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCRPhase" nillable="true" type="tns:ArrayOfCRPhase" />
+  <xs:complexType name="CRPhase">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q23="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" base="q23:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ITATDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ITATRevisedDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="PhaseNumber" type="xs:int" />
+          <xs:element minOccurs="0" name="PhaseTitle" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Remarks" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RevisedUATDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="SrNo" type="xs:int" />
+          <xs:element minOccurs="0" name="Stage" nillable="true" type="tns:CRStage" />
+          <xs:element minOccurs="0" name="StartDate" nillable="true" type="xs:dateTime" />
+          <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Teckraft.Core.Workflow" minOccurs="0" name="Tasks" nillable="true" type="q24:ArrayOfTask" />
+          <xs:element minOccurs="0" name="UATDate" nillable="true" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CRPhase" nillable="true" type="tns:CRPhase" />
+  <xs:complexType name="ArrayOfCRLog">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CRLog" nillable="true" type="tns:CRLog" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCRLog" nillable="true" type="tns:ArrayOfCRLog" />
+  <xs:complexType name="CRLog">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q25="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" base="q25:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AssignedDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LogDetail" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LogType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="StageName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="StatusCode" type="xs:int" />
+          <xs:element minOccurs="0" name="StatusText" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CRLog" nillable="true" type="tns:CRLog" />
+  <xs:complexType name="ArrayOfCRStage">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CRStage" nillable="true" type="tns:CRStage" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCRStage" nillable="true" type="tns:ArrayOfCRStage" />
+  <xs:complexType name="ArrayOfVendorDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="VendorDetail" nillable="true" type="tns:VendorDetail" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfVendorDetail" nillable="true" type="tns:ArrayOfVendorDetail" />
+  <xs:complexType name="VendorDetail">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q26="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" base="q26:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AgencyName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CRId" type="xs:int" />
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DevelopmentBy" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EstimatedDaysEffort" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="HardwareCost" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="IsPreferredVendor" type="xs:boolean" />
+          <xs:element minOccurs="0" name="LicenseCost" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="Platform" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RUB" type="xs:int" />
+          <xs:element minOccurs="0" name="SecurityCost" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="SelectedVendor" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="SoftwareCost" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="TotalCost" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="UniqueId" type="ser:guid" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="VendorDetail" nillable="true" type="tns:VendorDetail" />
+</xs:schema>

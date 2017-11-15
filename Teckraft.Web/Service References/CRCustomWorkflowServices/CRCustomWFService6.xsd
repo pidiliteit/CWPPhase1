@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Teckraft.Core.Workflow" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Teckraft.Core.Workflow" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:54461/CRCustomWFService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" />
+  <xs:import schemaLocation="http://localhost:54461/CRCustomWFService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Transactions" />
+  <xs:import schemaLocation="http://localhost:54461/CRCustomWFService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://localhost:54461/CRCustomWFService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" />
+  <xs:complexType name="Task">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" base="q1:BaseEntity">
+        <xs:sequence>
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="AssignedTo" nillable="true" type="q2:User" />
+          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Transactions" minOccurs="0" name="CR" nillable="true" type="q3:CR" />
+          <xs:element minOccurs="0" name="CRPhaseId" type="xs:int" />
+          <xs:element minOccurs="0" name="CRStageId" type="xs:int" />
+          <xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Completed" type="xs:boolean" />
+          <xs:element minOccurs="0" name="CompletedDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="CorrelationId" type="ser:guid" />
+          <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ITATDate" nillable="true" type="xs:dateTime" />
+          <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="Level2" nillable="true" type="q4:User" />
+          <xs:element minOccurs="0" name="NoOfDays" type="xs:int" />
+          <xs:element minOccurs="0" name="ParentTaskId" type="xs:int" />
+          <xs:element minOccurs="0" name="RUB" type="xs:int" />
+          <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="RUBUser" nillable="true" type="q5:User" />
+          <xs:element minOccurs="0" name="RevisedDateRemark" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RevisedEndDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="RevisedITATDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="RevisedStartDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="RevisedUATDate" nillable="true" type="xs:dateTime" />
+          <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Transactions" minOccurs="0" name="Stage" nillable="true" type="q6:CRStage" />
+          <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="StatusCode" type="xs:int" />
+          <xs:element minOccurs="0" name="SubStatusCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Subject" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TargetDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="TaskNo" type="xs:int" />
+          <xs:element minOccurs="0" name="TaskType" nillable="true" type="tns:TaskType" />
+          <xs:element minOccurs="0" name="Team" nillable="true" type="q1:Team" />
+          <xs:element minOccurs="0" name="TeamId" type="xs:int" />
+          <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" minOccurs="0" name="TeamMember" nillable="true" type="q7:User" />
+          <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UATDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="UniqueId" type="ser:guid" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Task" nillable="true" type="tns:Task" />
+  <xs:complexType name="ArrayOfTask">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Task" nillable="true" type="tns:Task" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTask" nillable="true" type="tns:ArrayOfTask" />
+  <xs:complexType name="TaskType">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q8="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" base="q8:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="TaskTypeCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TaskTypeDesc" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="TaskType" nillable="true" type="tns:TaskType" />
+  <xs:complexType name="SLA">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q9="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" base="q9:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CRTypeId" type="xs:int" />
+          <xs:element minOccurs="0" name="ModuleId" type="xs:int" />
+          <xs:element minOccurs="0" name="SLA1Days" type="xs:int" />
+          <xs:element minOccurs="0" name="SLA2Days" type="xs:int" />
+          <xs:element minOccurs="0" name="SubModuleId" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SLA" nillable="true" type="tns:SLA" />
+</xs:schema>

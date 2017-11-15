@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.Settings" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:54461/CRCustomWFService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.SAP" />
+  <xs:import schemaLocation="http://localhost:54461/CRCustomWFService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" />
+  <xs:complexType name="User">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" base="q1:BaseEntity">
+        <xs:sequence>
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.SAP" minOccurs="0" name="Company" nillable="true" type="q2:Company" />
+          <xs:element minOccurs="0" name="CurrentIP" nillable="true" type="xs:string" />
+          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.SAP" minOccurs="0" name="Division" nillable="true" type="q3:Division" />
+          <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IsEvaluator" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsITFH" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsTeamMember" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Teams" nillable="true" type="q1:ArrayOfTeam" />
+          <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="User" nillable="true" type="tns:User" />
+  <xs:complexType name="BusinessFunction">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" base="q4:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DivisionId" type="xs:int" />
+          <xs:element minOccurs="0" name="FunctionCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FunctionName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="BusinessFunction" nillable="true" type="tns:BusinessFunction" />
+  <xs:complexType name="ArrayOfSubModule">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SubModule" nillable="true" type="tns:SubModule" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSubModule" nillable="true" type="tns:ArrayOfSubModule" />
+  <xs:complexType name="SubModule">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q5="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" base="q5:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CRTypeId" type="xs:int" />
+          <xs:element minOccurs="0" name="Id" type="xs:int" />
+          <xs:element minOccurs="0" name="RCB" type="xs:int" />
+          <xs:element minOccurs="0" name="RCT" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="RUB" type="xs:int" />
+          <xs:element minOccurs="0" name="RUT" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="SubModuleCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SubModuleName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SubModule" nillable="true" type="tns:SubModule" />
+  <xs:complexType name="Module">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q6="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" base="q6:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CRTypeId" type="xs:int" />
+          <xs:element minOccurs="0" name="ModuleCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ModuleName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Module" nillable="true" type="tns:Module" />
+  <xs:complexType name="Reason">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q7="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" base="q7:BaseEntity">
+        <xs:sequence>
+          <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.SAP" minOccurs="0" name="Division" nillable="true" type="q8:Division" />
+          <xs:element minOccurs="0" name="IsActive" type="xs:boolean" />
+          <xs:element minOccurs="0" name="ReasonCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ReasonDesc" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ReasonType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Remarks" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Reason" nillable="true" type="tns:Reason" />
+  <xs:complexType name="RequestType">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q9="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" base="q9:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="RequestTypeCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RequestTypeName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="requesttype" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RequestType" nillable="true" type="tns:RequestType" />
+</xs:schema>
