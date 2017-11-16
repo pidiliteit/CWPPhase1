@@ -1,0 +1,15 @@
+<div>
+	<table cellspacing="0" rules="all" border="1" style="border-collapse:collapse;">
+		<tr>
+			<th scope="col">Initiative</th><th scope="col">Milestone_Title</th><th scope="col">Milestone_Description</th><th scope="col">Product</th><th scope="col">Segment</th><th scope="col">SubSegment</th><th scope="col">Status</th><th scope="col">DesiredOutput</th><th scope="col">Comments</th>
+		</tr><tr>
+			<td>New 1</td><td>Mnew 1</td><td>&nbsp;</td><td>Hi-PER</td><td>FV Retail (105)</td><td>Marketing</td><td>Yet to Begin</td><td>d1</td><td>com 1</td>
+		</tr><tr>
+			<td>New 1</td><td>Mnew 2</td><td>&nbsp;</td><td>Hi-PER</td><td>FV Retail (105)</td><td>Marketing</td><td>Yet to Begin</td><td>d1</td><td>com 1</td>
+		</tr><tr>
+			<td>New 1</td><td>Mnew 5</td><td>&nbsp;</td><td>Hi-PER</td><td>FV Retail (105)</td><td>Marketing</td><td>Yet to Begin</td><td>d1</td><td>com 1</td>
+		</tr><tr>
+			<td>New 1</td><td>Mnew 15DEc</td><td>&nbsp;</td><td>Hi-PER</td><td>FV Retail (105)</td><td>Marketing</td><td>Yet to Begin</td><td>d1</td><td>com 1</td>
+		</tr>
+	</table>
+</div>

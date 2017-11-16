@@ -1,0 +1,2110 @@
+﻿<!-- Main content -->
+<style>
+    .the-legend {
+        margin-bottom: 0px;
+    }
+
+    .well {
+        padding: 10px;
+    }
+</style>
+<style>
+     .cMore{
+        display:inline-block;
+        width:500px;
+        white-space: nowrap;
+        overflow:hidden !important;
+        text-overflow: ellipsis;
+       
+    }
+ 
+
+.less {
+  overflow: hidden;
+  height: 2.5em;
+  line-height: 1.2em;
+  width: 500px;
+}
+
+/*#more {
+  height: auto;
+}*/
+</style>
+<script>
+    //document.querySelector('button').addEventListener('click', function () {
+    //    document.querySelector('#content').style.height = 'auto';
+    //    this.style.display = 'none';
+    //});
+</script>
+<style>
+
+    .accordion {
+        margin-top:10px;        
+    }
+
+    button.accordion {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+    }
+
+        button.accordion.active, button.accordion:hover {
+            background-color: #ddd;
+        }
+
+   div.panel {
+        padding: 0 18px;
+        display: none;
+        background-color: white;
+    }
+</style>
+<section class="content-header">
+    <div class="row pnl-page-detail-action">
+        <div class="col-md-12">
+            <h1>Issue Details </h1>
+        </div>
+    </div>
+</section>
+<section class="content-header">
+    <div class="row pnl-page-detail-action">
+        <div class="col-md-3" ng-show="userRole.RoleName1=='TopManagement' || userRole.RoleName4=='Employee' || userRole.RoleName3=='ChapterOwner' || userRole.RoleName2=='HOD' || userRole.RoleName1=='NSM' || userRole.RoleName1=='PSM'">
+            <input type="button" class="btn btn-primary" value="My Pending Issues" style="width: 100%" ng-click="DisplayPendingValues()" />
+        </div>
+        <div class="col-md-3" ng-show="userRole.RoleName3=='ChapterOwner'">
+            <input type="button" class="btn btn-primary" value="Chapter Anchor" style="width: 100%" ng-click="DisplayChapterOwnerValues()" />
+        </div>
+        @*<div class="col-md-4" ng-show="userRole.RoleName2=='HOD'">
+            <input type="button" class="btn btn-primary" value="HOD View" style="width: 100%"  ng-click="DisplayChapterHODValues()"/>
+        </div>*@
+        <div class="col-md-3" ng-show="userRole.RoleName1=='TopManagement' || userRole.RoleName1=='NSM' || userRole.RoleName1=='PSM'">
+            <input type="button" class="btn btn-primary" value="Member View" style="width: 100%"  ng-click="DisplayChapterAllValues()"/>
+        </div>
+    </div>
+  <div class="overlay" ng-show="loading" align="center"><br />
+        <img src="~/Content/img/GetAttachment.gif" />
+    </div>
+</section>
+
+<section class="content" ng-show="IsVisible" style="min-height:500px">
+    <div ng-show="IsVisible">
+        <div>
+            <h3>My Pending Issues</h3>
+        </div>
+
+        <div ng-repeat="cap in chapterDetails" class="col-sm-3">
+            <button class="btn btn-primary" style="border-radius: 0px; background-color: #cce6ff; color: black; font-weight: bold;width:200px;height:200px"  ng-click="getHOdsNameforPending('{{cap.ChapterNameFromSystem}}','{{cap.ChapterNameDisplay}}','{{cap.EditFlag}}','ChapterAnchor')">
+                <h4>  {{cap.ChapterNameDisplay}} <br /><br/><b>Open Issues: {{cap.IssueCount}}</b> </h4>  <span> <br />  </span>
+            </button>
+
+            <br /><br />
+        </div>
+         <div ng-show="chapterDetails.length==0" class="alert alert-danger">
+            <i class="fa fa-ban"></i>No Records Found
+        </div>
+        </div>
+</section>
+
+<section class="content" ng-show="IsVisible1">
+    <div ng-show="IsVisible1">
+        <div>
+            <h3>Chapter Anchor</h3>
+        </div>
+ 
+        <div ng-repeat="cap in ownerChapterDetails" class="col-sm-3">
+            <button class="btn btn-primary" style="border-radius: 0px; background-color: #cce6ff; color: black; font-weight: bold;width:200px;height:200px" ng-click="getHOdsName('{{cap.ChapterNameFromSystem}}','{{cap.ChapterNameDisplay}}','{{cap.EditFlag}}','ChapterAnchor')">
+                <h4>  {{cap.ChapterNameDisplay}}</h4> <br /> <span> Anchor Name: <br /> {{cap.ChapterOwner}}  </span>
+            </button>
+
+                <br /><br />
+            </div>
+        <div ng-show="ownerChapterDetails.length==0" class="alert alert-danger">
+                <i class="fa fa-ban"></i>No Records Found
+        </div>
+    </div>
+</section>
+
+<section class="content" ng-show="IsVisible2" style="height:800px">
+    <div ng-show="IsVisible2">
+        <div>
+            <h3>HOD View</h3>
+        </div>
+        <div ng-repeat="cap in hodChapterDetails" class="accdiv">
+            <button class="accordion" style="border-radius: 0px; background-color: #cce6ff; color: black; font-weight: bold" ng-click="getHODChapterWiseIssues('{{cap.ChapterNameFromSystem}}')">
+                {{cap.ChapterNameDisplay}} - (Chapter Anchor Name: {{cap.ChapterOwner}})  <span style="position: absolute;  right: 100px;""> Data till - {{cap.RunDate}}</span>
+         
+            </button>
+             
+            <div class="panel" >
+                <p>
+
+                    <div style="overflow-y: auto; height: 200px">
+                        <table class="table table-hover table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Sr. No.</th>
+                                    <th>Request No.</th>
+                                    <th>Issue Details</th>
+                                    <th>Latest Comments</th>
+                                    @*<th>Status Flag</th>*@
+                                    <th>Reported By</th>
+                                    <th>Department</th>
+                                    <th>Location</th>
+                                    <th>Pending With</th>
+                                    <th>Pending Since (Days)</th>
+                                    <th>Created Date</th> 
+                                    @*<th>Reported Date</th>*@
+                                </tr>
+                                <tr ng-repeat="i in hodIssueDetails">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{i.RequestNo}}</td>
+                                    <td style="text-align:justify">{{i.IssueDetail1}}</td>
+                                    <td style="text-align:justify">{{i.Comments}}</td>
+                                    @*<td>{{i.Status}}</td>*@
+                                    <td>{{i.ReportedByName}}</td>
+                                    <td>{{i.Department}}</td>
+                                    <td>{{i.Location}}</td>
+                                    <td>{{i.PendingWithEmail}}</td>
+                                    <td>{{i.PendingSince}}</td>
+                                     <td>{{i.LoggedDate}}</td>
+                                    @*<td>{{i.RunDate}}</td>*@
+                                </tr>
+                            </tbody>
+                        <div ng-show="hodChapterDetails.length==0" class="alert alert-danger">
+                                <i class="fa fa-ban"></i>No Records Found
+                        </div>
+                        </table>
+                    </div>
+
+                </p>
+            </div>
+
+
+        </div>
+        <div ng-show="hodChapterDetails.length==0" class="alert alert-danger">
+                <i class="fa fa-ban"></i>No Records Found
+        </div>
+    </div>
+</section>
+
+
+<section class="content" ng-show="IsVisible3" style="padding-top:0px;padding-bottom:0px;height:800px" >
+    <div ng-show="IsVisible3">
+        <div>
+                <h3>Member View</h3>
+            </div>
+        <br/><br/>
+        <div ng-repeat="cap in allChapterDetails" class="col-sm-3">
+            
+            <button class="btn btn-primary" style="border-radius: 0px; background-color: #cce6ff; color: black; font-weight: bold;width:200px;height:200px" ng-click="getHOdsName('{{cap.ChapterNameFromSystem}}','{{cap.ChapterNameDisplay}}','{{cap.EditFlag}}','Member')">
+                <span ><h4> {{cap.ChapterNameDisplay}}</h4></span> <br /> <span> Anchor Name: <br /> {{cap.ChapterOwner}}  </span>
+            </button>
+            <br /><br />
+            
+
+
+        </div>
+        <div ng-show="allChapterDetails.length==0" class="alert alert-danger">
+            <i class="fa fa-ban"></i>No Records Found
+        </div>
+       
+    </div>
+</section>
+
+
+@*Anchor Comments and MemberView -- Is Visible --4*@
+<section class="content" ng-show="IsVisible4" style="padding-top:0px;padding-bottom:0px;height:1600px">
+    <div class="row" style="margin-top:0px">
+        <div class="col-sm-6 col-xs-12">
+            <div class="form-group">
+                <h4>
+                    <b>{{TopMgmt}}</b>
+                </h4>
+            </div>
+        </div>        
+                <div class="col-sm-6 col-xs-12" align="right">
+                    <div class="form-group">
+                        <br/>
+                        <input type="button" class="btn btn-primary" value="Back" ng-click="back()" />
+                    </div>
+                </div>
+            </div>
+    
+            <div align="left">
+                <div id="container" style="min-width: 500px; height: 300px;" align="left"></div>
+            </div>
+       
+    <div class="row">
+        <div class="col-sm-4 col-xs-12">
+            <div class="form-group">
+                <label>Select Division</label>
+                <select class="form-control" ng-model="item.division" ng-change="getSelectedHODChapterWiseIssues('','')" ng-options="md.SAPDivisionName for md in hodNameData">
+                    <option value="">Select..</option>
+                </select>
+
+            </div>
+        </div>
+        <div class="row">
+            @*MarkteSUdhar,PilWorld WSS Feedback , Dealer Feedback*@
+            <div class="col-sm-12 col-xs-12" align="right" ng-if="TopMgmt=='Market Sudhar' || TopMgmt=='Pilworld WSS feedback' || TopMgmt=='Dealer Feedback' || TopMgmt=='My Pidilite' || TopMgmt=='Customer Service Cell'  || TopMgmt=='WSS Service Cell' || TopMgmt=='Birthday Lunch' || TopMgmt=='Simplified Suggestion' || TopMgmt=='Sampark' || TopMgmt=='Pidilite Ideas Initiatives' || TopMgmt=='Risk Management'">
+                <input type="button" class="btn btn-primary pull-right" value="Export Closed Issues" ng-click="downloadFullDumpClose('{{SystemTopMngt}}')" />
+                @*<nav class="navbar navbar-static-top" role="navigation">
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown user user-menu">
+                                <a href="javascript:;" class="dropdown-toggle btn btn-primary pull-right" style="margin-left: 815px;padding-top: 5px;padding-bottom: 7px;" data-toggle="dropdown">
+                                    Show Columns
+                                </a>
+                                <ul class="dropdown-menu" id="testclick">
+                                    <li align="left"> <input type="checkbox" ng-model="userWiseColumnNames.ID_Issue_Detail1" /> Issue Details </li>
+                                    <li align="left"> <input type="checkbox" ng-model="userWiseColumnNames.id_request" /> Request No. </li>
+                                    <li align="left"> <input type="checkbox" ng-model="userWiseColumnNames.id_reported_by_name" /> Reported By  </li>
+                                    <li align="left"> <input type="checkbox" ng-model="userWiseColumnNames.id_dept" /> Division </li>
+                                    <li align="left"> <input type="checkbox" ng-model="userWiseColumnNames.id_location" /> Location </li>
+                                    <li align="left"> <input type="checkbox" ng-model="userWiseColumnNames.id_pending_with_name" /> Pending With  </li>
+                                    <li align="left"> <input type="checkbox" ng-model="userWiseColumnNames.pendingSince" /> Pending Since </li>
+                                    <li align="left"> <input type="checkbox" ng-model="userWiseColumnNames.id_comments" /> Comments </li>
+                                    <li align="left"><input type="button" class="btn btn-primary" data-dismiss="modal" value="Submit" ng-click="GetCheckedDetails()" /></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                </nav>*@
+            </div>
+        </div>
+                @****************************************************@
+        @*Dealer Feedback*@
+                <div ng-if="TopMgmt=='Dealer Feedback'">
+                    <div class="col-sm-12 col-xs-12" ng-if="beyondCount>0">
+                        <fieldset class="well the-fieldset" style="margin-top: 10px;" >
+                            <legend style="margin-bottom:0px" > Beyond TAT - <b><span>{{beyondCount}} </span></b>Issues </legend>
+                            @*<div class="col-md-4" align="left">
+                                <font color="blue"><b> * Click here to view details</b></font>
+                            </div>*@
+                          
+                                <div class="col-md-12">
+                                    <input type="button" class="btn btn-primary pull-right" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Beyond')" />
+                                </div>
+                             
+                            <div class="col-sm-12 col-xs-12">
+                                <p>
+                                    <div style="overflow-y: auto; height: 200px" >
+                                        <table class="table table-hover table-striped table-bordered" id="tab1">
+                                            <tbody>
+                                                <tr>
+                                                    @*<th>Sr. No.</th>*@
+                                                    @*<th>Request No.</th>*@
+                                                    <th>Issue Details</th>
+                                                    <th>Pending With</th>
+                                                    <th>Collaborator Comment</th>
+                                                    <th>Anchor Comments</th>                                          
+                                                </tr>
+                                                <tr ng-repeat="i in hodIssueDetails  | filter: checkifGreaterthan('PendingSince',7)">
+                                                    @*<td>{{$index+1}}</td>*@
+                                                    @*<td>{{i.RequestNo}}</td>*@
+                                                    <td>
+                                                        <div class="less" id="BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                        <a id="BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                        <br />
+                                                        <a style="visibility:hidden" id="BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a> 
+                                                    </td>
+                                                    <td>{{i.PendingStatus}} ({{i.PendingWithName}} ({{i.PendingWithEmail}}))</td>
+                                                    <td style="text-align:justify">{{i.Comments}}</td>
+                                                    <td style="text-align:justify">
+                                                        {{i.AnchorSentBackComments}}
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                        <div class="alert alert-danger" ng-show="trueFlag==0">
+                                            <i class="fa fa-ban"></i>No Records Found
+                                        </div>
+                                    </div>
+
+
+                                </p>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-sm-12 col-xs-12" ng-if="withinCount>0">
+
+                        <fieldset class="well the-fieldset" style="margin-top: 10px;">
+                            <legend style="margin-bottom:0px" > Within TAT - <b><span>{{withinCount}} </span></b>Issues </legend>
+                            @*<div class="col-md-4" align="left">
+                                <font color="blue"><b> * Click here to view details</b></font>
+                            </div>*@
+                            <div class="col-md-12" >
+                                <input type="button" class="btn btn-primary pull-right" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Within')" />
+                            </div>
+                            <div class="col-sm-12 col-xs-12">
+                                <p>
+                                    <div style="overflow-y: auto; height: 200px">
+
+                                        <table class="table table-hover table-striped table-bordered" id="tab2">
+                                            <tbody>
+                                                <tr>
+                                                    @*<th>Sr. No.</th>*@
+                                                    @*<th>Request No.</th>*@
+                                                    <th>Issue Details</th>
+                                                    <th>Pending With</th>
+                                                    <th>Collaborator Comment</th>
+                                                    <th>Anchor Comments</th>
+                                                </tr>
+                                                <tr ng-repeat="i in hodIssueDetails | filter: checkiflessthan('PendingSince',7)">
+                                                    @*<td>{{$index+1}}</td>*@
+                                                    @*<td>{{i.RequestNo}}</td>*@
+                                                    <td style="text-align:justify">
+                                                        <div class="less" id="WithinMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                        <a id="WithinMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('WithinMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                        <br />
+                                                        <a style="visibility:hidden" id="WithinMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('WithinMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a> 
+                                                    </td>
+                                                    <td>{{i.PendingStatus}} ({{i.PendingWithName}} ({{i.PendingWithEmail}}))</td>
+                                                    <td style="text-align:justify">{{i.Comments}}</td>
+                                                    <td style="text-align:justify">
+                                                        {{i.AnchorSentBackComments}}
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                        <div class="alert alert-danger" ng-show="falseFlag==0">
+                                            <i class="fa fa-ban"></i>No Records Found
+                                        </div>
+                                    </div>
+
+
+                                </p>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+        @*Risk Mangement*@
+                <div ng-if="TopMgmt=='Risk Management'">
+                    <div class="col-sm-12 col-xs-12" ng-if="beyondCount>0">
+                        <fieldset class="well the-fieldset" style="margin-top: 10px;">
+                            <legend style="margin-bottom:0px" >Risk <b><span>{{beyondCount}} </span></b>Issues</legend>
+                            @*<div class="col-md-4" align="left">
+                                <font color="blue"><b> * Click here to view details</b></font>
+                            </div>*@
+                            <div class="col-md-12" >
+                                <input type="button" class="btn btn-primary pull-right" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Beyond')" />
+                            </div>
+
+                            <div class="col-sm-12 col-xs-12">
+                                <p>
+                                    <div style="overflow-y: auto; height: 200px">
+                                        <table class="table table-hover table-striped table-bordered" id="tab1">
+                                            <tbody>
+                                                <tr>
+                                                    @*<th>Sr. No.</th>
+                                                    <th>Request No.</th>
+                                                    <th>Category</th>
+                                                    <th>Risk Details</th>*@
+                                                    <th>Issue Details</th>
+                                                    <th>Pending With</th>
+                                                    <th>Collaborator Comment</th>
+                                                    @*<th>Target Date</th>*@
+                                                    <th>Anchor Comments</th>
+
+                                                </tr>
+                                                <tr ng-repeat="i in hodIssueDetails  | filter: checkifGreaterthan('PendingSince',7)">
+                                                    @*<td>{{$index+1}}</td>
+                                                    <td>{{i.RequestNo}}</td>
+                                                    <td>{{i.ID_Category}}</td>*@
+                                                    <td style="text-align:justify">
+                                                        <div class="less" id="BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                        <a id="BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                        <br />
+                                                        <a style="visibility:hidden" id="BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a> 
+                                                    </td>
+                                                    <td>{{i.PendingStatus}} ({{i.PendingWithName}} ({{i.PendingWithEmail}}))</td>
+                                                    <td style="text-align:justify">{{i.Comments}}</td>
+                                                    <td style="text-align:justify">
+                                                        {{i.AnchorSentBackComments}}
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                                    </td>
+                                                    @*<td>{{i.ID_Target_Date}}</td>*@
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="alert alert-danger" ng-show="trueFlag==0">
+                                            <i class="fa fa-ban"></i>No Records Found
+                                        </div>
+                                    </div>
+                                </p>
+                            </div>
+                        </fieldset>
+                    </div>
+
+
+                </div>
+
+                @*My Pidilite*@
+                <div ng-if="TopMgmt=='My Pidilite' && hodIssueDetails.length>0">
+                    <div class="col-sm-12 col-xs-12" ng-if="beyondCount>0">
+                        <fieldset class="well the-fieldset" style="margin-top: 10px;">
+                            <legend style="margin-bottom:0px" > Beyond TAT - <b><span>{{beyondCount}} </span></b>Issues</legend>
+                            @*<div class="col-md-4" align="left">
+                                <font color="blue"><b> * Click here to view details</b></font>
+                            </div>*@
+                            <div class="col-md-12" >
+                                <input type="button" class="btn btn-primary pull-right" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Beyond')" />
+                            </div>
+                            <div class="col-sm-12 col-xs-12">
+                                <p>
+                                    <div style="overflow-y: auto; height: 200px">
+                                        <table class="table table-hover table-striped table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    @*<th>Sr. No.</th>*@
+                                                    <th>Issue Details</th>
+                                                    <th>Pending With</th>
+                                                    <th>Latest Comments</th>
+                                                </tr>
+                                                <tr ng-repeat="i in hodIssueDetails | filter:{TAT:'Beyond TAT'}">
+                                                    @*<td>{{$index+1}}</td>*@
+                                                    <td style="text-align:justify">
+                                                        <div class="less" id="BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                        <a id="BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                        <br />
+                                                        <a style="visibility:hidden" id="BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a> 
+                                                    </td>
+                                                    @*<td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>*@
+                                                    <td>{{i.PendingStatus}}  ({{i.ResponsibleWithName}} ({{i.ResponsibleWithEmail}}))</td>
+                                                    <td style="text-align:justify">{{i.Comments}}</td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </p>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-sm-12 col-xs-12" ng-if="withinCount>0">
+
+                        <fieldset class="well the-fieldset" style="margin-top: 10px;">
+                            <legend style="margin-bottom:0px"> Within TAT - <b><span>{{withinCount}} </span></b>Issues </legend>
+                            @*<div class="col-md-4" align="left">
+                                <font color="blue"><b> * Click here to view details</b></font>
+                            </div>*@
+                            <div class="col-md-12" >
+                                <input type="button" class="btn btn-primary pull-right" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Within')" />
+                            </div>
+                            <div class="col-sm-12 col-xs-12">
+                                <p>
+                                    <div style="overflow-y: auto; height: 200px">
+                                        <table class="table table-hover table-striped table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    @*<th>Sr. No.</th>*@
+                                                    <th>Issue Details</th>
+                                                    <th>Pending With</th>
+                                                    <th>Latest Comments</th>
+                                                </tr>
+                                                <tr ng-repeat="i in hodIssueDetails  | filter:{TAT:'Within TAT'}">
+                                                    @*<td>{{$index+1}}</td>*@
+                                                    <td style="text-align:justify">
+                                                        <div class="less" id="WithinMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                        <a id="WithinMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('WithinMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                        <br />
+                                                        <a style="visibility:hidden" id="WithinMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('WithinMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a> 
+                                                    </td>
+                                                    @*<td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>*@
+                                                    <td>{{i.PendingStatus}} ({{i.ResponsibleWithName}} ({{i.ResponsibleWithEmail}}))</td>
+                                                    <td style="text-align:justify">{{i.Comments}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </p>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+        
+                @*WSS Service Cell*@
+                <div ng-show="TopMgmt=='WSS Service Cell' ">
+                    <div class="col-sm-12 col-xs-12" ng-if="beyondCount>0">
+                        <fieldset class="well the-fieldset" style="margin-top: 10px;">
+                            <legend style="margin-bottom:0px" > Beyond TAT - <b><span>{{beyondCount}} </span></b>Issues </legend>
+                            @*<div class="col-md-4" align="left">
+                                <font color="blue"><b> * Click here to view details</b></font>
+                            </div>*@
+                            <div class="col-md-12" >
+                                <input type="button" class="btn btn-primary pull-right" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Beyond')" />
+                            </div>
+                            <div class="col-sm-12 col-xs-12">
+                                <p>
+                                    <div style="overflow-y: auto; height: 200px" >
+                                        <table class="table table-hover table-striped table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    @*<th>Sr. No.</th>*@
+                                                    @*<th>Request No.</th>*@
+                                                    <th>Issue Details</th>
+                                                    @*<th>Reported By</th>
+                                                    <th>Location</th>*@
+                                                    <th>Pending With</th>
+                                                    <th>Collaborator Comment</th>
+                                                    <th>Anchor Comments</th>
+                                                </tr>
+                                                <tr ng-repeat="i in hodIssueDetails | filter:{TAT:'Beyond TAT'}">
+                                                    @*<td>{{$index+1}}</td>*@
+                                                    @*<td>{{i.RequestNo}}</td>*@
+                                                    <td style="text-align:justify">
+                                                        <div class="less" id="BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                        <a id="BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                        <br />
+                                                        <a style="visibility:hidden" id="BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a> 
+
+                                                    </td>
+                                                    @*<td>{{i.ReportedByName}} ({{i.ReportedByEmail}})</td>
+                                                    <td>{{i.Location}}</td>*@
+                                                    @*<td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>*@
+                                                    <td>{{i.PendingStatus}} ({{i.ResponsibleWithName}} ({{i.ResponsibleWithEmail}}))</td>
+                                                    <td style="text-align:justify">{{i.Comments}}</td>
+                                                    <td style="text-align:justify">
+                                                        {{i.AnchorSentBackComments}}
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </p>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-sm-12 col-xs-12" ng-if="withinCount>0">
+
+                        <fieldset class="well the-fieldset" style="margin-top: 10px;">
+                            <legend style="margin-bottom:0px" > Within TAT - <b><span>{{withinCount}} </span></b>Issues </legend>
+                            @*<div class="col-md-4" align="left">
+                                <font color="blue"><b> * Click here to view details</b></font>
+                            </div>*@
+                            <div class="col-md-12" >
+                                <input type="button" class="btn btn-primary pull-right" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Within')" />
+                            </div>
+                            <div class="col-sm-12 col-xs-12">
+                                <p>
+                                    <div style="overflow-y: auto; height: 200px" >
+                                        <table class="table table-hover table-striped table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    @*<th>Sr. No.</th>*@
+                                                    @*<th>Request No.</th>*@
+                                                    <th>Issue Details</th>
+                                                    @*<th>Reported By</th>
+                                                    <th>Location</th>*@
+                                                    <th>Pending With</th>
+                                                    <th>Collaborator Comment</th>
+                                                    <th>Anchor Comments</th>
+                                                </tr>
+                                                <tr ng-repeat="i in hodIssueDetails | filter:{TAT:'Within TAT'}">
+                                                    @*<td>{{$index+1}}</td>*@
+                                                    @*<td>{{i.RequestNo}}</td>*@
+                                                    <td style="text-align:justify">
+                                                        <div class="less" id="WithinMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                        <a id="WithinMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('WithinMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                        <br />
+                                                        <a style="visibility:hidden" id="WithinMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('WithinMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a> 
+                                                    </td>
+                                                    @*<td>{{i.ReportedByName}} ({{i.ReportedByEmail}})</td>
+                                                    <td>{{i.Location}}</td>*@
+                                                    @*<td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>*@
+                                                    <td>{{i.PendingStatus}} ({{i.ResponsibleWithName}} ({{i.ResponsibleWithEmail}}))</td>
+                                                    <td style="text-align:justify">{{i.Comments}}</td>
+                                                    <td style="text-align:justify">
+                                                        {{i.AnchorSentBackComments}}
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </p>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                @*bIRTHDAY LUNCH,Sampark,Suggestion_at_facebook,simplified Suggestion*@
+                <div ng-if="TopMgmt=='Birthday Lunch' || TopMgmt== 'Sampark' || TopMgmt=='Pidilite Ideas Initiatives' || TopMgmt=='Simplified Suggestion'">
+                    <div class="col-sm-12 col-xs-12"  ng-if="beyondCount>0">
+                        <fieldset class="well the-fieldset" style="margin-top: 10px;">
+                            <legend style="margin-bottom:0px" > Issue Details - <b><span>{{beyondCount}} </span></b>Issues </legend>
+                            @*<div class="col-md-4" align="left">
+                                <font color="blue"><b> * Click here to view details</b></font>
+                            </div>*@
+                            <div class="col-md-12" >
+                                <input type="button" class="btn btn-primary pull-right" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Beyond')" />
+                            </div>
+                            <div class="col-sm-12 col-xs-12">
+                                <p>
+                                    <div style="overflow-y: auto; height: 200px" >
+                                        <table class="table table-hover table-striped table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    @*<th>Sr. No.</th>*@
+                                                    <th>Issue Details</th>
+                                                    @*<th>Reported By</th>*@
+                                                    <th>Pending With</th>
+                                                    @*<th>Pending Since(Days)</th>*@
+                                                    <th>Collaborator Comment</th>                                                    
+                                                    <th>Anchor Comments</th>
+                                                </tr>
+                                                <tr ng-repeat="i in hodIssueDetails">
+                                                    @*<td>{{$index+1}}</td>*@
+                                                    <td style="text-align:justify">
+                                                        <div class="less" id="BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                        <a id="BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                        <br />
+                                                        <a style="visibility:hidden" id="BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a> 
+                                                    </td>
+                                                    @*<td>{{i.ReportedByName}} ({{i.ReportedByEmail}})</td>*@
+                                                    <td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>
+                                                    @*<td>{{i.PendingSince}}</td>*@
+                                                    <td style="text-align:justify">{{i.Comments}}</td>
+                                                    <td style="text-align:justify">
+                                                        {{i.AnchorSentBackComments}}
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </p>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                @*Market Sudhar*@
+                <div ng-if="TopMgmt=='Market Sudhar'">
+                    <div class="col-sm-12 col-xs-12" ng-if="beyondCount>0">
+                        <fieldset class="well the-fieldset" style="margin-top: 10px;" ng-show="hodIssueDetails.length>0">
+                            <legend style="margin-bottom:0px" > Beyond TAT - <b><span>{{beyondCount}} </span></b>Issues </legend>
+                            @*<div class="col-md-4" align="left">
+                                <font color="blue"><b> * Click here to view details</b></font>
+                            </div>*@
+                            <div class="col-md-12" >
+                                <input type="button" class="btn btn-primary pull-right" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Beyond')" />
+
+
+                            </div>
+                            <div class="col-sm-12 col-xs-12">
+                                <p>
+                                    <div style="overflow-y: auto; height: 200px" >
+                                        <table class="table table-hover table-striped table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    @*<th>Sr. No.</th>*@
+                                                    <th ng-show="userWiseColumnNames.ID_Issue_Detail1==true">Issue Details</th>
+                                                    @*<th ng-show="userWiseColumnNames.id_location==true">Location</th>*@
+                                                    <th ng-show="userWiseColumnNames.id_pending_with_name==true">Pending With</th>
+                                                    @*<th ng-show="userWiseColumnNames.pendingSince==true">Pending Since(Days)</th>*@
+                                                    <th ng-show="userWiseColumnNames.id_comments==true">Collaborator Comment</th>
+                                                    <th ng-show="userWiseColumnNames.AnchorSentBackComments==true">Anchor Comments</th>
+
+                                                    @*<th ng-show="userWiseColumnNames.id_request==true">Request No.</th>*@
+                                                    @*<th ng-show="userWiseColumnNames.id_reported_by_name==true || userWiseColumnNames.id_reported_by_email==true">Reported By</th>
+                                                    <th ng-show="userWiseColumnNames.id_dept==true">Division</th>*@
+                                                    @*<th ng-show="userWiseColumnNames.id_pending_with_name==true || userWiseColumnNames.id_pending_with_email==true">Pending With</th>*@
+                                                    @*<th>Comments by Anchor</th>*@
+                                                    @*<th>Add Comment</th>*@
+                                                </tr>
+                                                <tr ng-repeat="i in hodIssueDetails  | filter: checkifGreaterthan('PendingSince',45)">
+                                                    @*<td>{{$index+1}}</td>*@
+                                                    <td style="text-align:justify" ng-show="userWiseColumnNames.ID_Issue_Detail1==true">
+                                                        <div class="less" id="BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                        <a id="BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                        <br />
+                                                        <a style="visibility:hidden" id="BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a> 
+                                                    </td>
+                                                    @*<td ng-show="userWiseColumnNames.id_location==true">{{i.Location}}</td>*@
+                                                    <td ng-show="userWiseColumnNames.id_pending_with_name==true">{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>
+                                                    @*<td ng-show="userWiseColumnNames.pendingSince==true">{{i.PendingSince}}</td>*@
+                                                    <td style="text-align:justify" ng-show="userWiseColumnNames.id_comments==true">{{i.Comments}}</td>
+                                                    <td style="text-align:justify" ng-show="userWiseColumnNames.AnchorSentBackComments==true">
+                                                        {{i.AnchorSentBackComments}}
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                                    </td>
+
+                                                    @*<td ng-show="userWiseColumnNames.id_request==true">{{i.RequestNo}}</td>
+                                                    <td ng-show="userWiseColumnNames.id_reported_by_name==true || userWiseColumnNames.id_reported_by_email==true">{{i.ReportedByName}} ({{i.ReportedByEmail}})}</td>
+                                                    <td ng-show="userWiseColumnNames.id_dept==true">{{i.Department}}</td>*@
+                                                    @*<td ng-show="userWiseColumnNames.id_pending_with_name==true || userWiseColumnNames.id_pending_with_email==true">{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>*@
+                                                    @*<td>
+                                                            <div>
+                                                                <a style="cursor:pointer" class="btn btn-primary" data-target="#myModal1Anchor{{getVal(SystemTopMngt)}}{{$index}}" ng-click="openModal(i,$index,'myModal1Anchor{{getVal(SystemTopMngt)}}{{$index}}')">Add Comment</a>
+                                                                <div class="modal" data-backdrop="static" data-keyboard="false" id="myModal1Anchor{{getVal(SystemTopMngt)}}{{$index}}" role="dialog">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                                <h4 class="modal-title">Comment Box</h4>
+                                                                            </div>
+
+                                                                            <div class="modal-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-12 col-xs-12">
+                                                                                        <div style="font-size:12px;color:red">*Note: Click submit button save Comments and Status. <br /><br /></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row" ng-repeat="com in issueCommentDetails">
+                                                                                    <div class="col-sm-8 col-xs-12">
+                                                                                        <div class="form-group">
+                                                                                            <label><i class=""></i>Comments </label>
+                                                                                            <textarea class="form-control" ng-model="com.anchorComments" placeholder="Comments"></textarea>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-primary" ng-click="saveAnchorComments(i,issueCommentDetails,$index,'myModal1Anchor{{getVal(SystemTopMngt)}}{{$index}}')">Submit</button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>*@
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+
+                                        <div class="alert alert-danger" ng-show="trueFlag==0">
+                                            <i class="fa fa-ban"></i>No Records Found
+                                        </div>
+                                    </div>
+                                </p>
+                            </div>
+
+                        </fieldset>
+                    </div>
+                    <div>
+
+                    </div>
+                    <div class="col-sm-12 col-xs-12" ng-if="withinCount>0">
+
+                        <fieldset class="well the-fieldset" style="margin-top: 10px;" ng-show="hodIssueDetails.length>0">
+                            <legend style="margin-bottom:0px"  > Within TAT - <b><span>{{withinCount}} </span></b>Issues </legend>
+                            @*<div class="col-md-4" align="left">
+                                <font color="blue"><b> * Click here to view details</b></font>
+                            </div>*@
+                            <div class="col-md-12" >
+                                <input type="button" class="btn btn-primary pull-right" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Within')" />
+                            </div>
+                            <div class="col-sm-12 col-xs-12">
+                                <p>
+                                    <div style="overflow-y: auto; height: 200px" >
+                                        <table class="table table-hover table-striped table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <th>Sr. No.</th>
+                                                    <th ng-show="userWiseColumnNames.ID_Issue_Detail1==true">Issue Details</th>
+                                                    @*<th ng-show="userWiseColumnNames.id_location==true">Location</th>*@
+                                                    <th ng-show="userWiseColumnNames.id_pending_with_name==true">Pending With</th>
+                                                    @*<th ng-show="userWiseColumnNames.pendingSince==true">Pending Since(Days)</th>*@
+                                                    <th ng-show="userWiseColumnNames.id_comments==true">Collaborator Comment</th>
+                                                    <th ng-show="userWiseColumnNames.AnchorSentBackComments==true">Anchor Comments</th>
+
+                                                    @*<th ng-show="userWiseColumnNames.id_request==true">Request No.</th>
+                                                    <th ng-show="userWiseColumnNames.id_reported_by_name==true || userWiseColumnNames.id_reported_by_email==true">Reported By</th>
+                                                    <th ng-show="userWiseColumnNames.id_dept==true">Division</th>*@
+                                                    @*<th ng-show="userWiseColumnNames.id_pending_with_name==true || userWiseColumnNames.id_pending_with_email==true">Pending With</th>*@
+
+                                                </tr>
+                                                <tr ng-repeat="i in hodIssueDetails | filter: checkiflessthan('PendingSince',45)">
+                                                    @*<td>{{$index+1}}</td>*@
+                                                    <td style="text-align:justify" ng-show="userWiseColumnNames.ID_Issue_Detail1==true">
+                                                        <div class="less" id="WithinMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                        <a id="WithinMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('WithinMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                        <br />
+                                                        <a style="visibility:hidden" id="WithinMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('WithinMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a> 
+                                                    </td>
+                                                    @*<td ng-show="userWiseColumnNames.id_location==true">{{i.Location}}</td>*@
+                                                    <td ng-show="userWiseColumnNames.id_pending_with_name==true">{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>
+                                                    @*<td ng-show="userWiseColumnNames.pendingSince==true">{{i.PendingSince}}</td>*@
+                                                    <td style="text-align:justify" ng-show="userWiseColumnNames.id_comments==true">{{i.Comments}}</td>
+                                                    <td style="text-align:justify" ng-show="userWiseColumnNames.AnchorSentBackComments==true">
+                                                        {{i.AnchorSentBackComments}}
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                                    </td>
+                                                    @*<td ng-show="userWiseColumnNames.id_request==true">{{i.RequestNo}}</td>
+                                                    <td ng-show="userWiseColumnNames.id_reported_by_name==true || userWiseColumnNames.id_reported_by_email==true">{{i.ReportedByName}} ({{i.ReportedByEmail}})}</td>
+                                                    <td ng-show="userWiseColumnNames.id_dept==true">{{i.Department}}</td>*@
+                                                    @*<td ng-show="userWiseColumnNames.id_pending_with_name==true || userWiseColumnNames.id_pending_with_email==true">{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>*@
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="alert alert-danger" ng-show="falseFlag==0">
+                                            <i class="fa fa-ban"></i>No Records Found
+                                        </div>
+                                    </div>
+                                </p>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+        @*Pilworld WSS feedback*@
+                <div ng-if="TopMgmt=='Pilworld WSS feedback'">
+                    <div class="col-sm-12 col-xs-12" ng-if="beyondCount>0">
+                        <fieldset class="well the-fieldset" style="margin-top: 10px;">
+                            <legend style="margin-bottom:0px" > Beyond TAT - <b><span>{{beyondCount}} </span></b>Issues </legend>
+                            @*<div class="col-md-4" align="left">
+                                <font color="blue"><b> * Click here to view details</b></font>
+                            </div>*@
+                            <div class="col-md-12" >
+                                <input type="button" class="btn btn-primary pull-right" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Beyond')" />
+                            </div>
+                            <div class="col-sm-12 col-xs-12">
+                                <p>
+                                    <div style="overflow-y: auto; height: 200px" >
+                                        <table class="table table-hover table-striped table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    @*<th>Sr. No.</th>*@
+                                                    <th>Issue Details</th>
+                                                    @*<th>Location</th>*@
+                                                    <th>Pending With</th>
+                                                    @*<th>Pending Since(Days)</th>*@
+                                                    <th>Collaborator Comment</th>
+                                                    <th>Anchor Comments</th>
+                                                    @*<th>Comments by Anchor</th>*@
+                                                    @*<th>Add Comment</th>*@
+                                                </tr>
+                                                <tr ng-repeat="i in hodIssueDetails  | filter: checkifGreaterthan('PendingSince',45)">
+                                                    @*<td>{{$index+1}}</td>*@
+                                                    <td style="text-align:justify">
+                                                        <div class="less" id="BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                        <a id="BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                        <br />
+                                                        <a style="visibility:hidden" id="BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a> 
+                                                    </td>
+                                                    @*<td>{{i.Location}}</td>*@
+                                                    <td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>
+                                                    @*<td>{{i.PendingSince}}</td>*@
+                                                    <td style="text-align:justify">{{i.Comments}}</td>
+                                                    <td style="text-align:justify">
+                                                        {{i.AnchorSentBackComments}}
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                                    </td>
+                                                    @*<td style="text-align:justify">{{i.AnchorComments}}</td>*@
+                                                    @*<td>
+                                                            <div>
+                                                                <a style="cursor:pointer" class="btn btn-primary" data-target="#myModal1Anchor{{getVal(SystemTopMngt)}}{{$index}}" ng-click="openModal(i,$index,'myModal1Anchor{{getVal(SystemTopMngt)}}{{$index}}')">Add Comment</a>
+                                                                <div class="modal" data-backdrop="static" data-keyboard="false" id="myModal1Anchor{{getVal(SystemTopMngt)}}{{$index}}" role="dialog">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                                <h4 class="modal-title">Comment Box</h4>
+                                                                            </div>
+
+                                                                            <div class="modal-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-12 col-xs-12">
+                                                                                        <div style="font-size:12px;color:red">*Note: Click submit button save Comments and Status. <br /><br /></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row" ng-repeat="com in issueCommentDetails">
+                                                                                    <div class="col-sm-8 col-xs-12">
+                                                                                        <div class="form-group">
+                                                                                            <label><i class=""></i>Comments </label>
+                                                                                            <textarea class="form-control" ng-model="com.anchorComments" placeholder="Comments"></textarea>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-primary" ng-click="saveAnchorComments(i,issueCommentDetails,$index,'myModal1Anchor{{getVal(SystemTopMngt)}}{{$index}}')">Submit</button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>*@
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                        <div class="alert alert-danger" ng-show="trueFlag==0">
+                                            <i class="fa fa-ban"></i>No Records Found
+                                        </div>
+                                    </div>
+                                </p>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-sm-12 col-xs-12" ng-if="withinCount>0">
+
+                        <fieldset class="well the-fieldset" style="margin-top: 10px;">
+                            <legend style="margin-bottom:0px" > Within TAT - <b><span>{{withinCount}} </span></b>Issues </legend>
+                            @*<div class="col-md-4" align="left">
+                                <font color="blue"><b> * Click here to view details</b></font>
+                            </div>*@
+                            <div class="col-md-12" >
+                                <input type="button" class="btn btn-primary pull-right" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Within')" />
+                            </div>
+                            <div class="col-sm-12 col-xs-12">
+                                <p>
+                                    <div style="overflow-y: auto; height: 200px">
+                                        <table class="table table-hover table-striped table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    @*<th>Sr. No.</th>*@
+                                                    <th>Issue Details</th>
+                                                    @*<th>Location</th>*@
+                                                    <th>Pending With</th>
+                                                    @*<th>Pending Since(Days)</th>*@
+                                                    <th>Collaborator Comment</th>
+                                                    <th>Anchor Comments</th>
+                                                    @*<th>Comments by Anchor</th>*@
+
+                                                </tr>
+                                                <tr ng-repeat="i in hodIssueDetails  | filter: checkiflessthan('PendingSince',45)">
+                                                    @*<td>{{$index+1}}</td>*@
+                                                    <td style="text-align:justify">
+                                                        <div class="less" id="WithinMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                        <a id="WithinMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('WithinMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                        <br />
+                                                        <a style="visibility:hidden" id="WithinMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('WithinMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a> 
+                                                    </td>
+                                                    @*<td>{{i.Location}}</td>*@
+                                                    <td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>
+                                                    @*<td>{{i.PendingSince}}</td>*@
+                                                    <td style="text-align:justify">{{i.Comments}}</td>
+                                                    <td style="text-align:justify">
+                                                        {{i.AnchorSentBackComments}}
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                        <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                                    </td>
+                                                    @*<td style="text-align:justify">{{i.AnchorComments}}</td>*@
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="alert alert-danger" ng-show="falseFlag==0">
+                                            <i class="fa fa-ban"></i>No Records Found
+                                        </div>
+                                    </div>
+                                </p>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+        @*Customer Service Cell*@
+        <div ng-if="TopMgmt=='Customer Service Cell'">
+            <div class="col-sm-12 col-xs-12" ng-if="beyondCount>0">
+                <fieldset class="well the-fieldset" style="margin-top: 10px;">
+                    <legend style="margin-bottom:0px"> Beyond TAT - <b><span>{{beyondCount}} </span></b>Issues </legend>
+                    @*<div class="col-md-4" align="left">
+                        <font color="blue"><b> * Click here to view details</b></font>
+                    </div>*@
+
+                    <div class="col-md-12">
+                        <input type="button" class="btn btn-primary pull-right" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Beyond')" />
+                    </div>
+
+                    <div class="col-sm-12 col-xs-12">
+                        <p>
+                            <div style="overflow-y: auto; height: 200px">
+                                <table class="table table-hover table-striped table-bordered" id="tab1">
+                                    <tbody>
+                                        <tr>
+                                            @*<th>Sr. No.</th>*@
+                                            @*<th>Request No.</th>*@
+                                            <th>Issue Details</th>
+                                            <th>Pending With</th>
+                                            <th>Collaborator Comment</th>
+                                            <th>Anchor Comments</th>
+                                        </tr>
+                                        <tr ng-repeat="i in hodIssueDetails  | filter: checkifGreaterthan('PendingSince',7)">
+                                            @*<td>{{$index+1}}</td>*@
+                                            @*<td>{{i.RequestNo}}</td>*@
+                                            <td>
+                                                <div class="less" id="BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                <a id="BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                <br />
+                                                <a style="visibility:hidden" id="BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('BeyondMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a>
+                                            </td>
+                                            <td>{{i.PendingStatus}} ({{i.PendingWithName}} ({{i.PendingWithEmail}}))</td>
+                                            <td style="text-align:justify">{{i.Comments}}</td>
+                                            <td style="text-align:justify">
+                                                {{i.AnchorSentBackComments}}
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                                <div class="alert alert-danger" ng-show="trueFlag==0">
+                                    <i class="fa fa-ban"></i>No Records Found
+                                </div>
+                            </div>
+
+
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="col-sm-12 col-xs-12" ng-if="withinCount>0">
+                <fieldset class="well the-fieldset" style="margin-top: 10px;">
+                    <legend style="margin-bottom:0px"> Within TAT - <b><span>{{withinCount}} </span></b>Issues </legend>
+                    @*<div class="col-md-4" align="left">
+                        <font color="blue"><b> * Click here to view details</b></font>
+                    </div>*@
+                    <div class="col-md-12">
+                        <input type="button" class="btn btn-primary pull-right" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Within')" />
+                    </div>
+                    <div class="col-sm-12 col-xs-12">
+                        <p>
+                            <div style="overflow-y: auto; height: 200px">
+
+                                <table class="table table-hover table-striped table-bordered" id="tab2">
+                                    <tbody>
+                                        <tr>
+                                            @*<th>Sr. No.</th>*@
+                                            @*<th>Request No.</th>*@
+                                            <th>Issue Details</th>
+                                            <th>Pending With</th>
+                                            <th>Collaborator Comment</th>
+                                            <th>Anchor Comments</th>
+                                        </tr>
+                                        <tr ng-repeat="i in hodIssueDetails | filter: checkiflessthan('PendingSince',7)">
+                                            @*<td>{{$index+1}}</td>*@
+                                            @*<td>{{i.RequestNo}}</td>*@
+                                            <td style="text-align:justify">
+                                                <div class="less" id="WithinMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                <a id="WithinMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('WithinMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                <br />
+                                                <a style="visibility:hidden" id="WithinMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('WithinMembercontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinMemberReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a>
+                                            </td>
+                                            <td>{{i.PendingStatus}} ({{i.PendingWithName}} ({{i.PendingWithEmail}}))</td>
+                                            <td style="text-align:justify">{{i.Comments}}</td>
+                                            <td style="text-align:justify">
+                                                {{i.AnchorSentBackComments}}
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <div class="alert alert-danger" ng-show="falseFlag==0">
+                                    <i class="fa fa-ban"></i>No Records Found
+                                </div>
+                            </div>
+
+
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+                @****************************************************@
+
+            </div>
+
+
+</section>
+
+@*Collaborator -- IsVisible --5*@
+<section class="content" ng-show="IsVisible5" style="padding-top:0px;padding-bottom:0px;height:1600px">
+    <div class="row" style="margin-top:0px">
+        <div class="col-sm-6 col-xs-12">
+            <div class="form-group">
+                <h4>
+                    <b>{{TopMgmt}}</b>
+                </h4>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xs-12" align="right">
+            <div class="form-group">
+                <br />
+                <input type="button" class="btn btn-primary" value="Back" ng-click="backPending()" />
+            </div>
+        </div>
+    </div>
+
+   
+    <div class="row">
+        @****************************************************@
+        @*Dealer Feedback*@
+        <div ng-if="TopMgmt=='Dealer Feedback'">
+            <div class="col-sm-12 col-xs-12" ng-if="beyondCount>0">
+                <fieldset class="well the-fieldset" style="margin-top: 10px;">
+                    <legend style="margin-bottom:0px"> Beyond TAT - <b><span>{{beyondCount}} </span></b>Issues </legend>
+                    
+                    @*<div class="col-md-8" align="right">
+                        <input type="button" class="btn btn-primary" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Beyond')" />
+                    </div>*@
+
+                    <div class="col-sm-12 col-xs-12">
+                        <p>
+                            <div style="overflow-y: auto; height: 300px" >
+                                <table class="table table-hover table-striped table-bordered" id="tab1">
+                                    <tbody>
+                                        <tr>
+                                            @*<th>Sr. No.</th>
+                                            <th>Request No.</th>*@
+                                            <th>Issue Details</th>
+                                            <th>Status Type</th>
+                                            <th>Collaborator Comment</th>
+                                            <th>Anchor Comments</th>
+                                            <th>Comment</th>
+                                        </tr>
+                                        <tr ng-repeat="i in allIssueDetails  | filter: checkifGreaterthan('PendingSince',7)">
+                                            @*<td>{{$index+1}}</td>
+                                            <td>{{i.RequestNo}}</td>*@
+                                            <td style="text-align:justify">
+                                                <div class="less" id="Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                <a id="BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                <br />
+                                                <a style="visibility:hidden" id="BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a> 
+                                            </td>
+                                            <td>{{i.PendingStatus}}</td>
+                                            @*<td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>*@
+                                            
+                                            <td style="text-align:justify">{{i.Comments}}</td>
+                                            <td style="text-align:justify">
+                                                {{i.AnchorSentBackComments}}
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                            </td>
+
+                                            <td>
+                                                <a class="btn btn-primary" style="cursor:pointer" ng-click="openModal1(i)">Update</a>
+                                                
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                                <div class="alert alert-danger" ng-show="trueFlag==0">
+                                    <i class="fa fa-ban"></i>No Records Found
+                                </div>
+                            </div>
+
+
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="col-sm-12 col-xs-12" ng-if="withinCount>0">
+
+                <fieldset class="well the-fieldset" style="margin-top: 10px;" >
+                    
+                    <legend style="margin-bottom:0px"> Within TAT - <b><span>{{withinCount}} </span></b> Issues </legend>
+                             
+                    @*<div class="col-md-8" align="right">
+                        <input type="button" class="btn btn-primary" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Within')" />
+                    </div>*@
+                    <div class="col-sm-12 col-xs-12">
+                        <p>
+                            <div style="overflow-y: auto; height: 300px" >
+
+                                <table class="table table-hover table-striped table-bordered" id="tab2">
+                                    <tbody>
+                                        <tr>
+                                            @*<th>Sr. No.</th>
+                                            <th>Request No.</th>*@
+                                            <th>Issue Details</th>
+                                            <th>Status Type</th>
+                                            <th>Collaborator Comment</th>
+                                            <th>Anchor Comments</th>
+                                            <th>Comment</th>
+                                        </tr>
+                                        <tr ng-repeat="i in allIssueDetails | filter: checkiflessthan('PendingSince',7)">
+                                            @*<td>{{$index+1}}</td>
+                                            <td>{{i.RequestNo}}</td>*@
+                                            <td style="text-align:justify">
+                                                <div class="less" id="Withincontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                <a id="WithinReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('Withincontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                <br />
+                                                <a style="visibility:hidden" id="WithinReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('Withincontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a>
+                                            </td>
+                                            <td>{{i.PendingStatus}}</td>
+                                        
+                                            @*<td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>*@
+
+                                            <td style="text-align:justify">{{i.Comments}}</td>
+                                            <td style="text-align:justify">
+                                                {{i.AnchorSentBackComments}}
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                            </td>
+
+                                            <td>
+                                                <a class="btn btn-primary" style="cursor:pointer" ng-click="openModal1(i)">Update</a>
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <div class="alert alert-danger" ng-show="falseFlag==0">
+                                    <i class="fa fa-ban"></i>No Records Found
+                                </div>
+                            </div>
+
+
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        @*Risk Management*@
+        <div ng-if="TopMgmt=='Risk Management'">
+            <div class="col-sm-12 col-xs-12"  ng-if="beyondCount>0">
+                <fieldset class="well the-fieldset" style="margin-top: 10px;" >
+                    <legend style="margin-bottom:0px">Risk - <b><span>{{beyondCount}} </span></b>Issues</legend>
+                    <div class="col-sm-12 col-xs-12">
+                        <p>
+                            <div style="overflow-y: auto; height: 300px" >
+                                <table class="table table-hover table-striped table-bordered" id="tab1">
+                                    <tbody>
+                                        <tr>
+                                            @*<th>Sr. No.</th>
+                                            <th>Request No.</th>*@
+                                            @*<th>Category</th>*@
+                                            <th>Issue Details</th>
+                                            <th>Status Type</th>
+                                            <th>Collaborator Comment</th>
+                                            @*<th>Target Date</th>*@
+                                            <th>Anchor Comments</th>
+                                            <th>Comment</th>
+
+                                        </tr>
+                                        <tr ng-repeat="i in allIssueDetails  | filter: checkifGreaterthan('PendingSince',7)">
+                                            @*<td>{{$index+1}}</td>
+                                            <td>{{i.RequestNo}}</td>*@
+                                            @*<td>{{i.ID_Category}}</td>*@
+                                            <td style="text-align:justify">
+                                                <div class="less" id="Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                <a id="BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                <br />
+                                                <a style="visibility:hidden" id="BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a>
+                                            </td>
+                                            <td>{{i.PendingStatus}}</td>
+                                            <td style="text-align:justify">{{i.Comments}}</td>
+                                            @*<td>{{i.ID_Target_Date}}</td>*@
+                                            <td style="text-align:justify">
+                                                {{i.AnchorSentBackComments}}
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-primary" style="cursor:pointer" ng-click="openModal1(i)">Update</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                                <div class="alert alert-danger" ng-show="trueFlag==0">
+                                    <i class="fa fa-ban"></i>No Records Found
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+
+
+        </div>
+        
+        @*My Pidilite*@
+        <div ng-if="TopMgmt=='My Pidilite' && allIssueDetails.length>0">
+            <div class="col-sm-12 col-xs-12" ng-if="beyondCount>0">
+                <fieldset class="well the-fieldset" style="margin-top: 10px;" >
+                    <legend style="margin-bottom:0px"> Beyond TAT - <b>{{beyondCount}} </b>Issues</legend>                     
+                    @*<div class="col-md-8" align="right">
+                        <input type="button" class="btn btn-primary" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Beyond')" />
+                    </div>*@
+                    <div class="col-sm-12 col-xs-12">
+                        <p>
+                            <div style="overflow-y: auto; height: 300px">
+                                <table class="table table-hover table-striped table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            @*<th>Sr. No.</th>*@
+                                            <th>Issue Details</th>
+                                            <th>Status Type</th>
+                                            <th>Collaborator Comments</th>
+                                            @*<th>Anchor Comments</th>*@
+                                            <th>Comment</th>
+                                        </tr>
+                                        <tr ng-repeat="i in allIssueDetails | filter:{TAT:'Beyond TAT'}">
+                                            @*<td>{{$index+1}}</td>*@
+                                            <td style="text-align:justify">
+                                                <div class="less" id="Beyondcontent{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                <a id="BeyondReadContent{{$index+1}}" ng-click="ShowMoreData('Beyondcontent{{$index+1}}','BeyondReadContent{{$index+1}}','BeyondReadLessContent{{$index+1}}')">Read More</a>
+                                                <br />
+                                                <a style="visibility:hidden" id="BeyondReadLessContent{{$index+1}}" ng-click="ShowLessData('Beyondcontent{{$index+1}}','BeyondReadContent{{$index+1}}','BeyondReadLessContent{{$index+1}}')">Read Less</a>
+                                            <td>{{i.PendingStatus}}</td>
+                                            @*<td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>*@
+                                            <td style="text-align:justify">
+                                            {{i.Comments}}</td>
+                                            @*<td style="text-align:justify">
+                                                {{i.AnchorSentBackComments}}
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                            </td>*@
+                                            <td>
+                                                <a class="btn btn-primary" style="cursor:pointer" ng-click="openModal1(i)">Update</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="col-sm-12 col-xs-12" ng-if="withinCount>0">
+
+                <fieldset class="well the-fieldset" style="margin-top: 10px;" >
+                    <legend style="margin-bottom:0px"> Within TAT - <b>{{withinCount}} </b>Issues </legend>
+                    
+                    @*<div class="col-md-8" align="right">
+                        <input type="button" class="btn btn-primary" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Within')" />
+                    </div>*@
+                    <div class="col-sm-12 col-xs-12">
+                        <p>
+                            <div style="overflow-y: auto; height: 300px" >
+                                <table class="table table-hover table-striped table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            @*<th>Sr. No.</th>*@
+                                            <th>Issue Details</th>
+                                            <th>Status Type</th>
+                                            <th>Collaborator Comment </th>
+                                            @*<th>Anchor Comments</th>*@
+                                            <th>Comment</th>
+                                        </tr>
+                                        <tr ng-repeat="i in allIssueDetails  | filter:{TAT:'Within TAT'}">
+                                            @*<td>{{$index+1}}</td>*@
+                                            <td style="text-align:justify">
+                                                <div class="less" id="Withincontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                <a id="WithinReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('Withincontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                <br />
+                                                <a style="visibility:hidden" id="WithinReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('Withincontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a>
+                                            </td>
+                                            <td>{{i.PendingStatus}}</td>
+
+                                            @*<td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>*@
+                                            <td style="text-align:justify">{{i.Comments}}</td>
+                                            @*<td style="text-align:justify">
+                                                {{i.AnchorSentBackComments}}
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                            </td>*@
+                                            <td>
+                                                <a class="btn btn-primary" style="cursor:pointer" ng-click="openModal1(i)">Update</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        @*WSS Service Cell*@
+        <div ng-if="TopMgmt=='WSS Service Cell' ">
+            <div class="col-sm-12 col-xs-12" ng-if="beyondCount>0">
+                <fieldset class="well the-fieldset" style="margin-top: 10px;" >
+                    <legend style="margin-bottom:0px"> Beyond TAT - <b>{{beyondCount}} </b>Issues </legend>
+                    @*<div class="col-md-8" align="right">
+                        <input type="button" class="btn btn-primary" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Beyond')" />
+                    </div>*@
+                    <div class="col-sm-12 col-xs-12">
+                        <p>
+                            <div style="overflow-y: auto; height: 300px" >
+                                <table class="table table-hover table-striped table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            @*<th>Sr. No.</th>
+                                            <th>Request No.</th>*@
+                                            <th style="width:350px">Issue Details</th>
+                                            @*<th>Reported By/Location</th>*@
+                                            @*<th>Location</th>*@
+                                            <th>Status Type</th>
+                                            <th>Collaborator Comment</th>
+                                            <th>Anchor Comments</th>
+                                            <th>Comment</th>
+                                        </tr>
+                                        <tr ng-repeat="i in allIssueDetails | filter:{TAT:'Beyond TAT'}">
+                                            @*<td>{{$index+1}}</td>
+                                            <td>{{i.RequestNo}}</td>*@
+                                            <td style="text-align:justify;width:500px">
+                                                <div class="less" id="Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                <a id="BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                <br />
+                                                <a style="visibility:hidden" id="BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a>
+                                            </td>
+                                            @*<td>{{i.ReportedByName}} ({{i.ReportedByEmail}})/ {{i.Location}}</td>*@
+                                            @*<td>{{i.Location}}</td>*@
+                                            <td>{{i.PendingStatus}}</td>
+                                            @*<td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>*@
+                                            <td style="text-align:justify">{{i.Comments}}</td>
+                                            <td style="text-align:justify">
+                                                {{i.AnchorSentBackComments}}
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-primary" style="cursor:pointer" ng-click="openModal1(i)">Update</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="col-sm-12 col-xs-12" ng-if="withinCount>0">
+
+                <fieldset class="well the-fieldset" style="margin-top: 10px;">
+                    <legend style="margin-bottom:0px"> Within TAT - <b>{{withinCount}} </b>Issues </legend>
+                   
+                    @*<div class="col-md-8" align="right">
+                        <input type="button" class="btn btn-primary" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Within')" />
+                    </div>*@
+                    <div class="col-sm-12 col-xs-12">
+                        <p>
+                            <div style="overflow-y: auto; height: 300px" >
+                                <table class="table table-hover table-striped table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            @*<th>Sr. No.</th>
+                                            <th>Request No.</th>*@
+                                            <th>Issue Details</th>
+                                            @*<th>Reported By/Location</th>*@
+                                            @*<th>Location</th>*@
+                                            <th>Status Type</th>
+                                            <th>Collaborator Comment</th>
+                                            <th>Anchor Comments</th>
+                                            <th>Comment</th>
+                                        </tr>
+                                        <tr ng-repeat="i in allIssueDetails | filter:{TAT:'Within TAT'}">
+                                            @*<td>{{$index+1}}</td>
+                                            <td>{{i.RequestNo}}</td>*@
+                                            <td width="300px">
+                                                <div class="less" id="Withincontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                <a id="WithinReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('Withincontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                <br />
+                                                <a style="visibility:hidden" id="WithinReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('Withincontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a>
+                                            </td>
+                                            @*<td>{{i.ReportedByName}} ({{i.ReportedByEmail}})/ {{i.Location}}</td>*@
+                                            @*<td>{{i.Location}}</td>*@
+                                            <td>{{i.PendingStatus}}</td>
+                                            @*<td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>*@
+                                            <td style="text-align:justify">{{i.Comments}}</td>
+                                            <td style="text-align:justify">
+                                                {{i.AnchorSentBackComments}}
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                            </td>
+
+                                            <td>
+                                                <a class="btn btn-primary" style="cursor:pointer" ng-click="openModal1(i)">Update</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        @*Birthday Lunch,Sampark,Suggestion_at_facebook,simplified Suggestion*@
+        @*Change in TopMgnt name as per live for facebook*@
+        <div ng-if="TopMgmt=='Birthday Lunch' || TopMgmt== 'Sampark' || TopMgmt=='Pidilite Ideas Initiatives' || TopMgmt=='Simplified Suggestion'">
+            <div class="col-sm-12 col-xs-12" ng-if="beyondCount>0">
+                <fieldset class="well the-fieldset" style="margin-top: 10px;">
+                    <legend style="margin-bottom:0px"> Issue Details - <b>{{beyondCount}} </b>Issues </legend>
+                    
+                    @*<div class="col-md-8" align="right">
+                        <input type="button" class="btn btn-primary" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Beyond')" />
+                    </div>*@
+                    <div class="col-sm-12 col-xs-12">
+                        <p>
+                            <div style="overflow-y: auto; height: 300px" >
+                                <table class="table table-hover table-striped table-bordered">
+                                    @*style="table-layout:fixed"*@
+                                    <tbody>
+                                        <tr>
+                                            @*<th>Sr. No.</th>*@
+                                            <th style="width:30%">Issue Details</th>
+                                            @*<th>Reported By</th>*@
+                                            @*<th>Pending With</th>*@
+                                            <th>Status Type</th>
+                                            @*<th>Pending Since<br />(Days)</th>*@
+                                            <th>Collaborator Comment</th>
+                                            <th>Anchor Comments</th>
+                                            <th>Comment</th>
+                                        </tr>
+                                        <tr ng-repeat="i in allIssueDetails">
+                                            @*<td>{{$index+1}}</td>*@
+                                            <td>
+                                                <div class="less" id="Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                <a id="BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                <br />
+                                                    <a style="visibility:hidden" id="BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a>
+                                            </td>
+                                            @*<td><span> {{i.ReportedByName}}</span><br /><span style="font-size:11px;overflow-wrap: break-word;">({{i.ReportedByEmail}})</span></td>*@
+                                            @*<td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>*@
+                                            @*<td>{{i.PendingSince}}</td>*@
+                                            <td>{{i.PendingStatus}}</td>
+                                            <td style="text-align:justify">{{i.Comments}}</td>
+                                            <td style="text-align:justify">
+                                                {{i.AnchorSentBackComments}}
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-primary" style="cursor:pointer" ng-click="openModal1(i)">Update</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        @*Market Sudhar*@
+        <div ng-if="TopMgmt=='Market Sudhar'">
+            <div class="col-sm-12 col-xs-12" ng-if="beyondCount>0">
+                <fieldset class="well the-fieldset" style="margin-top: 10px;" ng-show="allIssueDetails.length>0" >
+                    <legend style="margin-bottom:0px"> Beyond TAT - <b>{{beyondCount}} </b>Issues </legend>
+                   
+                    @*<div class="col-md-8" align="right">
+                        <input type="button" class="btn btn-primary" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Beyond')" />
+
+
+                    </div>*@
+                    <div class="col-sm-12 col-xs-12">
+                        <p>
+                            <div style="overflow-y: auto; height: 300px" >
+                                <table class="table table-hover table-striped table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            @*<th>Sr. No.</th>*@
+                                            <th>Issue Details</th>
+                                            @*<th>Location</th>*@
+                                            @*<th>Responsible Person</th>*@
+                                            @*<th>Pending Since(Days)</th>*@
+                                            <th>Status Type</th>
+                                            <th>Collaborator Comment</th>
+                                            <th>Anchor Comments</th>
+                                            <th>Comment</th>
+                                        </tr>
+                                        <tr ng-repeat="i in allIssueDetails  | filter: checkifGreaterthan('PendingSince',45)">
+                                            @*<td>{{$index+1}}</td>*@
+                                            <td style="text-align:justify" >
+                                                <div class="less" id="Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                <a id="BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                <br />
+                                                <a style="visibility:hidden" id="BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a>
+                                            </td>
+                                            @*<td >{{i.Location}}</td>*@
+                                            @*<td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>*@
+                                            @*<td>{{i.PendingSince}}</td>*@
+                                            <td>{{i.PendingStatus}}</td>
+                                            <td style="text-align:justify">{{i.Comments}}</td>
+                                            <td style="text-align:justify">
+                                                {{i.AnchorSentBackComments}}
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-primary" style="cursor:pointer" ng-click="openModal1(i)">Update</a>
+                                                </td>
+
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+
+                                <div class="alert alert-danger" ng-show="trueFlag==0">
+                                    <i class="fa fa-ban"></i>No Records Found
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+
+                </fieldset>
+            </div>
+            <div>
+
+            </div>
+            <div class="col-sm-12 col-xs-12" ng-if="withinCount>0">
+
+                <fieldset class="well the-fieldset" style="margin-top: 10px;" ng-show="allIssueDetails.length>0">
+                    <legend style="margin-bottom:0px"> Within TAT - <b>{{withinCount}} </b>Issues </legend>
+                    
+                    @*<div class="col-md-8" align="right">
+                        <input type="button" class="btn btn-primary" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Within')" />
+                    </div>*@
+                    <div class="col-sm-12 col-xs-12">
+                        <p>
+                            <div style="overflow-y: auto; height: 300px" >
+                                <table class="table table-hover table-striped table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            @*<th>Sr. No.</th>*@
+                                            <th >Issue Details</th>
+                                            @*<th >Location</th>*@
+                                            @*<th >Responsible Person</th>*@
+                                            @*<th>Pending Since(Days)</th>*@
+                                            <th>Collaborator Comment</th>
+                                            <th>Anchor Comments</th>
+                                            <th>Comment</th>
+                                        </tr>
+                                        <tr ng-repeat="i in allIssueDetails | filter: checkiflessthan('PendingSince',45)">
+                                            @*<td>{{$index+1}}</td>*@
+                                            <td>
+                                                <div class="less" id="Withincontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                <a id="WithinReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('Withincontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                <br />
+                                                <a style="visibility:hidden" id="WithinReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('Withincontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a>
+                                            </td>
+                                            @*<td>{{i.Location}}</td>*@
+                                            @*<td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>*@
+                                            @*<td>{{i.PendingSince}}</td>*@
+                                            <td>{{i.PendingStatus}}</td>
+                                            <td style="text-align:justify">{{i.Comments}}</td>
+                                            <td style="text-align:justify">
+                                                {{i.AnchorSentBackComments}}
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-primary" style="cursor:pointer" ng-click="openModal1(i)">Update</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="alert alert-danger" ng-show="falseFlag==0">
+                                    <i class="fa fa-ban"></i>No Records Found
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        @*PilWorld WSS Feedback*@
+        <div ng-if="TopMgmt=='Pilworld WSS feedback'">
+            <div class="col-sm-12 col-xs-12" ng-if="beyondCount>0">
+                <fieldset class="well the-fieldset" style="margin-top: 10px;">
+                    <legend style="margin-bottom:0px"> Beyond TAT - <b>{{beyondCount}} </b>Issues </legend>
+                   
+                    @*<div class="col-md-8" align="right">
+                        <input type="button" class="btn btn-primary" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Beyond')" />
+                    </div>*@
+                    <div class="col-sm-12 col-xs-12">
+                        <p>
+                            <div style="overflow-y: auto; height: 300px">
+                                <table class="table table-hover table-striped table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            @*<th>Sr. No.</th>*@
+                                            <th>Issue Details</th>
+                                            @*<th>Location</th>*@
+                                            @*<th>Responsible Person</th>*@
+                                            @*<th>Pending Since(Days)</th>*@
+                                            <th>Status Type</th>
+                                            <th>Collaborator Comment</th>
+                                            <th>Anchor Comments</th>
+                                            <th>Comment</th>
+                                            
+                                            @*<th>Comments by Anchor</th>*@
+                                            @*<th>Add Comment</th>*@
+                                        </tr>
+                                        <tr ng-repeat="i in allIssueDetails | filter: checkifGreaterthan('PendingSince',45)">
+                                            @*<td>{{$index+1}}</td>*@
+                                            <td >
+                                                <div class="less" id="Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                <a id="BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                <br />
+                                                <a style="visibility:hidden" id="BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a>
+                                            </td>
+                                            @*<td>{{i.Location}}</td>*@
+                                            @*<td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>*@
+                                            @*<td>{{i.PendingSince}}</td>*@
+                                            <td>{{i.PendingStatus}}</td>
+                                            <td style="text-align:justify">{{i.Comments}}</td>
+                                            <td style="text-align:justify">{{i.AnchorSentBackComments}}
+                                            <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                            <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-primary" style="cursor:pointer" ng-click="openModal1(i)">Update</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                                <div class="alert alert-danger" ng-show="trueFlag==0">
+                                    <i class="fa fa-ban"></i>No Records Found
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="col-sm-12 col-xs-12" ng-if="withinCount>0">
+
+                <fieldset class="well the-fieldset" style="margin-top: 10px;">
+                    <legend style="margin-bottom:0px"> Within TAT - <b>{{withinCount}} </b>Issues </legend>
+                     
+                    @*<div class="col-md-8" align="right">
+                        <input type="button" class="btn btn-primary" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Within')" />
+                    </div>*@
+                    <div class="col-sm-12 col-xs-12">
+                        <p>
+                            <div style="overflow-y: auto; height: 300px">
+                                <table class="table table-hover table-striped table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            @*<th>Sr. No.</th>*@
+                                            <th>Issue Details</th>
+                                            @*<th>Location</th>*@
+                                            @*<th>Responsible Person</th>*@
+                                            @*<th>Pending Since(Days)</th>*@
+                                            <th>Status Type</th>
+                                            <th>Collaborator Comment</th>
+                                            <th>Anchor Comments</th>
+                                            <th>Comment</th>
+                                            
+                                            @*<th>Comments by Anchor</th>*@
+
+                                        </tr>
+                                        <tr ng-repeat="i in allIssueDetails  | filter: checkiflessthan('PendingSince',45)">
+                                            @*<td>{{$index+1}}</td>*@
+                                            <td>
+                                                <div class="less" id="Withincontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                <a id="WithinReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('Withincontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                <br />
+                                                <a style="visibility:hidden" id="WithinReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('Withincontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a>
+                                            </td>
+                                            @*<td>{{i.Location}}</td>*@
+                                            @*<td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>*@
+                                            @*<td>{{i.PendingSince}}</td>*@
+                                            <td>{{i.PendingStatus}}</td>
+                                            <td style="text-align:justify">{{i.Comments}}</td>
+                                            @*<td style="text-align:justify">{{i.AnchorComments}}</td>*@
+                                            <td style="text-align:justify">
+                                                {{i.AnchorSentBackComments}}
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-primary" style="cursor:pointer" ng-click="openModal1(i)">Update</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="alert alert-danger" ng-show="falseFlag==0">
+                                    <i class="fa fa-ban"></i>No Records Found
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        @*Customer Service Cell*@
+        <div ng-if="TopMgmt=='Customer Service Cell'">
+            <div class="col-sm-12 col-xs-12" ng-if="beyondCount>0">
+                <fieldset class="well the-fieldset" style="margin-top: 10px;">
+                    <legend style="margin-bottom:0px"> Beyond TAT - <b>{{beyondCount}} </b>Issues </legend>
+
+                    @*<div class="col-md-8" align="right">
+                        <input type="button" class="btn btn-primary" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Beyond')" />
+                    </div>*@
+
+                    <div class="col-sm-12 col-xs-12">
+                        <p>
+                            <div style="overflow-y: auto; height: 300px">
+                                <table class="table table-hover table-striped table-bordered" id="tab1">
+                                    <tbody>
+                                        <tr>
+                                            @*<th>Sr. No.</th>
+                                            <th>Request No.</th>*@
+                                            <th>Issue Details</th>
+                                            <th>Status Type</th>
+                                            <th>Collaborator Comment</th>
+                                            <th>Anchor Comments</th>
+                                            <th>Comment</th>
+                                        </tr>
+                                        <tr ng-repeat="i in allIssueDetails  | filter: checkifGreaterthan('PendingSince',7)">
+                                            @*<td>{{$index+1}}</td>
+                                            <td>{{i.RequestNo}}</td>*@
+                                            <td style="text-align:justify">
+                                                <div class="less" id="Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                <a id="BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                <br />
+                                                <a style="visibility:hidden" id="BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('Beyondcontent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','BeyondReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a>
+                                            </td>
+                                            <td>{{i.PendingStatus}}</td>
+                                            @*<td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>*@
+
+                                            <td style="text-align:justify">{{i.Comments}}</td>
+                                            <td style="text-align:justify">
+                                                {{i.AnchorSentBackComments}}
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                            </td>
+
+                                            <td>
+                                                <a class="btn btn-primary" style="cursor:pointer" ng-click="openModal1(i)">Update</a>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                                <div class="alert alert-danger" ng-show="trueFlag==0">
+                                    <i class="fa fa-ban"></i>No Records Found
+                                </div>
+                            </div>
+
+
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="col-sm-12 col-xs-12" ng-if="withinCount>0">
+
+                <fieldset class="well the-fieldset" style="margin-top: 10px;">
+                    <legend style="margin-bottom:0px"> Within TAT - <b>{{withinCount}} </b>Issues </legend>
+
+                    @*<div class="col-md-8" align="right">
+                        <input type="button" class="btn btn-primary" value="Export to Excel" ng-click="downloadFullDump('{{SystemTopMngt}}',item.division,'Within')" />
+                    </div>*@
+                    <div class="col-sm-12 col-xs-12">
+                        <p>
+                            <div style="overflow-y: auto; height: 300px">
+
+                                <table class="table table-hover table-striped table-bordered" id="tab2">
+                                    <tbody>
+                                        <tr>
+                                            @*<th>Sr. No.</th>
+                                            <th>Request No.</th>*@
+                                            <th>Issue Details</th>
+                                            <th>Status Type</th>
+                                            <th>Collaborator Comment</th>
+                                            <th>Anchor Comments</th>
+                                            <th>Comment</th>
+                                        </tr>
+                                        <tr ng-repeat="i in allIssueDetails | filter: checkiflessthan('PendingSince',7)">
+                                            @*<td>{{$index+1}}</td>
+                                            <td>{{i.RequestNo}}</td>*@
+                                            <td style="text-align:justify">
+                                                <div class="less" id="Withincontent{{getVal(SystemTopMngt)}}{{$index+1}}">{{i.IssueDetail1}}</div>
+                                                <a id="WithinReadContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowMoreData('Withincontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read More</a>
+                                                <br />
+                                                <a style="visibility:hidden" id="WithinReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}" ng-click="ShowLessData('Withincontent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadContent{{getVal(SystemTopMngt)}}{{$index+1}}','WithinReadLessContent{{getVal(SystemTopMngt)}}{{$index+1}}')">Read Less</a>
+                                            </td>
+                                            <td>{{i.PendingStatus}}</td>
+                                            @*<td>{{i.PendingWithName}} ({{i.PendingWithEmail}})</td>*@
+                                            <td style="text-align:justify">{{i.Comments}}</td>
+                                            <td style="text-align:justify">
+                                                {{i.AnchorSentBackComments}}
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented On:</b> {{i.AnchorCommentDate}}</span>
+                                                <br /><span style="font-size:11px" ng-hide="!i.AnchorSentBackComments"><b>Commented By:</b>{{i.AnchorName}}</span>
+                                            </td>
+
+                                            <td>
+                                                <a class="btn btn-primary" style="cursor:pointer" ng-click="openModal1(i)">Update</a>
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <div class="alert alert-danger" ng-show="falseFlag==0">
+                                    <i class="fa fa-ban"></i>No Records Found
+                                </div>
+                            </div>
+
+
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        @****************************************************@
+
+    </div>
+
+
+</section>
+
+<script>
+
+    function test() {
+        //alert();
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].onclick = function () {
+
+                if (!$(this).hasClass("active")) {
+
+                    $(".accordion").removeClass("active");
+                    $(".panel").css("display", "none");
+                    //$(".accordion").find('img').attr('src', '/Content/img/D.png');
+
+                }
+
+                this.classList.toggle("active");
+
+                if ($(this).hasClass("active")) {
+                   // $(this).find('img').attr('src', '/Content/img/U.png');
+                }
+                else {
+                    //$(this).find('img').attr('src', '/Content/img/D.png');
+
+                }
+
+                //var panel = $(this).find('panel')
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            }
+        }
+    }
+
+    setInterval(function () { test(); }, 1000);
+
+    // $(this).find('img').attr('src', '/Content/img/U.png');
+    $('#testclick').click(function (e) {
+        e.stopPropagation();
+    })
+</script>
+
+<div class="modal" data-backdrop="static" data-keyboard="false" id="myModal1PendingBeyond" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Comment Box</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 col-xs-12">
+                        <div style="font-size:12px;color:red">*Note: Click submit button save Comments and Status. <br /><br /></div>
+                    </div>
+                </div>
+                
+                <div class="row" ng-repeat="com in issueCommentDetails| filter :{active:true}">
+                    @*| filter :{active:false}*@
+                   @*{{issueCommentDetails}}*@
+                    <div class="col-sm-8 col-xs-12">
+                        <div class="form-group">
+                            <label><i class=""></i>Comments </label>
+                            <textarea class="form-control" ng-model="com.iD_Comments" placeholder="Comments"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-xs-12">
+                        <div class="form-group">
+                            <label><i class=""></i>Status </label>
+                            <select class="form-control" ng-model="com.iD_Status_Id" ng-options="md.statusDesc for md in statusData track by md.id">
+                                <option value="">Select..</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+            <div class="col-sm-12 col-xs-12">
+                <table class="table table-hover table-striped table-bordered">
+                    <tbody>
+                        <tr>
+                            <th>Comment</th>
+                            <th>Date</th>
+                        </tr>
+                        @*<tr ng-repeat="i in issueCommentDetails | filter :isUserComment">*@
+                        <tr ng-repeat="i in issueCommentDetails | filter :{active:false}">
+
+                            @*{{issueCommentDetails}}*@
+                            <td>{{i.iD_Comments}}</td>
+                            <td>{{i.rct | date:'dd-MMM-yyyy'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="getConfirmation1(issueCommentDetails)">Submit</button>
+            </div>
+        </div>
+
+    </div>
+</div>

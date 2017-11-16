@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.SAP" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian.SAP" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:54461/CRCustomWFService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" />
+  <xs:complexType name="Company">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" base="q1:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CompanyCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CompanyName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Company" nillable="true" type="tns:Company" />
+  <xs:complexType name="Division">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/Teckraft.Core.Domian" base="q2:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DivisionCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DivisionName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Division" nillable="true" type="tns:Division" />
+</xs:schema>

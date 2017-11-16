@@ -1,0 +1,457 @@
+﻿<!-- Main content -->
+ 
+<section class="content-header">
+    <div class="row pnl-page-detail-action">
+        <div class="col-md-12" ng-hide="disabledFlag">
+            <h1>Create Requisition
+            </h1>
+
+        </div>
+        <div class="col-md-12"  ng-show="disabledFlag">
+            <h1>
+                Requisition - {{item.requestCode}}
+            </h1>
+
+        </div>
+    </div>
+</section>
+<style>
+    .the-legend {
+        margin-bottom: 0px;    
+    }
+    .well {
+    padding: 10px;    
+    }
+
+</style>
+
+<section class="content">
+
+    <form>
+        <div ng-hide="disabledFlag">
+            <fieldset class="well the-fieldset">
+                <legend class="the-legend">Dealer Details - {{item.dealerCode}} - {{item.dealerName}} </legend>
+                    <div class="row">
+                         <div class="col-sm-6">
+                            <label><i class=""></i>Owner Name: </label> &nbsp; &nbsp; &nbsp; {{item.dealerOwnerName}}
+                         </div>
+                         <div class="col-sm-6">
+                            <label><i class=""></i>SG Desc:</label> &nbsp; &nbsp; &nbsp; {{item.sgDescription}}
+                         </div>
+                    </div>
+                    <div class="row">
+                         <div class="col-sm-6">
+                           <label><i class=""></i>Mobile: </label> &nbsp; &nbsp; &nbsp; {{item.dealerMobile}}
+                         </div>
+                             <div class="col-sm-6">
+                            <label><i class=""></i>DRCP Flag:</label> {{item.drcpFlag}}
+                         </div>
+                    </div>
+                     <div class="row">
+                         <div class="col-sm-6">
+                           <label><i class=""></i>Email Id:</label> &nbsp; &nbsp; &nbsp; {{item.dealerEmail}}
+                         </div>
+                         <div class="col-sm-6">
+                            <label><i class=""></i>Salesman Type:</label> &nbsp; &nbsp; &nbsp; {{item.dealerSalesmanType}}
+                         </div>
+                    </div>
+                    <div class="row">
+                         <div class="col-sm-6">
+                            <label><i class=""></i>City:</label> &nbsp; &nbsp; &nbsp; {{item.dealerCity}}
+                         </div>
+                         <div class="col-sm-6">
+                            <label><i class=""></i>Visit Day:</label> &nbsp; &nbsp; &nbsp; {{item.dealerVisitDay}}
+                         </div>
+                    </div>
+                    <div class="row">
+                         <div class="col-sm-6">
+                            <label><i class=""></i>State:</label> &nbsp; &nbsp; &nbsp; {{item.dealerState}}
+                         </div>
+                         <div class="col-sm-6">
+                             <label><i class=""></i>Visit Frequency:</label> &nbsp; &nbsp; &nbsp; {{item.dealerVisitFrequency}}
+                         </div>
+                    </div>
+                    <div class="row">
+                         <div class="col-sm-6">
+                            <label><i class=""></i>Shop Address </label> &nbsp; &nbsp; &nbsp; {{item.dealerAddress}}
+                         </div>
+                         <div class="col-sm-6">
+                             <label><i class=""></i>Class Name:</label> &nbsp; &nbsp; &nbsp; {{item.dealerClassName}}
+                         </div>
+                    </div>
+            <div class="row">
+  <div class="col-sm-6" ng-if="item.dealerStatus=='N'">
+                            <label><i class=""></i>RTR Status:</label> &nbsp; &nbsp; &nbsp;<label style="background-color:Red;color:yellow"> Inactive</label>
+                         </div>
+                         <div class="col-sm-6" ng-if="item.dealerStatus=='Y'">
+                            <label><i class=""></i>RTR Status :</label> &nbsp; &nbsp; &nbsp;<label style="background-color:Green;color:yellow"> Active</label>
+                         </div>
+</div>
+                @*<div class="row">
+                    <div class="col-sm-3">
+                            <label><i class=""></i>Owner Name </label> &nbsp; &nbsp; &nbsp; {{item.dealerOwnerName}}
+                    </div>
+                    <div class="col-sm-3">
+                            <label><i class=""></i>Mobile: </label> &nbsp; &nbsp; &nbsp; {{item.dealerMobile}}
+                    </div>
+  <div class="col-sm-3">
+                            <label><i class=""></i>Email Id:</label> &nbsp; &nbsp; &nbsp; {{item.dealerEmail}}
+                    </div>
+                <div class="col-sm-3">
+                            <label><i class=""></i>Division:</label> &nbsp; &nbsp; &nbsp; {{item.dealerDivision}}
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                            <label><i class=""></i>City:</label> &nbsp; &nbsp; &nbsp; {{item.dealerCity}}
+                        </div>
+                    <div class="col-sm-3">
+                            <label><i class=""></i>State:</label> &nbsp; &nbsp; &nbsp; {{item.dealerState}}
+                        </div>
+                <div class="col-sm-6">
+                            <label><i class=""></i>Shop Address </label> &nbsp; &nbsp; &nbsp; {{item.dealerAddress}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                            <label><i class=""></i>SG Desc:</label> &nbsp; &nbsp; &nbsp; {{item.sgDescription}}
+                        </div>
+                    <div class="col-sm-3">
+                            <label><i class=""></i>Status Flag:</label> &nbsp; &nbsp; &nbsp; {{item.dealerStatus}}
+                        </div>
+                    <div class="col-sm-3">
+                            <label><i class=""></i>Salesman Type:</label> &nbsp; &nbsp; &nbsp; {{item.dealerSalesmanType}}
+                        </div>
+                    <div class="col-sm-3">
+                        <label><i class=""></i>Visit Day:</label> &nbsp; &nbsp; &nbsp; {{item.dealerVisitDay}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label><i class=""></i>Visit Frequency:</label> &nbsp; &nbsp; &nbsp; {{item.dealerVisitFrequency}}
+                    </div>
+                    <div class="col-sm-3">
+                        <label><i class=""></i>Class Name:</label> &nbsp; &nbsp; &nbsp; {{item.dealerClassName}}
+                    </div>
+                </div>*@
+            </fieldset>
+        </div>
+
+
+<div class="panel-group" ng-hide="disabledFlag">
+  <div class="panel panel-default">
+    <div class="panel-heading" style="background-color: #3c8dbc;border-radius: 3px;">
+        <a  role="button" data-toggle="collapse" data-parent="" data-target="#collapse1" aria-expanded="true">
+            <div align="left" id="divShow" ng-click="hideClass()">
+                <h4 class="panel-title" style="color: #fff;" >
+                   Hierarchy Level &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 <font  style="color:  #ffff00;font-weight:bold">Show</font>   
+                </h4>
+            </div>
+            <div align="left" id="divHide" ng-click="ShowClass()"  >
+                <h4 class="panel-title" style="color: #fff;">
+                    Hierarchy Level &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                   <font  style="color:  #ffff00;font-weight:bold">Hide</font>     
+                </h4>
+            </div>
+            
+</a>
+          
+      </h4>
+    </div>
+    <div id="collapse1" class="panel-collapse collapse">
+      <div class="panel-body">
+                        <div   class="col-sm-6">
+               <fieldset class="well the-fieldset" >
+                      <legend class="the-legend">NSM Details ( {{item.nsmCode}} - {{item.nsmDesc}})</legend>
+                       <label>Person Name:</label> &nbsp;&nbsp;{{item.nsmPerson}}<br />
+                      <label>Email:</label> &nbsp;&nbsp;{{item.nsmEmail}}<br />
+                      <label>Mobile:</label> &nbsp;&nbsp;{{item.nsmMobile}}
+            </fieldset>
+            </div>
+  <div   class="col-sm-6">
+               <fieldset class="well the-fieldset"  >
+                      <legend class="the-legend">ZSM Details ( {{item.zsmCode}} - {{item.zsmDesc}})</legend>
+                <label>Person Name:</label> &nbsp;&nbsp;{{item.zsmPerson}}<br />
+                        <label>Email:</label> &nbsp;&nbsp;{{item.zsmEmail}}<br />
+                      <label>Mobile:</label> &nbsp;&nbsp;{{item.zsmMobile}}
+            </fieldset>
+            </div>
+   <div   class="col-sm-6">
+               <fieldset class="well the-fieldset">
+                      <legend class="the-legend">RSM Details ( {{item.rsmCode}} - {{item.rsmDesc}})</legend>
+                    <label>Person Name:</label> &nbsp;&nbsp;{{item.rsmPerson}}<br />
+                        <label>Email:</label> &nbsp;&nbsp;{{item.rsmEmail}}<br />
+                      <label>Mobile:</label> &nbsp;&nbsp;{{item.rsmMobile}}
+            </fieldset>
+            </div>
+  <div   class="col-sm-6">
+               <fieldset class="well the-fieldset" >
+                      <legend class="the-legend">BM Details ( {{item.bmCode}} - {{item.bmDesc}})</legend>
+                    <label>Person Name:</label> &nbsp;&nbsp;{{item.bmPerson}}<br />
+                    <label>Email:</label> &nbsp;&nbsp;{{item.bmEmail}}<br />
+                      <label>Mobile:</label> &nbsp;&nbsp;{{item.bmMobile}}
+            </fieldset>
+            </div>
+  <div   class="col-sm-6">
+               <fieldset class="well the-fieldset">
+                      <legend class="the-legend">ASM Details ( {{item.asmCode}} - {{item.asmDesc}}) </legend>
+                    <label>Person Name:</label> &nbsp;&nbsp;{{item.asmPerson}}<br />
+                     <label>Email:</label> &nbsp;&nbsp;{{item.asmEmail}}<br />
+                      <label>Mobile:</label> &nbsp;&nbsp;{{item.asmMobile}}
+            </fieldset>
+            </div>
+  <div   class="col-sm-6">
+               <fieldset class="well the-fieldset" >
+                      <legend class="the-legend">TSI Details ( {{item.tsiCode}} - {{item.tsiDesc}}) </legend>
+                        <label>Person Name:</label> &nbsp;&nbsp;{{item.tsiPerson}}<br />
+                       <label>Email:</label> &nbsp;&nbsp;{{item.tsiEmail}}<br />
+                      <label>Mobile:</label> &nbsp;&nbsp;{{item.tsiMobile}}
+            </fieldset>
+            </div>
+
+     <div   class="col-sm-6">
+               <fieldset class="well the-fieldset" >
+                      <legend class="the-legend">WSS Details ( {{item.wssCode}} - {{item.wssDesc}})</legend>
+                       
+                        <label>Email:</label> &nbsp;&nbsp;{{item.wssEmail}}<br />
+                      <label>Mobile:</label> &nbsp;&nbsp;{{item.wssMobile}}
+            </fieldset>
+            </div>
+ <div   class="col-sm-6">
+               <fieldset class="well the-fieldset" >
+                      <legend class="the-legend">Dealer RTR Types</legend>
+                        <label>Dealer Outlet Type 1:</label> &nbsp;&nbsp;{{item.dealerRTRTYPE1}}<br />
+                        <label>Dealer Outlet Type 2:</label> &nbsp;&nbsp;{{item.dealerRTRTYPE2}}
+                </fieldset>
+            </div>
+      </div>
+       
+    </div>
+  </div>
+</div>
+
+   <div >
+    <fieldset class="well the-fieldset" >
+            <legend class="the-legend"   ng-show="disabledFlag">SR Details</legend>
+        <legend class="the-legend"   ng-hide="disabledFlag">New SR Entry</legend>
+                 <div class="row" >
+                      <div class="col-sm-4 col-xs-12">
+                         <div class="form-group">
+                            <label>Call Start Time :</label> &nbsp; &nbsp; &nbsp;{{item.callStartTime}}
+                           @*<input type="textbox" class="form-control" ng-model="item.callStartTime" disabled="true">*@
+                        </div>
+                    </div>
+                     <div class="col-sm-4 col-xs-12">
+                         <div class="form-group">
+                             <label>Source</label>
+                          
+                            <select class="form-control" ng-model="item.source" ng-options="md.sourceDesc for md in sourceMasterData  track by md.id " ng-hide="disabledFlag">
+                                 <option value="">Select..</option>
+                             </select>
+                           @* <select class="form-control" ng-model="item.source" ng-options="md.sourceDesc for md in sourceMasterData" ng-show="currentUser.id!=item.rcb.id">
+                                 <option value="">Select..</option>
+                             </select>*@
+                              <pre ng-show="disabledFlag" >{{item.source.sourceDesc}}</pre>
+                         </div>
+                     </div>
+                     <div class="col-sm-4 col-xs-12">
+                         <div class="form-group">
+                             <label>Call Type</label>
+                           <select class="form-control" ng-model="item.callType" ng-change="getQuestionMaster()" ng-options="md.callType for md in callTypeMasterData track by md.id" ng-hide="disabledFlag">
+                                 <option value="">Select..</option>
+                             </select>
+                             <pre ng-show="disabledFlag">{{item.callType.callType}}</pre>
+                         </div>
+                     </div>
+                      @*<div class="col-sm-4 col-xs-12">
+                         <div class="form-group">
+                            <label>Called By</label>  <br/>
+                            <input type="radio" ng-model="item.calledBy" name="call" value="WSS" ng-disabled="disabledFlag">  WSS 
+                            <input type="radio" ng-model="item.calledBy" name="call" value="TSI" ng-disabled="disabledFlag"> TSI 
+                            <input type="radio" ng-model="item.calledBy" name="call" value="CSM" ng-disabled="disabledFlag"> CSM 
+                            <input type="radio" ng-model="item.calledBy" name="call" value="Dealer" ng-disabled="disabledFlag"> Dealer 
+                        </div>
+                    </div>*@
+              
+               
+                </div>
+  <div class="row" >
+     
+                     
+                <div class="col-sm-4 col-xs-12">
+                         <div class="form-group">
+                            <label>SR Type</label>
+                         
+                          <select class="form-control" ng-model="item.reason" ng-change="getQuestionMaster()" ng-options="md.reasonDesc for md in reasonMasterData track by md.id" ng-hide="disabledFlag">
+                                <option value="">Select..</option>
+                            </select>
+                             <pre ng-show="disabledFlag">{{item.reason.reasonDesc}}</pre>
+                        </div>
+                    </div>
+      <div class="col-sm-4 col-xs-12">
+          <div class="form-group">
+              <label>Called No.</label>
+   
+           @* <input type="textbox" class="form-control" ng-model="item.calledNo" ng-hide="disabledFlag">*@
+ <input type="number" class="form-control" ng-model="item.calledNo" ng-hide="disabledFlag">
+              <pre ng-show="disabledFlag">{{item.calledNo}}</pre>
+          </div>
+      </div>
+ <div class="col-sm-4 col-xs-12">
+@if (User.IsInRole("CallCentre")){
+          <div class="form-group">
+              <label>Status</label>
+           <select class="form-control" ng-model="item.status" ng-options="md.statusDesc for md in statusMasterData track by md.id">
+                <option value="">Select..</option>
+            </select>
+          </div>
+       }
+else{
+     <pre ng-show="disabledFlag">{{item.status.statusDesc}}</pre>
+}
+      </div>
+                </div>
+@if (User.IsInRole("CallCentre")){
+            <div class="row">
+                 <div class="col-sm-8 col-xs-12">
+                 <div class="form-group">
+                            <label>Currently Pending With</label>
+                          
+ <input type="text" class="form-control" id="dealer1" placeholder="Type Name..."
+                                    auto-complete
+                                    min-length="1"
+                                    http-service="personCodeService"
+                                    render-item="personCodeRender"
+                                    on-select="personCodeSelect"
+                                    ng-model="item.pendingWithUser1"
+                                    />
+                        </div>
+                    </div>
+<div class="col-sm-4 col-xs-12" ng-hide="true" >
+                 <div class="form-group">
+                            <label>Pending Since</label>
+                                  <input type="text" class="form-control" ng-click="open($event, item,'pendingSince')"
+                                   datepicker-popup="dd-MMM-yyyy"
+                                   class="pendingSince"
+                                   ng-change="resetDate(item,'pendingSince')"
+                                   ng-model="item.pendingSince" is-open="item.datepickers.pendingSince" 
+                                   datepicker-options="dateOptions"
+                                   date-disabled="disabled(date, mode)" close-text="Close"/>
+                        </div>
+                    </div>
+              </div>
+}
+              <div class="row">
+                 <div class="col-sm-8 col-xs-12">
+                 <div class="form-group">
+                            <label>Response / Feedback</label>
+                           <textarea class="form-control" ng-model="item.reasonDesc" ng-disabled="disabledFlag"></textarea>
+                           
+                        </div>
+                    </div>
+              </div>
+       @* @if (User.IsInRole("CallCentre"))*@
+        @*{*@
+        <div class="row" ng-show="disabledFlag">
+            <div class="col-sm-8 col-xs-12">
+                <div class="form-group">
+                    <label>Comments</label>
+                    <textarea class="form-control" ng-model="item.comment" ></textarea>
+                </div>
+            </div>
+        </div>
+        @*}*@
+
+ <fieldset class="well the-fieldset"  ng-show="queDetails.length>0 && (item.id==0 || item.id==null)">
+<legend class="the-legend"   ng-show="queDetails.length>0">Questions and Answers</legend>
+<div class="row" ng-repeat="o in queDetails">
+    
+     <div class="col-sm-8 col-xs-12">
+                <div class="form-group">
+                    <label>{{o.questionDesc}}</label><br />
+                    <label style="background-color:yellow">Answer:</label>  <textarea class="form-control" ng-model="o.answer"></textarea>
+                </div>
+            </div>
+</div>
+</fieldset>
+
+<fieldset class="well the-fieldset" ng-show="item.dealerFeedbackQuestions.length>0 && item.id>0">
+<legend class="the-legend"   ng-show="item.dealerFeedbackQuestions.length>0">Questions and Answers</legend>
+<div class="row" ng-repeat="o in item.dealerFeedbackQuestions">
+     <div class="col-sm-8 col-xs-12">
+                <div class="form-group">
+                    <label>{{o.questionMaster.questionDesc}}</label><br />
+                    <label style="background-color:yellow">Answer:</label>  <textarea class="form-control" ng-model="o.answer"></textarea>
+                </div>
+            </div>
+</div>
+</fieldset>
+
+    </fieldset>
+   </div>
+  <div class="row" style="margin: 0px;">
+      <div class="col-sm-12 col-xs-12" align="right">
+             <input type="button" class="btn btn-primary" value="Submit" ng-click="save()" /> 
+            &nbsp;&nbsp;
+             <input type="button" class="btn btn-primary" value="Back" ng-click="back()" />
+           
+          </div>
+      </div>
+        <div ng-show="disabledFlag">
+            @Html.Partial("dealerFeedbackLog")
+            </div>
+</form>
+</section>
+
+ 
+<script type="text/javascript">
+    $('.date').datepicker();
+    $(".select2").select2();
+
+    $(".timepicker").timepicker({
+        showInputs: false
+    });
+
+    //$(function () {
+    //    $('#datetimepicker3').datetimepicker({
+    //        format: 'LT'
+    //    });
+    //});
+
+</script>
+
+<!-- /.content -->

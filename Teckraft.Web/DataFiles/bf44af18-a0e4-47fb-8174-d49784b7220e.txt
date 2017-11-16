@@ -1,0 +1,17 @@
+select assign.title as assignedToTitle,cs.stagecode,cr.ChangeRequestCode CrNo,
+(cr.changerequestcode + '-' + convert(varchar(max), substring(cs.stagecode,1,1)) + '-' + convert(varchar(max),ct.taskno)) as TaskNo,
+cr.RequestDate CrDate,cr.StageText CrStage,cr.StatusText CrStatus,
+req.title as taskCreator,m.ModuleName,sm.SubModuleName,d.DivisionName,bf.FunctionName,cr.Subject as CRSuject,ct.*,cp.* from crphasetask ct left join crstage cs on ct.crstageid=cs.id 
+left join crphase cp on cp.crstageid=ct.crstageid
+left join userdetail assign on assign.userid=ct.assignedto
+left join cr on cr.id=cs.crid
+left join UserDetail req on req.UserId=cr.RCB
+left join Division d on d.Id=cr.DivisionId
+left join BusinessFunction bf on bf.Id=cr.FunctionId
+left join Module m on m.Id=cr.ModuleId
+left join SubModule sm on sm.Id=cr.SubModuleId
+
+where ct.AssignedTo in (5049,5065,5198,5245,5258,5326,5327,5328,5337,5351,5622,5654,6100,6189,6215,6593,6657,6704,6724,7281,7404,7643,7680,7698,7758,7763,
+7846,7957,8147,8159,8215,8230,8480,8577,8657,8982,9058,9059,9670,9698,9794,10547,10704,10723)
+and cs.stagecode in ('Execution','Testing','Design')
+order by crno

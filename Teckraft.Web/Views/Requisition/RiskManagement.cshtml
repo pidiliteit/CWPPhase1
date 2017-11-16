@@ -1,0 +1,189 @@
+﻿<!-- Main content -->
+<style>
+    .the-legend {
+        margin-bottom: 0px;
+    }
+
+    .well {
+        padding: 10px;
+    }
+</style>
+<style>
+
+    .accordion {
+        margin-top:10px;        
+    }
+
+    button.accordion {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+    }
+
+        button.accordion.active, button.accordion:hover {
+            background-color: #ddd;
+        }
+
+   div.panel {
+        padding: 0 18px;
+        display: none;
+        background-color: white;
+    }
+</style>
+<section class="content-header">
+    <div class="row pnl-page-detail-action">
+        <div class="col-md-12">
+            <h1>Issue Details </h1>
+        </div>
+    </div>
+</section>
+ 
+<section class="content"  style="padding-top:0px;padding-bottom:0px">
+    <div class="row" style="margin-top:0px">
+        <div class="col-sm-6 col-xs-12">
+            <div class="form-group">
+                <h4>
+                    <b>Risk Management (for internal auditors)</b>
+                </h4>
+            </div>
+        </div>
+        
+                <div class="col-sm-6 col-xs-12" align="right">
+                    <div class="form-group">
+                        <br/>
+                        <input type="button" class="btn btn-primary" value="Back" ng-click="back()" />
+                    </div>
+                </div>
+                 
+            </div>
+   
+            <div align="left">
+                <div id="piechartexample" style="min-width: 150px; height: 150px;" align="left"></div>
+            </div>
+       
+            <div class="row">
+                <div class="col-sm-4 col-xs-12">
+                    <div class="form-group">
+                        <label>Select Division</label>
+                        <select class="form-control" >
+                            <option value="">Select..</option>
+                            <option value="IT">IT</option>
+                            <option value="FV">FV</option>
+                            <option value="CC">CC</option>
+                        </select>
+                    </div>
+                </div>
+            
+                <div class="col-sm-6 col-xs-12">
+                    @*<div class="form-group">
+                        <div style="color:red" ng-show="userRole.RoleName3=='ChapterOwner' "><b> * Click on Request No to update status.</b></div>
+                    </div>*@
+                </div>
+                <div class="col-md-12" align="right">
+                    <input type="button" class="btn btn-primary" value="Export Closed Issues(Last 3 Months)" />
+                    @*<input type="button" class="btn btn-primary" value="Export to Excel"  />*@
+                </div>
+                <div class="col-sm-12 col-xs-12" style="175px">
+                    <fieldset class="well the-fieldset" style="margin-top: 10px;">
+                        <legend style="margin-bottom:0px"> Risk </legend>
+                        <div class="col-md-12" align="right">
+                            <input type="button" class="btn btn-primary" value="Export to Excel" />
+                        </div>
+                        <div class="col-sm-12 col-xs-12">
+                            <p>
+                                <div style="overflow-y: auto; height: 175px">
+
+                                    <table class="table table-hover table-striped table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <th>Sr. No.</th>
+                                                <th>Request No.</th>
+                                                <th>Category</th>
+                                                <th>Risk Details</th>
+                                                <th>Action Plan with Timeline</th>
+                                                <th>Comments By Anchor</th>
+                                                <th>Target Date</th>
+                                                <th>Add Comment</th>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>SuggestionBox-2017-2018-24072017-191</td>
+                                                <td>High</td>
+                                                <td>Due to delay in service 4-5 days. by SWSS dealers are selling competitor brands.</td>
+                                                <td>The team has confirmed that dealers are paying freight only.</td>
+                                                <td></td>
+                                                <td>5 Sep 2017</td>
+                                                <td>
+
+                                                    <div>
+                                                        <input type="button" class="btn btn-primary" value="Add Comment" />
+                                                    </div>
+
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </p>
+                        </div>
+                    </fieldset>
+                    </div>
+
+             
+                </div>
+           
+
+</section>
+<script>
+
+    function test() {
+        //alert();
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].onclick = function () {
+
+                if (!$(this).hasClass("active")) {
+
+                    $(".accordion").removeClass("active");
+                    $(".panel").css("display", "none");
+                    //$(".accordion").find('img').attr('src', '/Content/img/D.png');
+
+                }
+
+                this.classList.toggle("active");
+
+                if ($(this).hasClass("active")) {
+                   // $(this).find('img').attr('src', '/Content/img/U.png');
+                }
+                else {
+                    //$(this).find('img').attr('src', '/Content/img/D.png');
+
+                }
+
+                //var panel = $(this).find('panel')
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            }
+        }
+    }
+
+    setInterval(function () { test(); }, 1000);
+
+    // $(this).find('img').attr('src', '/Content/img/U.png');
+
+</script>

@@ -1,0 +1,91 @@
+﻿3<!-- Main content -->
+ @if (User.IsInRole("Creator")){
+<section class="content-header">
+    <div class="row pnl-page-detail-action">
+        <div class="col-md-12">
+            <h1>Create Requisition
+            </h1>
+
+        </div>
+    </div>
+</section>
+<section class="content">
+
+    <form>
+        <fieldset class="well the-fieldset" ng-model="item.dealerCode" >
+            <legend class="the-legend">Add </legend>
+                 <div class="row"  ng-hide="true" >
+                    <div class="col-sm-4">  <label><i class=""></i>TSI</label>
+                            <select class="form-control module" ng-model="item.tsi"  ng-options="md.VcTSICode +' - '+ md.VcTSIDesc for md in tsiUserDetails track by md.VcTSICode"> 
+                               <option value="">Select..</option>
+                            </select>
+                    </div>
+                        <div class="col-sm-4"> 
+                        <label><i class=""></i>ASM</label>
+                           <select class="form-control module" ng-model="item.asm" ng-options="md.VcASMCode + ' - ' + md.VcASMDesc for md in asmCurUser track by md.VcASMCode"> 
+                              <option value="">Select..</option>
+                            </select>
+                    </div>
+<div class="col-sm-4"> <label><i class=""></i>BM</label>
+                         <select class="form-control" ng-model="item.bm" ng-options="md.VcBMCode + ' - ' + md.VcBMDesc for md in bmCurUser track by md.VcBMCode">
+                                <option value="">Select..</option>
+                            </select>
+                    </div>
+                </div>
+
+            <div class="row">
+                <div class="col-sm-8"> <label><i class=""></i>Dealer Code / Name  </label>
+                        <input type="text" class="form-control" id="dealer" placeholder="Type Name..."
+                            auto-complete
+                            min-length="1"
+                            http-service="personCodeService"
+                            render-item="personCodeRender"
+                            on-select="personCodeSelect"
+                            ng-model="item.dealer"
+                            />
+                    </div>
+                </div>
+                   <div class="row">
+                        <div class="col-sm-8">
+                            
+                                <label><i class=""></i>Reason  </label>
+                                <select class="form-control module" ng-model="item.reason" ng-options="md.reasonDesc for md in reasonMasterData track by md.id"  > 
+                                    <option value="">Select..</option>
+                                </select>
+                       
+                    </div>
+                 </div>
+ <div class="row">
+                        <div class="col-sm-8">
+                           
+                                <label><i class=""></i>Reason Description </label>
+                                 <textarea class="form-control" ng-model="item.reasonDesc" placeholder="Reason Description"></textarea>
+                       
+                    </div>
+</div>
+                 
+                        </fieldset>
+        <div class="row footer-action" style="margin: 0px;">
+            <input type="button" class="btn btn-primary" value="Submit" ng-click="save()" />
+        </div>
+
+    </form>
+</section>
+}
+<script type="text/javascript">
+    $('.date').datepicker();
+    $(".select2").select2();
+
+    $(".timepicker").timepicker({
+        showInputs: false
+    });
+
+    //$(function () {
+    //    $('#datetimepicker3').datetimepicker({
+    //        format: 'LT'
+    //    });
+    //});
+
+</script>
+
+<!-- /.content -->

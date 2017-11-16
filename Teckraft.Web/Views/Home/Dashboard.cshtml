@@ -1,0 +1,530 @@
+﻿
+<style>
+     #pendingTaskIndicator {
+        width:100px; height:80px;
+        display: inline-block;
+        
+      }
+.details td, th {
+padding: 0;
+padding: 7px 20px 0px 10px;
+            
+}
+.details .strong {
+    font-weight: 600;
+}
+
+</style>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>Dashboard
+            <small>Version 2.0</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li class="active">Dashboard</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+
+        <!-- Info boxes -->
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <div class="info-box-content">
+                        <div id="pendingTaskIndicator" ></div>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <div class="info-box-content">
+                        <div id="taskOverdue" style="height:82px;"></div>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+
+            <!-- fix for small devices only -->
+            <div class="clearfix visible-sm-block"></div>
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-green"><i class="fa fa-link"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text"><a href="#/createRequisition">Add Requisition</a></span>
+                        @*<span class="info-box-text"><a>My Calendar</a></span>*@
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+@*            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">New Members</span>
+                        <span class="info-box-number">2,000</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>*@
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            
+            <!-- /.col -->
+            <div class="col-md-12">
+                <!-- PRODUCT LIST -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">My pending CR</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            @Html.Partial("_list") 
+                        </div>
+                        <!-- /.table-responsive -->
+                        <!-- List Message -->
+                            <div ng-show="!crList.length && !loadingCR">No Records Found...</div>
+                        <!-- /List Message -->
+                    </div>
+                    <!-- /.box-body -->
+                    <!-- .OverLay -->
+                    <div class="overlay" ng-show="loadingCR">
+                        <i class="fa fa-refresh fa-spin"></i>
+                    </div>
+                    <!-- /.OverLay -->
+
+                    @*<div class="product-info">
+                        <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+                        <span class="product-description">Samsung 32" 1080p 60Hz LED Smart HDTV.
+                        </span>
+                    </div>
+                    </li>
+                            <!-- /.item -->
+                    <li class="item">
+                        <div class="product-img">
+                            <img src="Content/dist/img/default-50x50.gif" alt="Product Image" />
+                        </div>
+                        <div class="product-info">
+                            <a href="javascript::;" class="product-title">Bicycle <span class="label label-info pull-right">$700</span></a>
+                            <span class="product-description">26" Mongoose Dolomite Men's 7-speed, Navy Blue.
+                            </span>
+                        </div>
+                    </li>
+                    <!-- /.item -->
+                    <li class="item">
+                        <div class="product-img">
+                            <img src="Content/dist/img/default-50x50.gif" alt="Product Image" />
+                        </div>
+                        <div class="product-info">
+                            <a href="javascript::;" class="product-title">Xbox One <span class="label label-danger pull-right">$350</span></a>
+                            <span class="product-description">Xbox One Console Bundle with Halo Master Chief Collection.
+                            </span>
+                        </div>
+                    </li>
+                    <!-- /.item -->
+                    <li class="item">
+                        <div class="product-img">
+                            <img src="Content/dist/img/default-50x50.gif" alt="Product Image" />
+                        </div>
+                        <div class="product-info">
+                            <a href="javascript::;" class="product-title">PlayStation 4 <span class="label label-success pull-right">$399</span></a>
+                            <span class="product-description">PlayStation 4 500GB Console (PS4)
+                            </span>
+                        </div>
+                    </li>
+                    <!-- /.item -->
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+                *@
+                <div class="box-footer text-center">
+                    <a href="#/requisitions" class="uppercase">View All CR</a>
+                </div>
+                <!-- /.box-footer -->
+                </div>
+
+
+                                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">My Project</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            @Html.Partial("_projectList") 
+                        </div>
+                        <!-- /.table-responsive -->
+                        <!-- List Message -->
+                            <div ng-show="!crList.length && !loadingCR">No Records Found...</div>
+                        <!-- /List Message -->
+                    </div>
+                    <!-- /.box-body -->
+                    <!-- .OverLay -->
+                    <div class="overlay" ng-show="loadingCR">
+                        <i class="fa fa-refresh fa-spin"></i>
+                    </div>
+                    <!-- /.OverLay -->
+
+                    @*<div class="product-info">
+                        <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+                        <span class="product-description">Samsung 32" 1080p 60Hz LED Smart HDTV.
+                        </span>
+                    </div>
+                    </li>
+                            <!-- /.item -->
+                    <li class="item">
+                        <div class="product-img">
+                            <img src="Content/dist/img/default-50x50.gif" alt="Product Image" />
+                        </div>
+                        <div class="product-info">
+                            <a href="javascript::;" class="product-title">Bicycle <span class="label label-info pull-right">$700</span></a>
+                            <span class="product-description">26" Mongoose Dolomite Men's 7-speed, Navy Blue.
+                            </span>
+                        </div>
+                    </li>
+                    <!-- /.item -->
+                    <li class="item">
+                        <div class="product-img">
+                            <img src="Content/dist/img/default-50x50.gif" alt="Product Image" />
+                        </div>
+                        <div class="product-info">
+                            <a href="javascript::;" class="product-title">Xbox One <span class="label label-danger pull-right">$350</span></a>
+                            <span class="product-description">Xbox One Console Bundle with Halo Master Chief Collection.
+                            </span>
+                        </div>
+                    </li>
+                    <!-- /.item -->
+                    <li class="item">
+                        <div class="product-img">
+                            <img src="Content/dist/img/default-50x50.gif" alt="Product Image" />
+                        </div>
+                        <div class="product-info">
+                            <a href="javascript::;" class="product-title">PlayStation 4 <span class="label label-success pull-right">$399</span></a>
+                            <span class="product-description">PlayStation 4 500GB Console (PS4)
+                            </span>
+                        </div>
+                    </li>
+                    <!-- /.item -->
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+                *@
+                <div class="box-footer text-center">
+                    <a href="#/requisitions" class="uppercase">View All CR</a>
+                </div>
+                <!-- /.box-footer -->
+                </div>
+                <!-- /.box -->
+            </div>
+
+@*<div class="row">*@
+
+<div class="col-md-12" ng-show="currentUser.division.divisionCode=='IT'">
+                <!-- TABLE: LATEST ORDERS -->
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                       
+                        <h3 class="box-title">My Pending project task</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table no-margin table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                       @* <th>CR No</th>*@
+                                        <th>Task No</th>
+                                        <th>TaskData</th>
+                                        <th>Assigned to</th>
+                                        <th>StartDate</th>
+                                        <th>EndDate</th>
+                                        <th>ITATDate</th>
+                                        <th>Revised ITAT Date</th>
+                                        <th>No of Days</th>
+                                        <th>Status</th>
+                                        <th>Pending With</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                     <tr ng-repeat="pt in pendingTask">
+                                       @* <td>{{pt.stage.cr.changeRequestCode}}</td>*@
+                                        <td> <a href="#/requisitions/{{pt.stage.cr.id}}">{{pt.taskCode}}</a></td>
+                                        <td>{{pt.subject}}</td>
+                                        <td>{{pt.assignedTo.title}}</td>
+                                        <td>{{pt.startDate|date:'dd-MMM-yyyy'}}</td>
+                                        <td>{{pt.endDate|date:'dd-MMM-yyyy'}}</td>
+                                        <td>{{pt.itatDate | date: 'dd-MMM-yyyy'}}</td>
+                                        <td>{{pt.RevisedITATDate |date:'dd-MMM-yyyy'}}</td>
+                                        <td>{{pt.noOfDays}}</td>
+                                           <td> {{pt.completed|pendingCompleted}}</td>
+                                         <td> {{pt.teamMember.title||pt.assignedTo.title}}</td>
+                                    </tr>
+
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                        <!-- List Message -->
+                            <div ng-show="!pendingTask.length  && !loadingTask">No Records Found...</div>
+                        <!-- /List Message -->
+
+                    </div>
+                    <!-- /.box-body -->
+                    <!-- .OverLay -->
+                    <div class="overlay" ng-show="loadingTask">
+                      <i class="fa fa-refresh fa-spin"></i>
+                    </div>
+                    <!-- /.OverLay -->
+                   @* <div class="box-footer">
+                         <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a> 
+                        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+                    </div>*@
+                <div class="box-footer text-center">
+                    <a href="#/tasks" class="uppercase">View All Project Task</a>
+                </div>
+                    <!-- /.box-footer -->
+                </div>
+                <!-- /.box -->
+            </div>
+
+@*</div>*@
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+<!--Calendar-->    
+        <div class="row" style="display:none;">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-body no-padding">
+                        <!-- THE CALENDAR -->
+                        <div id="calendar"></div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /. box -->
+            </div>
+            <!-- /.col -->
+        </div>
+<!-- /calendar-->
+<!-- /.row -->
+
+        <div class="row" style="display:none;">
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Project Status</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table no-margin" >
+                                <thead>
+                                    <tr>
+                                        <th>Project Name/Description</th>
+                                        <th>Activities</th>
+                                        <th>TargetDate</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>dashboad admin</td>
+                                        <td>abc</td>
+                                        <td><span class="label label-success">30-Dec-15</span></td>
+                                        <td>Process</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CRM</td>
+                                        <td>abc</td>
+                                        <td><span class="label label-success">30-APR-15</span></td>
+                                        <td>delivered</td>
+                                    </tr>
+                                    <tr>
+                                        <td>TSP-FV</td>
+                                        <td>abc</td>
+                                        <td><span class="label label-success">30-MAY-15</span></td>
+                                        <td>Processing</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Anchor LTE</td>
+                                        <td>abc</td>
+                                        <td><span class="label label-success">10-JUNE-15</span></td>
+                                        <td>Pending</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer clearfix">
+                        <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+                        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+                    </div>
+                    <!-- /.box-footer -->
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+
+
+
+
+
+        <div class="row" style="display:none;">
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">a.Exception report for MD/ANP/Business</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table no-margin">
+                                <thead>
+                                    <tr>
+                                        <th>Application Name/Description</th>
+                                        <th>Scope in Brief</th>
+                                        <th>Stage of the Project</th>
+                                        <th>Point of issue/s</th>
+                                        <th>Options recommended</th>
+                                        <th>Suggestions/comments</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>CRM management</td>
+                                        <td>abc1234</td>
+                                        <td>development</td>
+                                        <td>error</td>
+                                        <td>not required</td>
+                                        <td>good</td>
+                                    </tr>
+                                    <tr>
+                                        <td>TSP-FV</td>
+                                        <td>abc1234</td>
+                                        <td>development</td>
+                                        <td>error</td>
+                                        <td>not required</td>
+                                        <td>Excellent</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Anchor admin</td>
+                                        <td>abc1234</td>
+                                        <td>development</td>
+                                        <td>error</td>
+                                        <td>required</td>
+                                        <td>good</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+        <div class="row" style="display:none;">
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Status report to Business(Summary and Details)</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table no-margin">
+                                <thead>
+                                    <tr>
+                                        <th>CR Status</th>
+                                        <th>Category</th>
+                                        <th>Total CRs</th>
+                                        <th>Exception in CRs pending above due date</th>
+                                        <th>Newly added CRs during last 15 days</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Approved</td>
+                                        <td>project</td>
+                                        <td>05</td>
+                                        <td>Yes</td>
+                                        <td>NIL </td>
+                                    </tr>
+                                    <tr>
+                                        <td>delayed</td>
+                                        <td>project</td>
+                                        <td>05</td>
+                                        <td>Yes</td>
+                                        <td>NIL </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Processing</td>
+                                        <td>project</td>
+                                        <td>05</td>
+                                        <td>Yes</td>
+                                        <td>NIL </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+
+    </section>
+    <!-- /.content -->
+
+</div>
+<!-- /.content-wrapper -->
